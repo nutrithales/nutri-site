@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Área do Paciente | Nutricionista Thales Rosa</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+@font-face{font-family:"Galano Grotesque Alt";src:url("assets/fonts/GalanoGrotesqueAltRegular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:"Galano Grotesque Alt";src:url("assets/fonts/GalanoGrotesqueAltMedium.otf") format("opentype");font-weight:500;font-style:normal;font-display:swap;}
+@font-face{font-family:"Galano Grotesque Alt";src:url("assets/fonts/GalanoGrotesqueAltSemiBold.otf") format("opentype");font-weight:600;font-style:normal;font-display:swap;}
+@font-face{font-family:"Galano Grotesque Alt";src:url("assets/fonts/GalanoGrotesqueAltBold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap;}
+body{margin:0;font-family:"Galano Grotesque Alt",system-ui,sans-serif;background:#faf9f6;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+a:hover{color:#0fae62;}
+.cta{transition:transform .2s ease,background .2s ease;}
+.cta:hover{background:#0fae62 !important;color:#fff !important;transform:translateY(-2px);}
+.btn-outline:hover{background:#14181a !important;color:#fff !important;}
+button[type="submit"]:hover{background:#0fae62 !important;color:#fff !important;}
+.field-label{display:block;font-weight:600;font-size:.9rem;margin-bottom:6px;color:#14181a;}
+.field-input{width:100%;padding:12px 14px;border:1px solid #e7ebe9;border-radius:8px;font-size:1rem;margin-bottom:16px;box-sizing:border-box;font-family:inherit;}
+.auth-card{text-align:left;background:#fff;border:1px solid #e7ebe9;border-radius:16px;padding:32px;box-shadow:0 8px 28px -14px rgba(20,24,26,.15);box-sizing:border-box;}
+.submit-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;margin-top:20px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;border:none;background:#1adc7f;color:#04140c;cursor:pointer;box-sizing:border-box;}
+.submit-btn:disabled{opacity:.6;cursor:default;}
+.error-msg{color:#c0392b;font-size:.88rem;margin:8px 0 0;display:none;}
+.success-msg{color:#0fae62;font-size:.95rem;margin:0 0 1.2em;display:none;}
+/* Honeypot: hidden from real visitors, bots that auto-fill every field still populate it. */
+.hp-field{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+</style>
+</head>
+<body>
+<section style="padding:100px 0;text-align:center;">
+  <div style="max-width:420px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Área do paciente</span>
+
+    <div id="loggedView" style="display:none;">
+      <h1 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.02em;font-size:clamp(1.8rem,3.4vw,2.4rem);margin:0 0 .5em;color:#14181a;">Bem-vindo (a) de volta</h1>
+      <p id="loadingMsg" style="font-size:1.05rem;color:#5b6660;margin:0 0 1.5em;">Buscando sua página...</p>
+      <div id="pagesList" style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;"></div>
+      <a href="#" id="logoutBtn" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.95rem;border:2px solid #14181a;color:#14181a;" class="btn-outline">Sair</a>
+    </div>
+
+    <div id="loginView">
+      <h1 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.02em;font-size:clamp(1.8rem,3.4vw,2.4rem);margin:0 0 .3em;color:#14181a;">Entrar</h1>
+      <p style="font-size:1rem;color:#5b6660;margin:0 0 1.6em;">Acesse com o e-mail e senha cadastrados no seu acompanhamento.</p>
+      <form id="loginForm" class="auth-card">
+        <label class="field-label">E-mail</label>
+        <input type="email" id="emailInput" required class="field-input">
+        <label class="field-label">Senha</label>
+        <input type="password" id="passwordInput" required class="field-input" style="margin-bottom:8px;">
+        <p id="errorMsg" class="error-msg"></p>
+        <button type="submit" id="submitBtn" class="submit-btn">Entrar</button>
+      </form>
+      <p style="font-size:.9rem;color:#5b6660;margin-top:16px;"><a href="#" id="showForgotLink" style="color:#0fae62;font-weight:600;">Esqueci minha senha</a></p>
+      <p style="font-size:.9rem;color:#5b6660;margin-top:8px;">Ainda não tem acesso? <a href="#" id="showSignupLink" style="color:#0fae62;font-weight:600;">Cadastre-se aqui</a>.</p>
+    </div>
+
+    <div id="forgotView" style="display:none;">
+      <h1 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.02em;font-size:clamp(1.8rem,3.4vw,2.4rem);margin:0 0 .3em;color:#14181a;">Recuperar senha</h1>
+      <p style="font-size:1rem;color:#5b6660;margin:0 0 1.6em;">Informe seu e-mail cadastrado e enviaremos uma nova senha.</p>
+      <p id="forgotSuccessMsg" class="success-msg"></p>
+      <form id="forgotForm" class="auth-card">
+        <label class="field-label">E-mail</label>
+        <input type="email" id="forgotEmail" required class="field-input" style="margin-bottom:8px;">
+        <div class="hp-field" aria-hidden="true">
+          <label for="forgotWebsite">Não preencha este campo</label>
+          <input type="text" id="forgotWebsite" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <p id="forgotErrorMsg" class="error-msg"></p>
+        <button type="submit" id="forgotSubmitBtn" class="submit-btn">Enviar nova senha</button>
+      </form>
+      <p style="font-size:.9rem;color:#5b6660;margin-top:20px;"><a href="#" id="showLoginFromForgotLink" style="color:#0fae62;font-weight:600;">Voltar para o login</a></p>
+    </div>
+
+    <div id="signupView" style="display:none;">
+      <h1 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.02em;font-size:clamp(1.8rem,3.4vw,2.4rem);margin:0 0 .3em;color:#14181a;">Criar acesso</h1>
+      <p style="font-size:1rem;color:#5b6660;margin:0 0 1.6em;">Preencha seus dados. Você recebe a senha por e-mail e o acesso é liberado após a confirmação.</p>
+      <p id="signupSuccessMsg" class="success-msg"></p>
+      <form id="signupForm" class="auth-card">
+        <label class="field-label">Nome completo</label>
+        <input type="text" id="signupNome" required class="field-input" placeholder="Maria da Silva">
+        <label class="field-label">E-mail</label>
+        <input type="email" id="signupEmail" required class="field-input" placeholder="maria@email.com">
+        <label class="field-label">Telefone</label>
+        <input type="tel" id="signupTelefone" required class="field-input" placeholder="(41) 99999-9999">
+        <label class="field-label">CPF</label>
+        <input type="text" id="signupCpf" required class="field-input" placeholder="000.000.000-00" style="margin-bottom:8px;">
+        <!-- Honeypot — deixe sempre vazio, é invisível para pessoas reais -->
+        <div class="hp-field" aria-hidden="true">
+          <label for="signupWebsite">Não preencha este campo</label>
+          <input type="text" id="signupWebsite" name="website" tabindex="-1" autocomplete="off">
+        </div>
+        <p id="signupErrorMsg" class="error-msg"></p>
+        <button type="submit" id="signupSubmitBtn" class="submit-btn">Criar acesso</button>
+      </form>
+      <p style="font-size:.9rem;color:#5b6660;margin-top:20px;">Já tem acesso? <a href="#" id="showLoginLink" style="color:#0fae62;font-weight:600;">Entrar</a>.</p>
+    </div>
+  </div>
+</section>
+
+<script>
+// Configure com as credenciais do seu projeto Supabase antes de publicar:
+const SUPABASE_URL = 'https://xwihrxinweeadtcouhoo.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_9rdUCvfgWydLr4vA-uQvHQ_FWwgggLk';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// URL do painel administrativo (Next.js na Vercel) — é lá que vive a rota
+// /api/pacientes/self-register que processa o cadastro. Troque se o domínio
+// do painel for outro.
+const ADMIN_APP_URL = 'https://admin-nutri-thales.vercel.app';
+
+const loggedView = document.getElementById('loggedView');
+const loginView = document.getElementById('loginView');
+const signupView = document.getElementById('signupView');
+const forgotView = document.getElementById('forgotView');
+const loadingMsg = document.getElementById('loadingMsg');
+const pagesList = document.getElementById('pagesList');
+const errorMsg = document.getElementById('errorMsg');
+const submitBtn = document.getElementById('submitBtn');
+const signupErrorMsg = document.getElementById('signupErrorMsg');
+const signupSuccessMsg = document.getElementById('signupSuccessMsg');
+const signupSubmitBtn = document.getElementById('signupSubmitBtn');
+const forgotErrorMsg = document.getElementById('forgotErrorMsg');
+const forgotSuccessMsg = document.getElementById('forgotSuccessMsg');
+const forgotSubmitBtn = document.getElementById('forgotSubmitBtn');
+
+function hideAllViews() {
+  loginView.style.display = 'none';
+  signupView.style.display = 'none';
+  forgotView.style.display = 'none';
+  loggedView.style.display = 'none';
+}
+function showLoggedIn() {
+  hideAllViews();
+  loggedView.style.display = 'block';
+}
+function showLoginForm() {
+  hideAllViews();
+  loginView.style.display = 'block';
+}
+function showSignupForm() {
+  hideAllViews();
+  signupView.style.display = 'block';
+}
+function showForgotForm() {
+  hideAllViews();
+  forgotView.style.display = 'block';
+}
+
+document.getElementById('showSignupLink').addEventListener('click', (e) => {
+  e.preventDefault();
+  showSignupForm();
+});
+document.getElementById('showLoginLink').addEventListener('click', (e) => {
+  e.preventDefault();
+  showLoginForm();
+});
+document.getElementById('showForgotLink').addEventListener('click', (e) => {
+  e.preventDefault();
+  showForgotForm();
+});
+document.getElementById('showLoginFromForgotLink').addEventListener('click', (e) => {
+  e.preventDefault();
+  showLoginForm();
+});
+
+async function fetchPatientPages(userId) {
+  loadingMsg.style.display = 'block';
+  pagesList.innerHTML = '';
+  const { data, error } = await sb.from('paginas_paciente').select('titulo, url_pagina').eq('user_id', userId);
+  loadingMsg.style.display = 'none';
+  if (error || !data || data.length === 0) {
+    loadingMsg.textContent = 'Nenhuma página encontrada ainda.';
+    loadingMsg.style.display = 'block';
+    return;
+  }
+  data.forEach(pg => {
+    const a = document.createElement('a');
+    a.href = pg.url_pagina; a.target = '_blank'; a.rel = 'noopener';
+    a.className = 'cta';
+    a.style.cssText = 'display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;background:#1adc7f;color:#04140c;';
+    a.textContent = pg.titulo;
+    pagesList.appendChild(a);
+  });
+}
+
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  errorMsg.style.display = 'none';
+  submitBtn.textContent = 'Entrando…'; submitBtn.disabled = true;
+  const email = document.getElementById('emailInput').value;
+  const password = document.getElementById('passwordInput').value;
+  const { data, error } = await sb.auth.signInWithPassword({ email, password });
+  submitBtn.textContent = 'Entrar'; submitBtn.disabled = false;
+  if (error) { errorMsg.textContent = 'E-mail ou senha incorretos.'; errorMsg.style.display = 'block'; return; }
+  showLoggedIn();
+  fetchPatientPages(data.session.user.id);
+});
+
+document.getElementById('logoutBtn').addEventListener('click', async (e) => {
+  e.preventDefault();
+  await sb.auth.signOut();
+  showLoginForm();
+});
+
+document.getElementById('signupForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  signupErrorMsg.style.display = 'none';
+  signupSuccessMsg.style.display = 'none';
+  signupSubmitBtn.textContent = 'Enviando…'; signupSubmitBtn.disabled = true;
+
+  const payload = {
+    nome: document.getElementById('signupNome').value,
+    email: document.getElementById('signupEmail').value,
+    telefone: document.getElementById('signupTelefone').value,
+    cpf: document.getElementById('signupCpf').value,
+    website: document.getElementById('signupWebsite').value, // honeypot
+  };
+
+  try {
+    const res = await fetch(ADMIN_APP_URL + '/api/pacientes/self-register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const result = await res.json();
+
+    if (!res.ok || !result.success) {
+      signupErrorMsg.textContent = result.message || 'Não foi possível concluir o cadastro. Tente novamente.';
+      signupErrorMsg.style.display = 'block';
+    } else {
+      document.getElementById('signupForm').reset();
+      document.getElementById('signupForm').style.display = 'none';
+      signupSuccessMsg.textContent = result.message;
+      signupSuccessMsg.style.display = 'block';
+    }
+  } catch (err) {
+    signupErrorMsg.textContent = 'Não foi possível conectar ao servidor. Tente novamente em instantes.';
+    signupErrorMsg.style.display = 'block';
+  }
+
+  signupSubmitBtn.textContent = 'Criar acesso'; signupSubmitBtn.disabled = false;
+});
+
+document.getElementById('forgotForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  forgotErrorMsg.style.display = 'none';
+  forgotSuccessMsg.style.display = 'none';
+  forgotSubmitBtn.textContent = 'Enviando…'; forgotSubmitBtn.disabled = true;
+
+  const payload = {
+    email: document.getElementById('forgotEmail').value,
+    website: document.getElementById('forgotWebsite').value, // honeypot
+  };
+
+  try {
+    const res = await fetch(ADMIN_APP_URL + '/api/pacientes/forgot-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    const result = await res.json();
+
+    if (!res.ok || !result.success) {
+      forgotErrorMsg.textContent = result.message || 'Não foi possível processar o pedido. Tente novamente.';
+      forgotErrorMsg.style.display = 'block';
+    } else {
+      document.getElementById('forgotForm').reset();
+      document.getElementById('forgotForm').style.display = 'none';
+      forgotSuccessMsg.textContent = result.message;
+      forgotSuccessMsg.style.display = 'block';
+    }
+  } catch (err) {
+    forgotErrorMsg.textContent = 'Não foi possível conectar ao servidor. Tente novamente em instantes.';
+    forgotErrorMsg.style.display = 'block';
+  }
+
+  forgotSubmitBtn.textContent = 'Enviar nova senha'; forgotSubmitBtn.disabled = false;
+});
+
+(async function init() {
+  const { data } = await sb.auth.getSession();
+  if (data.session) { showLoggedIn(); fetchPatientPages(data.session.user.id); }
+})();
+</script>
+</body>
+</html>

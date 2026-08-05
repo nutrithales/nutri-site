@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./image-slot.js"></script>
+<style>
+@font-face{font-family:"Galano Grotesque Alt";src:url("./fonts/GalanoGrotesqueAltRegular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:"Galano Grotesque Alt";src:url("./fonts/GalanoGrotesqueAltMedium.otf") format("opentype");font-weight:500;font-style:normal;font-display:swap;}
+@font-face{font-family:"Galano Grotesque Alt";src:url("./fonts/GalanoGrotesqueAltSemiBold.otf") format("opentype");font-weight:600;font-style:normal;font-display:swap;}
+@font-face{font-family:"Galano Grotesque Alt";src:url("./fonts/GalanoGrotesqueAltBold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap;}
+@font-face{font-family:"Galano Grotesque Alt";src:url("./fonts/GalanoGrotesqueAltExtraBold.otf") format("opentype");font-weight:800;font-style:normal;font-display:swap;}
+@font-face{font-family:"Galano Grotesque Alt";src:url("./fonts/GalanoGrotesqueAltBlack.otf") format("opentype");font-weight:900;font-style:normal;font-display:swap;}
+body{margin:0;-webkit-font-smoothing:antialiased;background:#faf9f6;}
+a{color:inherit;text-decoration:none;}
+a:hover{color:#0fae62;}
+@keyframes whatsappPulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.5),0 8px 24px -6px rgba(0,0,0,.35);}70%{box-shadow:0 0 0 14px rgba(37,211,102,0),0 8px 24px -6px rgba(0,0,0,.35);}100%{box-shadow:0 0 0 0 rgba(37,211,102,0),0 8px 24px -6px rgba(0,0,0,.35);}}
+.nav-links{display:flex;gap:28px;align-items:center;}
+.mobile-menu-btn{display:none;}
+.mobile-nav{display:none;}
+@media (max-width:860px){
+  .nav-links{display:none;}
+  .mobile-menu-btn{display:flex;}
+  .hero-grid{grid-template-columns:1fr !important;gap:20px !important;}
+  .hero-photo{aspect-ratio:4/3 !important;}
+  .hero-cta{flex-direction:column;align-items:stretch !important;margin-top:16px !important;}
+  .hero-cta a{width:100%;padding:12px 18px !important;font-size:.88rem !important;}
+  .grid3{grid-template-columns:1fr !important;}
+  .grid4{grid-template-columns:1fr 1fr !important;}
+  .about-grid{grid-template-columns:1fr !important;}
+  .about-photo{width:180px !important;height:180px !important;margin:0 auto !important;}
+  .sect-pad{padding:52px 0 !important;}
+  .header-inner{min-height:64px !important;}
+  .header-logo{height:36px !important;}
+  .header-cta{padding:9px 16px !important;font-size:.85rem !important;}
+  .footer-grid{grid-template-columns:1fr !important;text-align:center;}
+  .footer-grid > div:first-child > div:last-child{justify-content:center;}
+  .fab-wa{width:52px !important;height:52px !important;bottom:16px !important;right:16px !important;}
+  .fab-wa svg{width:26px !important;height:26px !important;}
+  .hero-section{padding:0 !important;}
+  .hero-eyebrow{font-size:.72rem !important;letter-spacing:.08em !important;}
+  .hero-h1{font-size:1.9rem !important;letter-spacing:-0.04em !important;line-height:1.22 !important;}
+  .hero-sub{font-size:1.02rem !important;}
+  .google-badge{white-space:normal !important;text-align:center !important;font-size:.85rem !important;padding:10px 18px !important;line-height:1.3 !important;}
+}
+@media (max-width:520px){
+  .grid4{grid-template-columns:1fr !important;}
+}
+</style>
+</helmet>
+
+<div style="font-family:'Galano Grotesque Alt',system-ui,sans-serif;color:#14181a;background:#faf9f6;">
+
+<header style="position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid #e7ebe9;z-index:100;">
+  <div class="header-inner" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;min-height:76px;gap:14px;">
+    <a href="#" style="display:flex;align-items:center;flex:none;">
+      <img class="header-logo" src="./assets/logo-thales.png" alt="Nutri Thales" style="height:44px;width:auto;display:block;">
+    </a>
+    <a href="{{ waLink }}" target="_blank" rel="noopener" class="header-cta" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;border-radius:999px;font-weight:600;font-size:.95rem;background:#1adc7f;color:#04140c;box-shadow:0 8px 20px -8px rgba(26,220,127,.6);transition:transform .2s ease,box-shadow .2s ease;white-space:nowrap;" style-hover="background:#0fae62;color:#fff;transform:translateY(-2px);">Agendar Consulta Esportiva</a>
+  </div>
+</header>
+
+<section class="hero-section" style="background:linear-gradient(180deg,#f0f5f2,#faf9f6);padding:0;">
+  <div class="hero-photo" style="position:relative;overflow:hidden;aspect-ratio:16/7;width:100%;">
+    <img src="./assets/thales-hero-esportiva.jpg" alt="Thales correndo em prova de rua" style="width:100%;height:100%;object-fit:cover;object-position:center 35%;display:block;">
+  </div>
+  <div class="hero-grid" style="max-width:1160px;margin:0 auto;padding:48px 24px 64px;box-sizing:border-box;display:grid;grid-template-columns:1fr;gap:40px;">
+    <div>
+      <span class="hero-eyebrow" style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Nutrição esportiva e performance no Centro Cívico, Curitiba</span>
+      <h1 class="hero-h1" style="letter-spacing:-0.08em;font-size:clamp(2.2rem,4.2vw,3.2rem);font-weight:700;line-height:1.16;margin:0 0 .5em;color:#14181a;">Nutrição Esportiva e Performance: alcance seu próximo nível nos treinos</h1>
+      <p class="hero-sub" style="font-size:1.2rem;color:#5b6660;max-width:56ch;margin:0 0 1em;">Planejamento nutricional estratégico e periodizado para aumentar seu rendimento, acelerar a recuperação e otimizar sua composição corporal. Presencial no Centro Cívico ou online para Juvevê, Cabral, Alto da Glória, Ahú, Batel e toda Curitiba.</p>
+      <div class="hero-cta" style="display:flex;gap:14px;flex-wrap:wrap;margin-top:28px;">
+        <a href="{{ waLink }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:16px 28px;border-radius:999px;font-weight:600;font-size:1rem;background:#1adc7f;color:#04140c;box-shadow:0 8px 20px -8px rgba(26,220,127,.6);transition:transform .2s ease,box-shadow .2s ease,background .2s ease;" style-hover="background:#0fae62;color:#fff;transform:translateY(-2px);box-shadow:0 12px 26px -8px rgba(26,220,127,.7);">Agendar Consulta Esportiva</a>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:24px;font-size:.92rem;color:#5b6660;font-weight:500;">
+        <span><strong style="color:#14181a;">+1.000</strong> atletas e praticantes já treinaram comigo</span>
+        <span style="opacity:.5;">·</span>
+        <span>Presencial no Centro Cívico ou Online</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;">
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#fff;border:1px solid #e7ebe9;border-radius:999px;font-size:.85rem;font-weight:600;color:#14181a;">● Periodização de treino e dieta</span>
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#fff;border:1px solid #e7ebe9;border-radius:999px;font-size:.85rem;font-weight:600;color:#14181a;">● Avaliação física com BodyMetrix</span>
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#fff;border:1px solid #e7ebe9;border-radius:999px;font-size:.85rem;font-weight:600;color:#14181a;">● Suplementação baseada em evidências</span>
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#fff;border:1px solid #e7ebe9;border-radius:999px;font-size:.85rem;font-weight:600;color:#14181a;">● Hipertrofia sem perder rendimento</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:76px 0;">
+  <div style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="max-width:680px;margin:0 auto 44px;text-align:center;">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Seu treino evoluiu, sua alimentação não?</span>
+      <h2 style="letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0 0 .5em;color:#14181a;">O treino certo com a nutrição errada trava seu rendimento</h2>
+      <p style="font-size:1.08rem;color:#5b6660;margin:0;">É a falta de uma estratégia nutricional alinhada à sua planilha de treinos que impede o próximo nível.</p>
+    </div>
+    <div class="grid4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;">
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:28px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(20,24,26,.2);">
+        <div style="width:52px;height:52px;border-radius:50%;background:rgba(26,220,127,.14);display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+          <svg viewBox="0 0 24 24" style="width:24px;height:24px;stroke:#0fae62;fill:none;stroke-width:1.8;"><circle cx="12" cy="12" r="9"></circle><path stroke-linecap="round" d="M12 7v5l3.5 2"></path></svg>
+        </div>
+        <h3 style="font-size:1.12rem;margin:0 0 .4em;color:#14181a;">Platô de rendimento</h3>
+        <p style="margin:0;color:#5b6660;font-size:.98rem;">Você treina forte, mas sente que parou de evoluir, sem energia para os treinos mais pesados.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:28px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(20,24,26,.2);">
+        <div style="width:52px;height:52px;border-radius:50%;background:rgba(26,220,127,.14);display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+          <svg viewBox="0 0 24 24" style="width:24px;height:24px;stroke:#0fae62;fill:none;stroke-width:1.8;"><path stroke-linecap="round" stroke-linejoin="round" d="M4 15c3-6 6 6 9 0s6-6 8-2"></path><path stroke-linecap="round" d="M4 20h16"></path></svg>
+        </div>
+        <h3 style="font-size:1.12rem;margin:0 0 .4em;color:#14181a;">Recuperação lenta</h3>
+        <p style="margin:0;color:#5b6660;font-size:.98rem;">Dores e fadiga que demoram para passar, atrapalhando a consistência dos treinos.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:28px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(20,24,26,.2);">
+        <div style="width:52px;height:52px;border-radius:50%;background:rgba(26,220,127,.14);display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+          <svg viewBox="0 0 24 24" style="width:24px;height:24px;stroke:#0fae62;fill:none;stroke-width:1.8;"><rect x="5" y="4" width="14" height="17" rx="2"></rect><path stroke-linecap="round" d="M9 9h6M9 13h6M9 17h3"></path></svg>
+        </div>
+        <h3 style="font-size:1.12rem;margin:0 0 .4em;color:#14181a;">Dieta genérica de internet</h3>
+        <p style="margin:0;color:#5b6660;font-size:.98rem;">Planilhas prontas que não consideram sua modalidade, sua planilha de treino ou seus objetivos reais.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:28px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(20,24,26,.2);">
+        <div style="width:52px;height:52px;border-radius:50%;background:rgba(26,220,127,.14);display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+          <svg viewBox="0 0 24 24" style="width:24px;height:24px;stroke:#0fae62;fill:none;stroke-width:1.8;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21c-3-4-5-6-5-9a5 5 0 0 1 10 0c0 3-2 5-5 9z"></path><path stroke-linecap="round" d="M8 3c-1.5 3-1 4 0 5M16 3c1.5 3 1 4 0 5"></path></svg>
+        </div>
+        <h3 style="font-size:1.12rem;margin:0 0 .4em;color:#14181a;">Suplementação no achismo</h3>
+        <p style="margin:0;color:#5b6660;font-size:.98rem;">Suplementos tomados sem critério, sem saber se realmente fazem diferença no seu rendimento.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="metodo" style="padding:76px 0;background:#f0f5f2;">
+  <div style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="max-width:680px;margin:0 auto 44px;text-align:center;">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Método Nutri Thales</span>
+      <h2 style="letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0 0 .5em;color:#14181a;">Nutrição periodizada junto com o seu treino, não separada dele</h2>
+      <p style="font-size:1.08rem;color:#5b6660;margin:0;">Ciência, estratégia e acompanhamento próximo para você treinar mais forte e se recuperar mais rápido.</p>
+    </div>
+    <div class="grid4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;">
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:28px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);">
+        <div style="width:52px;height:52px;border-radius:50%;background:rgba(26,220,127,.14);display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+          <svg viewBox="0 0 24 24" style="width:24px;height:24px;stroke:#0fae62;fill:none;stroke-width:1.8;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21c-4.5 0-8-3.5-8-8 0-5 4-9 8-9s8 4 8 9c0 4.5-3.5 8-8 8z"></path><path stroke-linecap="round" d="M12 4v17"></path></svg>
+        </div>
+        <h3 style="font-size:1.12rem;margin:0 0 .4em;color:#14181a;">Periodização de nutrientes</h3>
+        <p style="margin:0;color:#5b6660;font-size:.98rem;">Carboidratos e demais nutrientes ajustados de acordo com sua planilha de treinos.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:28px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);">
+        <div style="width:52px;height:52px;border-radius:50%;background:rgba(26,220,127,.14);display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+          <svg viewBox="0 0 24 24" style="width:24px;height:24px;stroke:#0fae62;fill:none;stroke-width:1.8;"><rect x="7" y="2" width="10" height="20" rx="2"></rect><path stroke-linecap="round" d="M11 18h2"></path></svg>
+        </div>
+        <h3 style="font-size:1.12rem;margin:0 0 .4em;color:#14181a;">Pré, durante e pós-treino</h3>
+        <p style="margin:0;color:#5b6660;font-size:.98rem;">Estratégias precisas para cada momento do treino, incluindo suplementação baseada em evidências.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:28px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);">
+        <div style="width:52px;height:52px;border-radius:50%;background:rgba(26,220,127,.14);display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+          <svg viewBox="0 0 24 24" style="width:24px;height:24px;stroke:#0fae62;fill:none;stroke-width:1.8;"><path stroke-linecap="round" stroke-linejoin="round" d="M9 3h6l1 3H8l1-3z"></path><rect x="6" y="6" width="12" height="15" rx="2"></rect><path stroke-linecap="round" d="M9 12h6M9 16h4"></path></svg>
+        </div>
+        <h3 style="font-size:1.12rem;margin:0 0 .4em;color:#14181a;">Plano no aplicativo</h3>
+        <p style="margin:0;color:#5b6660;font-size:.98rem;">Receba seu plano e ajustes direto no celular, com substituições sempre que precisar.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:28px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);">
+        <div style="width:52px;height:52px;border-radius:50%;background:rgba(26,220,127,.14);display:flex;align-items:center;justify-content:center;margin-bottom:18px;">
+          <svg viewBox="0 0 24 24" style="width:24px;height:24px;stroke:#0fae62;fill:none;stroke-width:1.8;"><path stroke-linecap="round" stroke-linejoin="round" d="M3 17l6-6 4 4 8-8"></path><path stroke-linecap="round" stroke-linejoin="round" d="M15 7h6v6"></path></svg>
+        </div>
+        <h3 style="font-size:1.12rem;margin:0 0 .4em;color:#14181a;">Evolução de composição corporal</h3>
+        <p style="margin:0;color:#5b6660;font-size:.98rem;">Hipertrofia e definição sem perder rendimento nos treinos.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:76px 0;">
+  <div style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="max-width:680px;margin:0 auto 44px;text-align:center;">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Como funciona</span>
+      <h2 style="letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0;color:#14181a;">Do primeiro encontro aos ajustes que sustentam sua performance</h2>
+    </div>
+    <div class="grid4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px;">
+      <div style="position:relative;padding:6px 0 6px 64px;">
+        <div style="position:absolute;left:0;top:0;width:44px;height:44px;border-radius:50%;background:#14181a;color:#1adc7f;font-weight:700;font-size:1.1rem;display:flex;align-items:center;justify-content:center;">1</div>
+        <h3 style="font-size:1.15rem;margin:0 0 .4em;color:#14181a;">Anamnese esportiva</h3>
+        <p style="margin:0;color:#5b6660;">Entendemos sua modalidade, sua planilha de treinos, seus objetivos e sua rotina.</p>
+      </div>
+      <div style="position:relative;padding:6px 0 6px 64px;">
+        <div style="position:absolute;left:0;top:0;width:44px;height:44px;border-radius:50%;background:#14181a;color:#1adc7f;font-weight:700;font-size:1.1rem;display:flex;align-items:center;justify-content:center;">2</div>
+        <h3 style="font-size:1.15rem;margin:0 0 .4em;color:#14181a;">Avaliação física e metabólica</h3>
+        <p style="margin:0;color:#5b6660;">Uma leitura completa da sua composição corporal para embasar a periodização.</p>
+      </div>
+      <div style="position:relative;padding:6px 0 6px 64px;">
+        <div style="position:absolute;left:0;top:0;width:44px;height:44px;border-radius:50%;background:#14181a;color:#1adc7f;font-weight:700;font-size:1.1rem;display:flex;align-items:center;justify-content:center;">3</div>
+        <h3 style="font-size:1.15rem;margin:0 0 .4em;color:#14181a;">Plano nutricional periodizado no app</h3>
+        <p style="margin:0;color:#5b6660;">Você recebe uma estratégia alinhada aos seus treinos, prática de seguir no dia a dia.</p>
+      </div>
+      <div style="position:relative;padding:6px 0 6px 64px;">
+        <div style="position:absolute;left:0;top:0;width:44px;height:44px;border-radius:50%;background:#14181a;color:#1adc7f;font-weight:700;font-size:1.1rem;display:flex;align-items:center;justify-content:center;">4</div>
+        <h3 style="font-size:1.15rem;margin:0 0 .4em;color:#14181a;">Acompanhamento e suporte</h3>
+        <p style="margin:0;color:#5b6660;">Ajustes contínuos conforme sua evolução, para sustentar seu ganho de performance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sobre" style="padding:76px 0;background:#f0f5f2;">
+  <div class="about-grid" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;display:grid;grid-template-columns:.8fr 1.2fr;gap:48px;align-items:center;">
+    <div class="about-photo" style="position:relative;border-radius:50%;overflow:hidden;width:220px;height:220px;box-shadow:0 10px 30px -12px rgba(20,24,26,.15);">
+      <img src="./assets/thales-about.jpg" alt="Thales Augusto Costa Rosa" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+    <div>
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Quem te acompanha</span>
+      <h2 style="letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.6rem);margin:0 0 .5em;color:#14181a;">Thales Augusto Costa Rosa</h2>
+      <p style="font-size:1.08rem;color:#5b6660;">Nutricionista e profissional de Educação Física, pós-graduado em Treinamento Desportivo, com foco em nutrição esportiva, performance e composição corporal.</p>
+      <p style="font-size:1.08rem;color:#5b6660;">Meu trabalho é ajudar corredores, praticantes de musculação, Crossfit e esportes de endurance a alinhar a alimentação com a planilha de treino, sem achismos e sem dietas genéricas.</p>
+      <p style="font-size:1.08rem;color:#5b6660;">Aqui você recebe uma estratégia periodizada, com pré, durante e pós-treino definidos, suplementação baseada em evidências e ajustes constantes conforme sua evolução.</p>
+      <a href="{{ waLink }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;background:#1adc7f;color:#04140c;box-shadow:0 8px 20px -8px rgba(26,220,127,.6);transition:transform .2s ease,box-shadow .2s ease,background .2s ease;margin-top:8px;" style-hover="background:#0fae62;color:#fff;transform:translateY(-2px);">Agendar Consulta Esportiva</a>
+    </div>
+  </div>
+</section>
+
+<section id="depoimentos" style="padding:76px 0;">
+  <div style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="max-width:680px;margin:0 auto 44px;text-align:center;">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">O que dizem</span>
+      <h2 style="letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0;color:#14181a;">Quem já evoluiu a performance com o Thales</h2>
+    </div>
+    <div class="grid3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px;">
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);display:flex;flex-direction:column;gap:16px;">
+        <div style="width:46px;height:46px;border-radius:50%;background:rgba(26,220,127,.15);color:#0fae62;font-weight:700;font-size:.92rem;display:flex;align-items:center;justify-content:center;">CM</div>
+        <p style="font-size:1.05rem;color:#14181a;font-style:italic;margin:0;">"Consegui evoluir meu rendimento na corrida e ainda ganhei massa magra. A dieta é super possível, personalizada e encaixa direitinho no meu ciclo de treinos."</p>
+      </div>
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);display:flex;flex-direction:column;gap:16px;">
+        <div style="width:46px;height:46px;border-radius:50%;background:rgba(26,220,127,.15);color:#0fae62;font-weight:700;font-size:.92rem;display:flex;align-items:center;justify-content:center;">KM</div>
+        <p style="font-size:1.05rem;color:#14181a;font-style:italic;margin:0;">"Profissional competente, atencioso e dedicado! Oferece um atendimento nutricional e desportivo personalizado e diferenciado, trazendo ótimos resultados de hipertrofia e definição em pouco tempo! Superou minhas expectativas, recomendo!"</p>
+      </div>
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);display:flex;flex-direction:column;gap:16px;">
+        <div style="width:46px;height:46px;border-radius:50%;background:rgba(26,220,127,.15);color:#0fae62;font-weight:700;font-size:.92rem;display:flex;align-items:center;justify-content:center;">HC</div>
+        <p style="font-size:1.05rem;color:#14181a;font-style:italic;margin:0;">"Minha recuperação entre os treinos melhorou muito e finalmente saí do platô. O Thales é super atencioso, educado, sempre disposto a tirar as dúvidas."</p>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:16px;background:#14181a;color:#fff;border-radius:22px;padding:28px 32px;margin-top:36px;font-size:1.15rem;text-align:center;">
+      <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;"><strong style="color:#1adc7f;font-size:1.5rem;">+1.000 pessoas</strong> já treinaram comigo!</div>
+      <a href="https://www.google.com/maps/search/?api=1&query=Nutricionista+Thales+Rosa+Centro+C%C3%ADvico+Curitiba" target="_blank" rel="noopener" class="google-badge" style="display:inline-flex;align-items:baseline;gap:8px;color:#fff;font-weight:600;font-size:.82rem;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:10px 18px;transition:transform .2s ease,background .2s ease;" style-hover="background:rgba(255,255,255,.16);transform:translateY(-2px);">
+        <svg viewBox="0 0 24 24" style="width:16px;height:16px;flex:none;position:relative;top:2px;" aria-hidden="true"><path fill="#1adc7f" d="M12 .5l3.09 6.26L22 7.77l-5 4.87 1.18 6.88L12 16.27l-6.18 3.25L7 12.64 2 7.77l6.91-1.01z"></path></svg>
+        <span>Avaliações 5 estrelas no Google</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="padding:76px 0;background:#f0f5f2;">
+  <div style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="max-width:680px;margin:0 auto 44px;text-align:center;">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Dúvidas frequentes</span>
+      <h2 style="letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0 0 .5em;color:#14181a;">Informação clara para evoluir seu rendimento</h2>
+      <p style="font-size:1.08rem;color:#5b6660;margin:0;">Se ainda restar alguma dúvida, é só chamar antes de agendar.</p>
+    </div>
+    <div style="max-width:760px;margin:0 auto;background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:8px 24px;">
+      <sc-for list="{{ faqs }}" as="faq" hint-placeholder-count="5">
+        <div style="border-bottom:1px solid #e7ebe9;">
+          <div onClick="{{ faq.toggle }}" style="cursor:pointer;padding:20px 0;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:16px;color:#14181a;font-size:1.02rem;">
+            <span>{{ faq.q }}</span>
+            <span style="flex:none;width:26px;height:26px;border-radius:50%;background:#f0f5f2;display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:#0fae62;">{{ faq.symbol }}</span>
+          </div>
+          <sc-if value="{{ faq.open }}" hint-placeholder-val="{{ false }}">
+            <p style="padding:0 0 20px;margin:0;color:#5b6660;font-size:1.02rem;">{{ faq.a }}</p>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section style="padding:76px 0;background:#14181a;">
+  <div style="max-width:760px;margin:0 auto;padding:0 24px;box-sizing:border-box;text-align:center;">
+    <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#1adc7f;display:block;margin-bottom:12px;">Chega de treinar no escuro</span>
+    <h2 style="letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0 0 .5em;color:#fff;">Vamos alinhar sua nutrição ao seu treino</h2>
+    <p style="font-size:1.08rem;color:rgba(255,255,255,.75);margin:0 0 32px;">Agende sua consulta esportiva com o Thales pelo WhatsApp e comece com uma estratégia periodizada feita para sua modalidade e seus objetivos.</p>
+    <a href="{{ waLink }}" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:18px 32px;border-radius:999px;font-weight:600;font-size:1.05rem;background:#1adc7f;color:#04140c;box-shadow:0 8px 20px -8px rgba(26,220,127,.5);transition:transform .2s ease,box-shadow .2s ease,background .2s ease;" style-hover="background:#0fae62;color:#fff;transform:translateY(-2px);box-shadow:0 12px 26px -8px rgba(26,220,127,.6);">Agendar Consulta Esportiva no WhatsApp</a>
+  </div>
+</section>
+
+<footer style="background:#14181a;color:#fff;border-top:1px solid rgba(255,255,255,.1);">
+  <div class="grid4 footer-grid" style="max-width:1160px;margin:0 auto;padding:56px 24px;box-sizing:border-box;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:32px;">
+    <div>
+      <img src="./assets/logo-thales-white.png" alt="Nutri Thales" style="height:72px;width:auto;display:block;">
+    </div>
+    <div>
+      <h3 style="font-size:.95rem;text-transform:uppercase;letter-spacing:.08em;color:#1adc7f;margin-bottom:14px;">Navegação</h3>
+      <a href="#metodo" style="display:block;color:rgba(255,255,255,.78);padding:5px 0;">Método</a>
+      <a href="#sobre" style="display:block;color:rgba(255,255,255,.78);padding:5px 0;">Sobre</a>
+      <a href="#depoimentos" style="display:block;color:rgba(255,255,255,.78);padding:5px 0;">Depoimentos</a>
+      <a href="#faq" style="display:block;color:rgba(255,255,255,.78);padding:5px 0;">FAQ</a>
+    </div>
+    <div>
+      <h3 style="font-size:.95rem;text-transform:uppercase;letter-spacing:.08em;color:#1adc7f;margin-bottom:14px;">Atendimento</h3>
+      <p style="color:rgba(255,255,255,.78);margin:0 0 10px;">Avenida Cândido de Abreu, 526, sala 1108, Torre B<br>Curitiba, Paraná</p>
+      <p style="color:rgba(255,255,255,.78);margin:0 0 10px;">Segunda a sexta, das 8h às 19h</p>
+      <a href="https://www.google.com/maps/search/?api=1&query=Nutricionista+Thales+Rosa+Centro+C%C3%ADvico+Curitiba" target="_blank" rel="noopener" style="display:inline-flex;align-items:baseline;gap:6px;color:#1adc7f;font-weight:600;font-size:.92rem;margin-top:4px;">
+        <svg viewBox="0 0 24 24" style="width:14px;height:14px;flex:none;position:relative;top:2px;" aria-hidden="true"><path fill="#1adc7f" d="M12 .5l3.09 6.26L22 7.77l-5 4.87 1.18 6.88L12 16.27l-6.18 3.25L7 12.64 2 7.77l6.91-1.01z"></path></svg>
+        <span>Avaliações 5 estrelas no Google</span>
+      </a>
+    </div>
+    <div>
+      <div style="display:flex;gap:12px;">
+        <a href="{{ waLink }}" target="_blank" rel="noopener" aria-label="Falar no WhatsApp" style="width:44px;height:44px;border-radius:50%;background:#0fae62;display:flex;align-items:center;justify-content:center;transition:transform .2s ease;" style-hover="transform:translateY(-2px);">
+          <svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:#fff;" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.64-1.03-5.12-2.9-6.99A9.82 9.82 0 0 0 12.04 2zm0 18.1h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.35c0-4.53 3.69-8.22 8.22-8.22 2.2 0 4.26.86 5.82 2.4a8.17 8.17 0 0 1 2.41 5.82c0 4.53-3.7 8.21-8.21 8.21zm4.5-6.15c-.25-.12-1.47-.72-1.7-.81-.23-.08-.4-.12-.56.13-.17.25-.65.81-.79.97-.15.17-.29.19-.54.06-.25-.12-1.04-.38-1.99-1.22-.73-.66-1.23-1.46-1.37-1.71-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.44.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.36-.77-1.86-.2-.49-.4-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08 0 1.22.89 2.4 1.01 2.57.12.17 1.76 2.69 4.27 3.77.6.26 1.06.41 1.43.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.28z"></path></svg>
+        </a>
+        <a href="https://www.instagram.com/nutri.thales" target="_blank" rel="noopener" aria-label="Ver Instagram" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;transition:transform .2s ease,background .2s ease;" style-hover="transform:translateY(-2px);background:rgba(255,255,255,.18);">
+          <svg viewBox="0 0 24 24" style="width:20px;height:20px;" aria-hidden="true" stroke="#fff" fill="none" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"></circle></svg>
+        </a>
+        <a href="mailto:contato@nutrithales.com.br" aria-label="Enviar e-mail" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;transition:transform .2s ease,background .2s ease;" style-hover="transform:translateY(-2px);background:rgba(255,255,255,.18);">
+          <svg viewBox="0 0 24 24" style="width:20px;height:20px;" aria-hidden="true" stroke="#fff" fill="none" stroke-width="1.8"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path stroke-linecap="round" stroke-linejoin="round" d="M4 7l8 6 8-6"></path></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="{{ waLink }}" target="_blank" rel="noopener" aria-label="Falar no WhatsApp" class="fab-wa" style="position:fixed;bottom:24px;right:24px;width:60px;height:60px;border-radius:50%;background:#0fae62;display:flex;align-items:center;justify-content:center;z-index:999;animation:{{ pulseAnim }};" style-hover="transform:scale(1.06);">
+  <svg viewBox="0 0 24 24" style="width:30px;height:30px;fill:#fff;" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.64-1.03-5.12-2.9-6.99A9.82 9.82 0 0 0 12.04 2zm0 18.1h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.35c0-4.53 3.69-8.22 8.22-8.22 2.2 0 4.26.86 5.82 2.4a8.17 8.17 0 0 1 2.41 5.82c0 4.53-3.7 8.21-8.21 8.21zm4.5-6.15c-.25-.12-1.47-.72-1.7-.81-.23-.08-.4-.12-.56.13-.17.25-.65.81-.79.97-.15.17-.29.19-.54.06-.25-.12-1.04-.38-1.99-1.22-.73-.66-1.23-1.46-1.37-1.71-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.44.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.36-.77-1.86-.2-.49-.4-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08 0 1.22.89 2.4 1.01 2.57.12.17 1.76 2.69 4.27 3.77.6.26 1.06.41 1.43.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.28z"></path></svg>
+</a>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;pulseWhatsapp&quot;: {&quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Comportamento&quot;}}">const WA_NUMBER = '5541987347625';
+const WA_MSG = 'Olá! Vim pela página de Nutrição Esportiva e quero agendar uma Consulta Esportiva.';
+
+class Component extends DCLogic {
+  state = { openFaq: 0, menuOpen: false };
+
+  toggleFaq(i) {
+    this.setState(s => ({ openFaq: s.openFaq === i ? -1 : i }));
+  }
+
+  toggleMenu() {
+    this.setState(s => ({ menuOpen: !s.menuOpen }));
+  }
+
+  closeMenu() {
+    this.setState({ menuOpen: false });
+  }
+
+  renderVals() {
+    const waLink = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(WA_MSG);
+
+    const faqData = [
+      { q: 'A dieta muda de acordo com meu ciclo de treino?', a: 'Sim. A alimentação é periodizada junto com sua planilha, com ajustes nos dias de treino mais intenso, recuperação e competição.' },
+      { q: 'Vocês indicam quais suplementos tomar?', a: 'Sim, a suplementação é sempre baseada em evidências científicas e ajustada aos seus objetivos, sem indicações genéricas.' },
+      { q: 'O atendimento on-line funciona da mesma forma?', a: 'Sim. O acompanhamento mantém a mesma atenção e profundidade. A diferença é que a consulta acontece por videochamada, de onde você estiver.' },
+      { q: 'Consigo ganhar massa magra e ficar mais definido ao mesmo tempo?', a: 'Sim, com uma estratégia nutricional periodizada é possível evoluir a composição corporal, hipertrofia e definição, sem abrir mão do rendimento nos treinos.' },
+      { q: 'O plano é feito na hora da consulta?', a: 'A anamnese e avaliação acontecem na consulta, e o plano nutricional periodizado é entregue no aplicativo logo em seguida, já alinhado à sua planilha de treino.' }
+    ];
+
+    const faqs = faqData.map((f, i) => ({
+      ...f,
+      open: i === this.state.openFaq,
+      symbol: i === this.state.openFaq ? '−' : '+',
+      toggle: () => this.toggleFaq(i)
+    }));
+
+    const pulseAnim = (this.props.pulseWhatsapp ?? true) ? 'whatsappPulse 2.4s infinite' : 'none';
+
+    return {
+      waLink, faqs, pulseAnim,
+      menuOpen: this.state.menuOpen,
+      toggleMenu: () => this.toggleMenu(),
+      closeMenu: () => this.closeMenu()
+    };
+  }
+}</script>
+</body>
+</html>
