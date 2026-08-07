@@ -37,6 +37,22 @@ button[type="submit"]:hover{background:#0fae62 !important;color:#fff !important;
 .hp-field{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
 </style>
 </head>
+<script>
+function gtag_report_conversion(url) {
+  var callback = function () {
+    if (typeof(url) != 'undefined') {
+      window.location = url;
+    }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-18088365237/ZaQICKLen6ccELWZmrFD',
+      'value': 1.0,
+      'currency': 'BRL',
+      'event_callback': callback
+  });
+  return false;
+}
+</script>
 <body>
 <section style="padding:100px 0;text-align:center;">
   <div style="max-width:420px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
