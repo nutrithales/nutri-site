@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<script src="image-slot.js"></script>
+<style>
+@font-face{font-family:"Galano Grotesque Alt";src:url("assets/fonts/GalanoGrotesqueAltRegular.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:"Galano Grotesque Alt";src:url("assets/fonts/GalanoGrotesqueAltMedium.otf") format("opentype");font-weight:500;font-style:normal;font-display:swap;}
+@font-face{font-family:"Galano Grotesque Alt";src:url("assets/fonts/GalanoGrotesqueAltSemiBold.otf") format("opentype");font-weight:600;font-style:normal;font-display:swap;}
+@font-face{font-family:"Galano Grotesque Alt";src:url("assets/fonts/GalanoGrotesqueAltBold.otf") format("opentype");font-weight:700;font-style:normal;font-display:swap;}
+@font-face{font-family:"Galano Grotesque Alt";src:url("assets/fonts/GalanoGrotesqueAltExtraBold.otf") format("opentype");font-weight:800;font-style:normal;font-display:swap;}
+@font-face{font-family:"Galano Grotesque Alt";src:url("assets/fonts/GalanoGrotesqueAltBlack.otf") format("opentype");font-weight:900;font-style:normal;font-display:swap;}
+body{margin:0;font-family:"Galano Grotesque Alt",system-ui,sans-serif;background:#faf9f6;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+a:hover{color:#0fae62;}
+@keyframes whatsappPulse{0%{box-shadow:0 0 0 0 rgba(37,211,102,.5),0 8px 24px -6px rgba(0,0,0,.35);}70%{box-shadow:0 0 0 14px rgba(37,211,102,0),0 8px 24px -6px rgba(0,0,0,.35);}100%{box-shadow:0 0 0 0 rgba(37,211,102,0),0 8px 24px -6px rgba(0,0,0,.35);}}
+.mcta{display:flex;}
+@media (min-width:641px){.mcta{display:none;}}
+.hamburger{display:none;}
+.nav-mobile-panel{display:none;}
+html{scroll-behavior:smooth;}
+[data-reveal]{opacity:0;transform:translateY(28px);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1);}
+[data-reveal].is-visible{opacity:1;transform:none;}
+@keyframes pageIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+.page-in{animation:pageIn .55s cubic-bezier(.16,1,.3,1);}
+@keyframes navSlide{from{opacity:0;transform:translateY(-8px);}to{opacity:1;transform:none;}}
+@media (max-width:640px){
+  .nav-desktop{display:none !important;}
+  .hamburger{display:flex !important;}
+  .sec{padding-top:44px !important;padding-bottom:44px !important;}
+  .sec-hero{padding-top:40px !important;padding-bottom:36px !important;}
+  .grid3, .stk{grid-template-columns:1fr !important;gap:24px !important;}
+  .cta{width:100% !important;padding:17px 22px !important;font-size:1.05rem !important;}
+  .cta-row{flex-direction:column !important;}
+  .cta-row .cta{width:100% !important;}
+  .footer-grid{grid-template-columns:1fr !important;text-align:center;gap:36px !important;}
+  .mobile-trim{display:none !important;}
+  h1{font-size:2.1rem !important;}
+  h2{font-size:1.7rem !important;}
+}
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MedicalBusiness",
+  "name": "Nutricionista Thales Rosa",
+  "image": "assets/logo.png",
+  "url": "https://www.nutrithales.com.br",
+  "telephone": "+5541987347625",
+  "priceRange": "$$",
+  "medicalSpecialty": "Nutrition",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Avenida Cândido de Abreu, 526, sala 1108, Torre B",
+    "addressLocality": "Curitiba",
+    "addressRegion": "PR",
+    "addressCountry": "BR"
+  },
+  "openingHoursSpecification": [
+    {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"], "opens": "08:00", "closes": "19:00"}
+  ],
+  "areaServed": [
+    {"@type": "Place", "name": "Centro Cívico, Curitiba"},
+    {"@type": "Place", "name": "Juvevê, Curitiba"},
+    {"@type": "Place", "name": "Cabral, Curitiba"},
+    {"@type": "Place", "name": "Ahú, Curitiba"},
+    {"@type": "Place", "name": "Alto da Glória, Curitiba"},
+    {"@type": "Place", "name": "Bom Retiro, Curitiba"},
+    {"@type": "Place", "name": "São Lourenço, Curitiba"},
+    {"@type": "Place", "name": "Centro, Curitiba"},
+    {"@type": "Place", "name": "Batel, Curitiba"}
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Serviços de nutrição",
+    "itemListElement": [
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Emagrecimento"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Nutrição Esportiva"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Reeducação Alimentar"}},
+      {"@type": "Offer", "itemOffered": {"@type": "Service", "name": "Acompanhamento Personalizado"}}
+    ]
+  }
+}
+</script>
+</helmet>
+
+<div style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;display:none;"></div>
+
+<header style="position:sticky;top:0;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid #e7ebe9;z-index:100;">
+  <div style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;height:76px;gap:20px;flex-wrap:wrap;">
+    <a href="#" onClick="{{ goHome }}" aria-label="Nutricionista Thales Rosa, página inicial" style="display:flex;">
+      <img src="assets/logo.png" alt="Nutricionista Thales Rosa" height="54">
+    </a>
+    <nav class="nav-desktop" style="display:flex;align-items:center;gap:26px;font-weight:600;flex-wrap:wrap;">
+      <a href="#" onClick="{{ goHome }}" style="opacity:{{ navOp.home }};">Início</a>
+      <a href="#" onClick="{{ goSobre }}" style="opacity:{{ navOp.sobre }};">Sobre</a>
+      <a href="#" onClick="{{ goAcompanhamento }}" style="opacity:{{ navOp.acompanhamento }};">Acompanhamento</a>
+      <a href="#" onClick="{{ goPlanos }}" style="opacity:{{ navOp.planos }};">Planos</a>
+      <a href="#" onClick="{{ goContato }}" style="opacity:{{ navOp.contato }};">Contato</a>
+      <a href="#" onClick="{{ goAreaPaciente }}" style="display:inline-flex;align-items:center;gap:6px;border:2px solid #14181a;color:#14181a;border-radius:999px;padding:8px 16px;font-weight:600;font-size:.88rem;transition:background .2s ease,color .2s ease;" style-hover="background:#14181a;color:#fff;">Área do paciente</a>
+      <a href="#" onClick="{{ goAgendamento }}" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 20px;border-radius:999px;font-weight:600;font-size:.98rem;border:2px solid transparent;background:#1adc7f;color:#04140c;box-shadow:0 8px 20px -8px rgba(26,220,127,.6);transition:transform .2s ease,box-shadow .2s ease,background .2s ease;" style-hover="background:#0fae62;color:#fff;transform:translateY(-2px);box-shadow:0 12px 26px -8px rgba(26,220,127,.7);">Agendar consulta</a>
+    </nav>
+    <button onClick="{{ toggleNav }}" class="hamburger" aria-label="Abrir menu" style="width:48px;height:48px;align-items:center;justify-content:center;border:none;background:transparent;cursor:pointer;">
+      <svg viewBox="0 0 24 24" style="width:26px;height:26px;" stroke="#14181a" fill="none" stroke-width="2"><path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+  <sc-if value="{{ navOpen }}" hint-placeholder-val="{{ false }}">
+    <nav style="display:flex;flex-direction:column;border-top:1px solid #e7ebe9;padding:8px 24px 24px;gap:2px;animation:navSlide .3s cubic-bezier(.16,1,.3,1);">
+      <a href="#" onClick="{{ goHome }}" style="padding:16px 4px;font-weight:600;font-size:1.1rem;color:#14181a;border-bottom:1px solid #eef1ef;">Início</a>
+      <a href="#" onClick="{{ goSobre }}" style="padding:16px 4px;font-weight:600;font-size:1.1rem;color:#14181a;border-bottom:1px solid #eef1ef;">Sobre</a>
+      <a href="#" onClick="{{ goAcompanhamento }}" style="padding:16px 4px;font-weight:600;font-size:1.1rem;color:#14181a;border-bottom:1px solid #eef1ef;">Acompanhamento</a>
+      <a href="#" onClick="{{ goPlanos }}" style="padding:16px 4px;font-weight:600;font-size:1.1rem;color:#14181a;border-bottom:1px solid #eef1ef;">Planos</a>
+      <a href="#" onClick="{{ goContato }}" style="padding:16px 4px;font-weight:600;font-size:1.1rem;color:#14181a;border-bottom:1px solid #eef1ef;">Contato</a>
+      <a href="#" onClick="{{ goAreaPaciente }}" style="padding:16px 4px;font-weight:600;font-size:1.1rem;color:#14181a;border-bottom:1px solid #eef1ef;">Área do paciente</a>
+      <a href="#" onClick="{{ goAgendamento }}" style="display:flex;align-items:center;justify-content:center;margin-top:14px;padding:16px 20px;border-radius:999px;font-weight:700;font-size:1.05rem;background:#1adc7f;color:#04140c;">Agendar consulta</a>
+    </nav>
+  </sc-if>
+</header>
+
+<main>
+
+<sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+<section class="page-in" style="background:linear-gradient(180deg,#f0f5f2,#faf9f6);">
+  <div style="position:relative;width:100%;aspect-ratio:16/7;min-height:320px;overflow:hidden;">
+    <img src="assets/foto-thales-hero-full.jpg" alt="Thales Rosa, nutricionista, com brócolis na cozinha" style="width:100%;height:100%;object-fit:cover;display:block;">
+    <div style="position:absolute;top:16px;right:16px;background:#14181a;color:#fff;border-radius:8px;padding:10px 14px;font-size:.8rem;max-width:190px;box-shadow:0 8px 20px -8px rgba(0,0,0,.35);"><strong style="display:block;color:#1adc7f;font-size:.82rem;">Estratégia baseada em evidências</strong>Sem soluções prontas</div>
+  </div>
+  <div style="max-width:1160px;margin:0 auto;padding:56px 24px 56px;box-sizing:border-box;">
+    <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Nutricionista no Centro Cívico, Curitiba</span>
+    <h1 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(2.3rem,4.4vw,3.4rem);font-weight:700;line-height:1.18;margin:0 0 .5em;color:#14181a;max-width:900px;">Nutricionista no Centro Cívico, Curitiba | Emagrecimento e Nutrição Esportiva</h1>
+    <p style="font-size:1.2rem;color:#5b6660;max-width:60ch;margin:0 0 1em;">Acompanhamento individualizado para emagrecimento, recomposição corporal e performance, presencial no Centro Cívico ou online para toda Curitiba.</p>
+    <div class="cta-row" style="display:flex;gap:14px;flex-wrap:wrap;margin-top:32px;">
+      <a href="#" onClick="{{ goAgendamento }}" class="cta" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;border:2px solid transparent;background:#1adc7f;color:#04140c;box-shadow:0 8px 20px -8px rgba(26,220,127,.6);transition:transform .2s ease,box-shadow .2s ease,background .2s ease;" style-hover="background:#0fae62;color:#fff;transform:translateY(-2px);box-shadow:0 12px 26px -8px rgba(26,220,127,.7);">Quero agendar minha consulta</a>
+      <a href="#" onClick="{{ goAcompanhamento }}" class="cta" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;border:2px solid #14181a;color:#14181a;transition:transform .2s ease,background .2s ease,color .2s ease;" style-hover="background:#14181a;color:#fff;transform:translateY(-2px);">Como funciona o acompanhamento</a>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:22px;font-size:.92rem;color:#5b6660;font-weight:500;">
+      <span><strong style="color:#14181a;">+1.000</strong> pacientes atendidos</span>
+      <span style="opacity:.5;">·</span>
+      <span>Presencial no Centro Cívico ou Online</span>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;">
+      <span style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#fff;border:1px solid #e7ebe9;border-radius:999px;font-size:.85rem;font-weight:600;color:#14181a;">● Presencial em Curitiba</span>
+      <span style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#fff;border:1px solid #e7ebe9;border-radius:999px;font-size:.85rem;font-weight:600;color:#14181a;">● Atendimento on-line</span>
+      <span style="display:inline-flex;align-items:center;gap:6px;padding:7px 14px;background:#fff;border:1px solid #e7ebe9;border-radius:999px;font-size:.85rem;font-weight:600;color:#14181a;">● Estratégia individualizada</span>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;">
+  <div data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="max-width:680px;margin:0 auto 44px;text-align:center;">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Um processo feito para você</span>
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0 0 .5em;color:#14181a;">Comer melhor não precisa significar viver em guerra com a comida.</h2>
+      <p style="font-size:1.08rem;color:#5b6660;margin:0;">O acompanhamento combina ciência, estratégia e contexto para construir uma rotina que você consiga viver de verdade.</p>
+    </div>
+    <div class="grid3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px;">
+      <div style="position:relative;padding:6px 0 6px 64px;">
+        <div style="position:absolute;left:0;top:0;width:44px;height:44px;border-radius:50%;background:#14181a;color:#1adc7f;font-weight:700;font-size:1.1rem;display:flex;align-items:center;justify-content:center;">1</div>
+        <h3 style="font-size:1.2rem;margin:0 0 .4em;color:#14181a;">Objetivos claros</h3><p style="margin:0;color:#5b6660;">Entendemos o que você busca e quais mudanças realmente terão impacto no seu processo.</p>
+      </div>
+      <div style="position:relative;padding:6px 0 6px 64px;">
+        <div style="position:absolute;left:0;top:0;width:44px;height:44px;border-radius:50%;background:#14181a;color:#1adc7f;font-weight:700;font-size:1.1rem;display:flex;align-items:center;justify-content:center;">2</div>
+        <h3 style="font-size:1.2rem;margin:0 0 .4em;color:#14181a;">Plano aplicável</h3><p style="margin:0;color:#5b6660;">A estratégia considera sua rotina, preferências, treinos, horários e desafios do dia a dia.</p>
+      </div>
+      <div style="position:relative;padding:6px 0 6px 64px;">
+        <div style="position:absolute;left:0;top:0;width:44px;height:44px;border-radius:50%;background:#14181a;color:#1adc7f;font-weight:700;font-size:1.1rem;display:flex;align-items:center;justify-content:center;">3</div>
+        <h3 style="font-size:1.2rem;margin:0 0 .4em;color:#14181a;">Evolução acompanhada</h3><p style="margin:0;color:#5b6660;">Os ajustes acontecem conforme sua resposta, tornando o processo mais preciso e sustentável.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;background:#f0f5f2;">
+  <div class="stk" data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;">
+    <div>
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Feito para sua rotina</span>
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0 0 .5em;color:#14181a;">Um acompanhamento prático e personalizado</h2>
+      <p style="font-size:1.08rem;color:#5b6660;">Para quem quer emagrecer, ganhar massa muscular ou melhorar a performance, mesmo com rotina corrida e histórico de dificuldade em manter constância.</p>
+      <ul style="display:grid;gap:0;max-width:720px;margin:0;padding:0;">
+        <li style="display:flex;gap:18px;align-items:flex-start;list-style:none;padding:22px 0;border-top:0;font-size:1.08rem;color:#14181a;"><span style="flex:none;width:30px;height:30px;border-radius:50%;background:#1adc7f;color:#04140c;display:flex;align-items:center;justify-content:center;font-weight:700;">✓</span> Sente que já tentou mudar o corpo várias vezes, mas não conseguiu manter constância</li>
+        <li style="display:flex;gap:18px;align-items:flex-start;list-style:none;padding:22px 0;border-top:1px solid #e7ebe9;font-size:1.08rem;color:#14181a;"><span style="flex:none;width:30px;height:30px;border-radius:50%;background:#1adc7f;color:#04140c;display:flex;align-items:center;justify-content:center;font-weight:700;">✓</span> Treina (ou quer começar), mas não sabe como alinhar alimentação e resultado</li>
+        <li style="display:flex;gap:18px;align-items:flex-start;list-style:none;padding:22px 0;border-top:1px solid #e7ebe9;font-size:1.08rem;color:#14181a;"><span style="flex:none;width:30px;height:30px;border-radius:50%;background:#1adc7f;color:#04140c;display:flex;align-items:center;justify-content:center;font-weight:700;">✓</span> Tem rotina corrida e precisa de um plano que funcione na vida real</li>
+        <li style="display:flex;gap:18px;align-items:flex-start;list-style:none;padding:22px 0;border-top:1px solid #e7ebe9;font-size:1.08rem;color:#14181a;"><span style="flex:none;width:30px;height:30px;border-radius:50%;background:#1adc7f;color:#04140c;display:flex;align-items:center;justify-content:center;font-weight:700;">✓</span> Quer emagrecer, ganhar massa muscular ou melhorar a performance com estratégia</li>
+      </ul>
+    </div>
+    <div style="border-radius:22px;overflow:hidden;box-shadow:0 10px 30px -12px rgba(20,24,26,.15);aspect-ratio:3/4;">
+      <img src="assets/foto-thales-brocolis.jpg" alt="Thales Rosa mostrando um brócolis" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;">
+  <div style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;display:grid;grid-template-columns:.8fr 1.2fr;gap:48px;align-items:center;">
+    <div style="border-radius:50%;overflow:hidden;width:220px;height:220px;margin:0 auto;box-shadow:0 10px 30px -12px rgba(20,24,26,.15);">
+      <img src="assets/foto-thales-avocado.png" alt="Thales Rosa sorrindo com um abacate" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+    <div>
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Quem é</span>
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.6rem);margin:0 0 .5em;color:#14181a;">Thales Rosa</h2>
+      <p style="font-size:1.08rem;color:#5b6660;">Nutricionista e profissional de Educação Física, pós-graduado em Treinamento Desportivo, com foco em recomposição corporal, emagrecimento e performance.</p>
+      <p class="mobile-trim" style="font-size:1.08rem;color:#5b6660;">Meu trabalho é ajudar pessoas que já tentaram mudar o corpo várias vezes, mas nunca conseguiram manter constância, não por falta de esforço, mas por falta de estratégia e acompanhamento.</p>
+      <p class="mobile-trim" style="font-size:1.08rem;color:#5b6660;">Aqui você não recebe uma dieta genérica. Você recebe um plano pensado para sua rotina, seu treino e sua realidade, com ajustes constantes para garantir evolução de verdade.</p>
+      <a href="#" onClick="{{ goSobre }}" class="cta" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;border:2px solid #14181a;color:#14181a;transition:transform .2s ease,background .2s ease,color .2s ease;" style-hover="background:#14181a;color:#fff;transform:translateY(-2px);">Conhecer a trajetória completa</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;">
+  <div class="stk" data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;display:grid;grid-template-columns:.95fr 1.05fr;gap:48px;align-items:center;">
+    <div style="border-radius:22px;overflow:hidden;box-shadow:0 10px 30px -12px rgba(20,24,26,.15);aspect-ratio:4/5;">
+      <img src="assets/foto-thales-corrida-2.jpg" alt="Thales Rosa correndo, também profissional de Educação Física" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+    <div>
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Um diferencial no acompanhamento</span>
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0 0 .5em;color:#14181a;">Nutrição e treino, pensados pela mesma pessoa</h2>
+      <p style="font-size:1.08rem;color:#5b6660;">Há mais de 20 anos na musculação, fui um dos pioneiros do Crossfit em Curitiba e já corri uma maratona. Treinei praticamente todos os estilos, da hipertrofia ao funcional, da corrida de longa distância ao treino de alta intensidade.</p>
+      <p style="font-size:1.08rem;color:#5b6660;">Essa vivência mostra na prática como cada tipo de treino exige uma resposta nutricional diferente. Por isso, o plano alimentar não é genérico: ele é pensado junto com o seu treino, seja qual for a modalidade, e ajustado conforme sua rotina e sua evolução real.</p>
+      <ul style="display:grid;gap:0;max-width:720px;margin:0;padding:0;">
+        <li style="display:flex;gap:18px;align-items:flex-start;list-style:none;padding:18px 0;border-top:0;font-size:1.02rem;color:#14181a;"><span style="flex:none;width:26px;height:26px;border-radius:50%;background:#1adc7f;color:#04140c;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;">✓</span> Mais de 20 anos de prática em musculação</li>
+        <li style="display:flex;gap:18px;align-items:flex-start;list-style:none;padding:18px 0;border-top:1px solid #e7ebe9;font-size:1.02rem;color:#14181a;"><span style="flex:none;width:26px;height:26px;border-radius:50%;background:#1adc7f;color:#04140c;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;">✓</span> Um dos pioneiros do Crossfit em Curitiba</li>
+        <li style="display:flex;gap:18px;align-items:flex-start;list-style:none;padding:18px 0;border-top:1px solid #e7ebe9;font-size:1.02rem;color:#14181a;"><span style="flex:none;width:26px;height:26px;border-radius:50%;background:#1adc7f;color:#04140c;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.82rem;">✓</span> Maratonista, com vivência em treinos de resistência</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;background:#f0f5f2;">
+  <div data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="max-width:680px;margin:0 auto;text-align:center;">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Centro Cívico e região</span>
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0 0 .5em;color:#14181a;">Atendimento nutricional para quem trabalha no Centro Cívico</h2>
+      <p style="font-size:1.08rem;color:#5b6660;margin:0;">Rotina de escritório, pouco tempo pro almoço e dificuldade em manter constância? O consultório fica no Centro Cívico, perto de quem passa o dia na região, com atendimento pensado pra rotina real de quem trabalha por aqui.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;">
+  <div data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="max-width:680px;margin:0 auto 44px;text-align:center;">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Áreas de atuação</span>
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0 0 .5em;color:#14181a;">Nutricionista para emagrecimento no Centro Cívico e região</h2>
+      <p style="font-size:1.08rem;color:#5b6660;margin:0;">Atendimento presencial no Centro Cívico e online para quem mora ou trabalha em Curitiba, incluindo Juvevê, Cabral, Ahú, Alto da Glória, Bom Retiro, São Lourenço, Batel e Centro.</p>
+    </div>
+    <div class="grid3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px;">
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(20,24,26,.2);">
+        <div style="width:60px;height:60px;border-radius:50%;background:rgba(26,220,127,.14);display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><svg viewBox="0 0 24 24" style="width:28px;height:28px;stroke:#0fae62;fill:none;stroke-width:1.8;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21c-4.5 0-8-3.5-8-8 0-5 4-9 8-9s8 4 8 9c0 4.5-3.5 8-8 8z"/><path stroke-linecap="round" d="M12 4v17"/></svg></div>
+        <h3 style="font-size:1.28rem;margin:0 0 .4em;color:#14181a;">Emagrecimento &amp; recomposição corporal</h3>
+        <p style="margin:0;color:#5b6660;">Estratégias sustentáveis, sem dietas restritivas que não se sustentam na rotina real.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(20,24,26,.2);">
+        <div style="width:60px;height:60px;border-radius:50%;background:rgba(26,220,127,.14);display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><svg viewBox="0 0 24 24" style="width:28px;height:28px;stroke:#0fae62;fill:none;stroke-width:1.8;"><circle cx="12" cy="5" r="2"/><path stroke-linecap="round" stroke-linejoin="round" d="M9 22l2-8-2-2 1-5 2 2 3 1 2 3M9 14l-3 2M15 12l3 1"/></svg></div>
+        <h3 style="font-size:1.28rem;margin:0 0 .4em;color:#14181a;">Nutrição esportiva &amp; performance</h3>
+        <p style="margin:0;color:#5b6660;">Nutrição alinhada ao treino, periodização, recuperação e resultado no longo prazo.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(20,24,26,.2);">
+        <div style="width:60px;height:60px;border-radius:50%;background:rgba(26,220,127,.14);display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><svg viewBox="0 0 24 24" style="width:28px;height:28px;stroke:#0fae62;fill:none;stroke-width:1.8;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3a4 4 0 0 0-4 4c-1.5.3-3 1.7-3 3.5S6.5 14 8 14v2a4 4 0 0 0 4 4 4 4 0 0 0 4-4v-2c1.5 0 3-1.2 3-3.5S17.5 7.3 16 7a4 4 0 0 0-4-4z"/></svg></div>
+        <h3 style="font-size:1.28rem;margin:0 0 .4em;color:#14181a;">Reeducação alimentar</h3>
+        <p style="margin:0;color:#5b6660;">Constância, acolhimento e adesão prática acima de qualquer extremismo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;">
+  <div data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="max-width:680px;margin:0 auto 44px;text-align:center;">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Como funciona</span>
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0;color:#14181a;">Do primeiro encontro aos ajustes que sustentam sua evolução</h2>
+    </div>
+    <div style="class="grid3" style="display:grid;grid-template-columns:repeat(2,1fr);gap:28px;">
+      <div style="position:relative;padding:6px 0 6px 64px;"><div style="position:absolute;left:0;top:0;width:44px;height:44px;border-radius:50%;background:#14181a;color:#1adc7f;font-weight:700;font-size:1.1rem;display:flex;align-items:center;justify-content:center;">1</div><h3 style="font-size:1.2rem;margin:0 0 .4em;color:#14181a;">Escolha seu horário</h3><p style="margin:0;color:#5b6660;">Agende on-line de forma simples e encontre o melhor momento para você.</p></div>
+      <div style="position:relative;padding:6px 0 6px 64px;"><div style="position:absolute;left:0;top:0;width:44px;height:44px;border-radius:50%;background:#14181a;color:#1adc7f;font-weight:700;font-size:1.1rem;display:flex;align-items:center;justify-content:center;">2</div><h3 style="font-size:1.2rem;margin:0 0 .4em;color:#14181a;">Conte sua história</h3><p style="margin:0;color:#5b6660;">Na consulta, olhamos sua rotina, seus objetivos e tudo o que interfere no processo.</p></div>
+      <div style="position:relative;padding:6px 0 6px 64px;"><div style="position:absolute;left:0;top:0;width:44px;height:44px;border-radius:50%;background:#14181a;color:#1adc7f;font-weight:700;font-size:1.1rem;display:flex;align-items:center;justify-content:center;">3</div><h3 style="font-size:1.2rem;margin:0 0 .4em;color:#14181a;">Receba sua estratégia</h3><p style="margin:0;color:#5b6660;">Construímos um direcionamento personalizado, prático e alinhado à sua realidade.</p></div>
+      <div style="position:relative;padding:6px 0 6px 64px;"><div style="position:absolute;left:0;top:0;width:44px;height:44px;border-radius:50%;background:#14181a;color:#1adc7f;font-weight:700;font-size:1.1rem;display:flex;align-items:center;justify-content:center;">4</div><h3 style="font-size:1.2rem;margin:0 0 .4em;color:#14181a;">Evolua com ajustes</h3><p style="margin:0;color:#5b6660;">Acompanhamos sua resposta e refinamos a estratégia ao longo do caminho.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;background:#f0f5f2;">
+  <div data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="max-width:680px;margin:0 auto 44px;text-align:center;">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">O que dizem</span>
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0;color:#14181a;">O que diz quem já passou pelo processo</h2>
+    </div>
+    <div class="grid3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px;">
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);display:flex;flex-direction:column;gap:16px;">
+        <div style="width:46px;height:46px;border-radius:50%;background:rgba(26,220,127,.15);color:#0fae62;font-weight:700;font-size:.92rem;display:flex;align-items:center;justify-content:center;">NZ</div>
+        <p style="font-size:1.05rem;color:#14181a;font-style:italic;margin:0;">"O profissional mais atencioso e humano que conheço! Sempre muito realista e otimista. O suporte e atenção que o Thales fornece é algo que eu estava buscando a anos e nunca tinha encontrado, até me consultar com ele!"</p>
+        <cite style="font-style:normal;font-weight:700;color:#0fae62;">Nicoly Zdiarski</cite>
+      </div>
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);display:flex;flex-direction:column;gap:16px;">
+        <div style="width:46px;height:46px;border-radius:50%;background:rgba(26,220,127,.15);color:#0fae62;font-weight:700;font-size:.92rem;display:flex;align-items:center;justify-content:center;">EV</div>
+        <p style="font-size:1.05rem;color:#14181a;font-style:italic;margin:0;">"O Thales é um profissional excepcional! Muito atencioso e dedicado. A dieta que me passou super encaixa no meu dia a dia. Sem falar que eu não passo fome e já consegui ter resultados incríveis. 10/10"</p>
+        <cite style="font-style:normal;font-weight:700;color:#0fae62;">Eduardo Venturi</cite>
+      </div>
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);display:flex;flex-direction:column;gap:16px;">
+        <div style="width:46px;height:46px;border-radius:50%;background:rgba(26,220,127,.15);color:#0fae62;font-weight:700;font-size:.92rem;display:flex;align-items:center;justify-content:center;">JS</div>
+        <p style="font-size:1.05rem;color:#14181a;font-style:italic;margin:0;">"Mais do que um profissional excelente, um ser humano ímpar que sabe como te auxiliar na vida para além do consultório. Indico para toda e qualquer pessoa. O Thales é fora da curva."</p>
+        <cite style="font-style:normal;font-weight:700;color:#0fae62;">José Santos</cite>
+      </div>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;background:#14181a;color:#fff;border-radius:22px;padding:28px 32px;margin-top:36px;font-size:1.15rem;text-align:center;"><strong style="color:#1adc7f;font-size:1.5rem;">+1.000 pessoas</strong> já passaram por esse processo comigo!</div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;">
+  <div data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="max-width:680px;margin:0 auto;text-align:center;">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Por que o Centro Cívico</span>
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0 0 .5em;color:#14181a;">Por que escolher um nutricionista perto do Centro Cívico</h2>
+      <p style="font-size:1.08rem;color:#5b6660;margin:0;">Consultório de fácil acesso para quem mora ou circula pela região, Centro Cívico, Juvevê, Cabral, Ahú, Alto da Glória, Bom Retiro, São Lourenço, Batel e Centro, com horários que cabem na rotina de quem trabalha por perto, além de atendimento 100% online para o resto de Curitiba.</p>
+      <p style="font-size:.95rem;color:#5b6660;margin:16px 0 0;"><strong style="color:#14181a;">Horário de atendimento:</strong> segunda a sexta, das 8h às 19h.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;">
+  <div data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="max-width:680px;margin:0 auto 44px;text-align:center;">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Planos</span>
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0;color:#14181a;">Escolha o ritmo de acompanhamento ideal para você</h2>
+    </div>
+    <div class="grid3" style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;">
+      <sc-for list="{{ homePlans }}" as="plan" hint-placeholder-count="4">
+        <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);display:flex;flex-direction:column;gap:14px;">
+          <span style="display:inline-block;background:#f5f8f6;border:1px solid #e7ebe9;padding:6px 14px;border-radius:999px;font-size:.82rem;font-weight:600;color:#0fae62;width:fit-content;">{{ plan.tagline }}</span>
+          <h3 style="font-size:1.28rem;margin:0;color:#14181a;">{{ plan.name }}</h3>
+          <div style="font-size:1.6rem;font-weight:800;color:#14181a;">{{ plan.duration }}</div>
+          <p style="margin:0;color:#5b6660;">{{ plan.description }}</p>
+        </div>
+      </sc-for>
+    </div>
+    <div style="text-align:center;margin-top:36px;">
+      <a href="#" onClick="{{ goPlanos }}" class="cta" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;border:2px solid #14181a;color:#14181a;transition:transform .2s ease,background .2s ease,color .2s ease;" style-hover="background:#14181a;color:#fff;transform:translateY(-2px);">Ver todos os planos em detalhe</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;background:#f0f5f2;">
+  <div class="grid3" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;gap:28px;">
+    <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(20,24,26,.2);">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Presencial</span
+      <h3 style="font-size:1.28rem;margin:0 0 .4em;color:#14181a;">Consultório em Curitiba</h3>
+      <p style="margin:0 0 1em;color:#5b6660;">Avenida Cândido de Abreu, 526, sala 1108, Torre B.</p>
+      <a href="#" onClick="{{ goAgendamento }}" class="cta" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;border:2px solid #14181a;color:#14181a;transition:transform .2s ease,background .2s ease,color .2s ease;" style-hover="background:#14181a;color:#fff;transform:translateY(-2px);">Ver horários</a>
+    </div>
+    <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(20,24,26,.2);">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">On-line</span>
+      <h3 style="font-size:1.28rem;margin:0 0 .4em;color:#14181a;">Atendimento de onde você estiver</h3>
+      <p style="margin:0 0 1em;color:#5b6660;">A mesma profundidade e atenção em uma consulta realizada por videochamada.</p>
+      <a href="#" onClick="{{ goAgendamento }}" class="cta" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;border:2px solid #14181a;color:#14181a;transition:transform .2s ease,background .2s ease,color .2s ease;" style-hover="background:#14181a;color:#fff;transform:translateY(-2px);">Agendar on-line</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;">
+  <div data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="max-width:680px;margin:0 auto 44px;text-align:center;">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Dúvidas frequentes</span>
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0 0 .5em;color:#14181a;">Informação clara para começar com tranquilidade</h2>
+      <p style="font-size:1.08rem;color:#5b6660;margin:0;">Se ainda restar alguma dúvida, é só chamar antes de agendar.</p>
+    </div>
+    <div style="max-width:760px;margin:0 auto;">
+      <sc-for list="{{ faqs }}" as="faq" hint-placeholder-count="4">
+        <details style="border-bottom:1px solid #e7ebe9;">
+          <summary style="cursor:pointer;padding:18px 0;font-weight:600;list-style:none;display:flex;justify-content:space-between;color:#14181a;">{{ faq.q }}</summary>
+          <p style="padding-bottom:18px;margin:0 0 18px;color:#5b6660;">{{ faq.a }}</p>
+        </details>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;">
+  <div data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;margin-bottom:32px;">
+      <div>
+        <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Instagram</span>
+        <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0;color:#14181a;">Acompanhe no Instagram</h2>
+      </div>
+      <a href="https://www.instagram.com/nutri.thales" target="_blank" rel="noopener" class="cta" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;border:2px solid #14181a;color:#14181a;transition:transform .2s ease,background .2s ease,color .2s ease;" style-hover="background:#14181a;color:#fff;transform:translateY(-2px);">Seguir @nutri.thales</a>
+    </div>
+    <!-- Espaço reservado para o widget de feed do Instagram (ex.: SnapWidget, Elfsight, Juicer).
+         Passo a passo: 1) crie uma conta grátis em snapwidget.com (ou similar) e conecte @nutri.thales;
+         2) copie o <script src="..."> gerado e cole dentro de <helmet> no topo deste arquivo;
+         3) copie o <div> (ou <iframe>) do embed e cole aqui dentro, substituindo o placeholder abaixo. -->
+    <div id="instagram-feed-widget" style="border:2px dashed #e7ebe9;border-radius:14px;padding:48px 24px;text-align:center;background:#f5f8f6;">
+      <p style="margin:0 0 .4em;color:#14181a;font-weight:600;">Espaço reservado para o feed automático do Instagram</p>
+      <p style="margin:0;color:#5b6660;">Conecte um widget (SnapWidget, Elfsight ou Juicer) a @nutri.thales e cole o código de incorporação aqui para as postagens atualizarem sozinhas.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;">
+  <div style="background:#14181a;color:#fff;text-align:center;border-radius:22px;margin:0 24px;">
+    <div style="max-width:1160px;margin:0 auto;padding:72px 24px;box-sizing:border-box;">
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.7rem,3.2vw,2.3rem);margin:0 0 .5em;color:#fff;">Meu compromisso com você</h2>
+      <p style="color:rgba(255,255,255,.75);font-size:1.08rem;">Você não precisa de mais uma dieta pronta. Precisa de um plano que funcione na sua rotina e que faça sentido junto com o seu treino. Aqui, alimentação e treino andam juntos, e o plano vai sendo ajustado conforme sua evolução. Sem radicalismo, sem complicação, só o que realmente funciona na prática.</p>
+      <a href="#" onClick="{{ goAgendamento }}" class="cta" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;border:2px solid transparent;background:#1adc7f;color:#04140c;transition:transform .2s ease,background .2s ease;" style-hover="background:#0fae62;color:#fff;transform:translateY(-2px);">Quero agendar minha consulta</a>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ isSobre }}" hint-placeholder-val="{{ false }}">
+<section class="sec-hero page-in" style="padding:64px 0 56px;background:linear-gradient(180deg,#f0f5f2,#faf9f6);">
+  <div style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;display:grid;grid-template-columns:.8fr 1.2fr;gap:48px;align-items:center;">
+    <div style="border-radius:50%;overflow:hidden;width:220px;height:220px;margin:0 auto;box-shadow:0 10px 30px -12px rgba(20,24,26,.15);">
+      <img src="assets/foto-thales-avocado.png" alt="Thales Rosa sorrindo com um abacate" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+    <div>
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Sobre</span>
+      <h1 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(2.3rem,4.4vw,3.4rem);margin:0 0 .5em;color:#14181a;">Nutricionista esportivo em Curitiba: ciência, estratégia e acolhimento</h1>
+      <p style="font-size:1.2rem;color:#5b6660;max-width:54ch;margin:0;">Nutricionista e profissional de Educação Física, pós-graduado em Treinamento Desportivo, com experiência prática em treinamento, saúde e desempenho.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;">
+  <div data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="max-width:680px;margin:0 auto 44px;text-align:center;">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Na prática</span>
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0;color:#14181a;">Meu trabalho, em poucas palavras</h2>
+    </div>
+    <div style="max-width:760px;margin:0 auto;">
+      <p style="color:#5b6660;font-size:1.02rem;">Sou nutricionista e personal trainer, com foco em recomposição corporal, emagrecimento e performance.</p>
+      <p style="color:#5b6660;font-size:1.02rem;">Meu trabalho é ajudar pessoas que já tentaram mudar o corpo várias vezes, mas nunca conseguiram manter constância, não por falta de esforço, mas por falta de estratégia e acompanhamento.</p>
+      <p class="mobile-trim" style="color:#5b6660;font-size:1.02rem;">Aqui você não recebe uma dieta genérica. Você recebe um plano pensado para sua rotina, seu treino e sua realidade, com ajustes constantes para garantir evolução de verdade.</p>
+      <p class="mobile-trim" style="color:#5b6660;font-size:1.02rem;">Acredito em um acompanhamento humanizado, direto e baseado em ciência, sem terrorismo nutricional, sem radicalismo e sem promessas irreais.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;background:#f0f5f2;">
+  <div class="stk" data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;">
+    <div style="border-radius:22px;overflow:hidden;box-shadow:0 10px 30px -12px rgba(20,24,26,.15);aspect-ratio:3/4;">
+      <img src="assets/foto-thales-preparo.jpg" alt="Thales Rosa preparando alimentos na cozinha" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+    <div>
+      <h2 style="font-size:1.6rem;font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;color:#14181a;">Formação</h2>
+      <ul style="color:#5b6660;padding-left:20px;">
+        <li>Nutricionista</li>
+        <li>Profissional de Educação Física</li>
+        <li>Pós-graduado em Treinamento Desportivo</li>
+      </ul>
+      <h2 style="font-size:1.6rem;margin-top:1.2em;font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;color:#14181a;">Abordagem</h2>
+      <p style="color:#5b6660;">Atendimento baseado em evidências, estratégia e individualização, unindo o olhar da nutrição ao do treinamento físico para resultados reais e sustentáveis.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;">
+  <div data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="max-width:680px;margin:0 auto 44px;text-align:center;">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Filosofia</span>
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0;color:#14181a;">Menos neura, mais nutrição</h2>
+    </div>
+    <div class="grid3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:28px;">
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(20,24,26,.2);">
+        <div style="width:60px;height:60px;border-radius:50%;background:rgba(26,220,127,.14);display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><svg viewBox="0 0 24 24" style="width:28px;height:28px;stroke:#0fae62;fill:none;stroke-width:1.8;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21s-7-4.5-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.5-9.5 9-9.5 9z"/></svg></div>
+        <h3 style="font-size:1.28rem;margin:0 0 .4em;color:#14181a;">Sem terrorismo nutricional</h3>
+        <p style="margin:0;color:#5b6660;">Nenhum alimento é vilão. A comunicação é sempre acolhedora, nunca baseada em medo.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(20,24,26,.2);">
+        <div style="width:60px;height:60px;border-radius:50%;background:rgba(26,220,127,.14);display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><svg viewBox="0 0 24 24" style="width:28px;height:28px;stroke:#0fae62;fill:none;stroke-width:1.8;"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 7v5l3 3"/></svg></div>
+        <h3 style="font-size:1.28rem;margin:0 0 .4em;color:#14181a;">Ciência acima de modismo</h3>
+        <p style="margin:0;color:#5b6660;">Condutas com forte embasamento científico e pensamento crítico, sem seguir tendências sem evidência.</p>
+      </div>
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(20,24,26,.2);">
+        <div style="width:60px;height:60px;border-radius:50%;background:rgba(26,220,127,.14);display:flex;align-items:center;justify-content:center;margin-bottom:20px;"><svg viewBox="0 0 24 24" style="width:28px;height:28px;stroke:#0fae62;fill:none;stroke-width:1.8;"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v16M4 4l16 4-16 4"/></svg></div>
+        <h3 style="font-size:1.28rem;margin:0 0 .4em;color:#14181a;">Constância acima de extremismo</h3>
+        <p style="margin:0;color:#5b6660;">O que sustenta resultado é a rotina possível, não o plano perfeito que ninguém consegue seguir.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;">
+  <div style="background:#14181a;color:#fff;text-align:center;border-radius:22px;margin:0 24px;">
+    <div style="max-width:1160px;margin:0 auto;padding:72px 24px;box-sizing:border-box;">
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.7rem,3.2vw,2.3rem);margin:0 0 .5em;color:#fff;">Meu compromisso com você</h2>
+      <p style="color:rgba(255,255,255,.75);font-size:1.08rem;">Meu papel é te acompanhar de perto, te dar direção e ir ajustando o que for necessário pra você não voltar pro ciclo de começar e parar. Sem radicalismo, sem complicação, só o que realmente funciona na prática.</p>
+      <a href="#" onClick="{{ goAgendamento }}" class="cta" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;background:#1adc7f;color:#04140c;">Conversar com Thales</a>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ isAcompanhamento }}" hint-placeholder-val="{{ false }}">
+<section class="sec-hero page-in" style="padding:64px 0 56px;background:linear-gradient(180deg,#f0f5f2,#faf9f6);">
+  <div data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Acompanhamento &amp; serviços</span>
+    <h1 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(2.3rem,4.4vw,3.4rem);margin:0 0 .5em;color:#14181a;max-width:800px;">Emagrecimento e nutrição esportiva em Curitiba, com acompanhamento contínuo</h1>
+    <p style="font-size:1.2rem;color:#5b6660;max-width:54ch;margin:0;">Cada estratégia é adaptada aos seus objetivos, sua rotina e suas necessidades, com ajustes contínuos ao longo do processo.</p>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;">
+  <div class="stk" data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center;">
+    <div>
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Nutrição esportiva</span>
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0 0 .5em;color:#14181a;">Nutrição esportiva em Curitiba: para quem treina em Juvevê, Cabral e Alto da Glória</h2>
+      <p style="color:#5b6660;">O plano é ajustado conforme sua evolução, sua rotina e as dificuldades que aparecem no caminho, sem radicalismo, sem complicação, só o que realmente funciona na prática.</p>
+    </div>
+    <div style="border-radius:22px;overflow:hidden;box-shadow:0 10px 30px -12px rgba(20,24,26,.15);aspect-ratio:4/5;">
+      <img src="assets/foto-thales-corrida.jpg" alt="Thales Rosa correndo ao ar livre" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;background:#f0f5f2;">
+  <div style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;">
+    <sc-for list="{{ acompanhamentoServices }}" as="svc" hint-placeholder-count="6">
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(20,24,26,.2);">
+        <div style="width:60px;height:60px;border-radius:50%;background:rgba(26,220,127,.14);display:flex;align-items:center;justify-content:center;margin-bottom:20px;font-size:1.4rem;">●</div>
+        <h3 style="font-size:1.28rem;margin:0 0 .4em;color:#14181a;">{{ svc.title }}</h3>
+        <p style="margin:0;color:#5b6660;">{{ svc.desc }}</p>
+      </div>
+    </sc-for>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;background:#f0f5f2;">
+  <div data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="max-width:680px;margin:0 auto 44px;text-align:center;">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Modalidades</span>
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0;color:#14181a;">Reeducação alimentar presencial no Centro Cívico ou 100% online</h2>
+    </div>
+    <div class="grid3" style="display:grid;grid-template-columns:1fr 1fr;gap:28px;">
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(20,24,26,.2);">
+        <h3 style="font-size:1.28rem;margin:0 0 .4em;color:#14181a;">Presencial</h3>
+        <p style="margin:0;color:#5b6660;">Avenida Cândido de Abreu, 526, sala 1108, Torre B<br>Curitiba, Paraná</p>
+      </div>
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(20,24,26,.2);">
+        <h3 style="font-size:1.28rem;margin:0 0 .4em;color:#14181a;">On-line</h3>
+        <p style="margin:0;color:#5b6660;">Consultas por videochamada, com o mesmo cuidado, acompanhamento e suporte entre as sessões.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;">
+  <div data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="max-width:680px;margin:0 auto;text-align:center;">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Dúvida comum</span>
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0 0 .5em;color:#14181a;">Como funciona a consulta com nutricionista online para quem mora em Curitiba</h2>
+      <p style="font-size:1.08rem;color:#5b6660;margin:0;">A consulta acontece por videochamada, no mesmo formato e profundidade da presencial, ideal para quem mora em bairros mais distantes do Centro Cívico ou simplesmente prefere a praticidade de não se deslocar.</p>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;">
+  <div style="background:#14181a;color:#fff;text-align:center;border-radius:22px;margin:0 24px;">
+    <div style="max-width:1160px;margin:0 auto;padding:72px 24px;box-sizing:border-box;">
+      <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.7rem,3.2vw,2.3rem);margin:0 0 .5em;color:#fff;">Pronto para começar seu acompanhamento?</h2>
+      <a href="#" onClick="{{ goAgendamento }}" class="cta" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;background:#1adc7f;color:#04140c;">Agendar consulta</a>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ isPlanos }}" hint-placeholder-val="{{ false }}">
+<section class="sec-hero page-in" style="padding:64px 0 56px;background:linear-gradient(180deg,#f0f5f2,#faf9f6);">
+  <div style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;text-align:center;">
+    <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Planos</span>
+    <h1 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(2.3rem,4.4vw,3.4rem);margin:0 0 .5em;color:#14181a;">Planos de nutricionista em Curitiba para emagrecimento e performance</h1>
+    <p style="font-size:1.2rem;color:#5b6660;max-width:54ch;margin:0 auto;">Todos os planos são individualizados. Os valores estão sob consulta, fale com a gente para saber as condições atuais.</p>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;">
+  <div data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div class="grid3" style="display:grid;grid-template-columns:1fr 1fr;gap:28px;">
+      <sc-for list="{{ allPlans }}" as="plan" hint-placeholder-count="4">
+        <sc-if value="{{ plan.highlight }}" hint-placeholder-val="{{ false }}">
+          <div style="background:#fff;border:2px solid #1adc7f;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);display:flex;flex-direction:column;gap:14px;position:relative;">
+            <span style="position:absolute;top:-14px;left:24px;background:#1adc7f;color:#04140c;font-size:.75rem;font-weight:700;padding:4px 12px;border-radius:999px;">Mais escolhido</span>
+            <span style="display:inline-block;background:#f5f8f6;border:1px solid #e7ebe9;padding:6px 14px;border-radius:999px;font-size:.82rem;font-weight:600;color:#0fae62;width:fit-content;">{{ plan.tagline }}</span>
+            <h3 style="font-size:1.28rem;margin:0;color:#14181a;">{{ plan.name }}</h3>
+            <div style="font-size:1.6rem;font-weight:800;color:#14181a;">{{ plan.duration }}</div>
+            <p style="margin:0;color:#5b6660;">{{ plan.description }}</p>
+            <ul style="padding-left:0;list-style:none;margin:0;flex:1;">
+              <sc-for list="{{ plan.features }}" as="feat" hint-placeholder-count="3">
+                <li style="padding:6px 0;border-top:1px solid #e7ebe9;color:#5b6660;">{{ feat }}</li>
+              </sc-for>
+            </ul>
+            <a href="#" onClick="{{ goAgendamento }}" class="cta" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;background:#1adc7f;color:#04140c;width:100%;box-sizing:border-box;transition:transform .2s ease,background .2s ease;" style-hover="background:#0fae62;color:#fff;transform:translateY(-2px);">Escolher plano</a>
+          </div>
+        </sc-if>
+        <sc-if value="{{ plan.notHighlight }}" hint-placeholder-val="{{ true }}">
+          <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);display:flex;flex-direction:column;gap:14px;">
+            <span style="display:inline-block;background:#f5f8f6;border:1px solid #e7ebe9;padding:6px 14px;border-radius:999px;font-size:.82rem;font-weight:600;color:#0fae62;width:fit-content;">{{ plan.tagline }}</span>
+            <h3 style="font-size:1.28rem;margin:0;color:#14181a;">{{ plan.name }}</h3>
+            <div style="font-size:1.6rem;font-weight:800;color:#14181a;">{{ plan.duration }}</div>
+            <p style="margin:0;color:#5b6660;">{{ plan.description }}</p>
+            <ul style="padding-left:0;list-style:none;margin:0;flex:1;">
+              <sc-for list="{{ plan.features }}" as="feat" hint-placeholder-count="3">
+                <li style="padding:6px 0;border-top:1px solid #e7ebe9;color:#5b6660;">{{ feat }}</li>
+              </sc-for>
+            </ul>
+            <a href="#" onClick="{{ goAgendamento }}" class="cta" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;background:#1adc7f;color:#04140c;width:100%;box-sizing:border-box;transition:transform .2s ease,background .2s ease;" style-hover="background:#0fae62;color:#fff;transform:translateY(-2px);">Escolher plano</a>
+          </div>
+        </sc-if>
+      </sc-for>
+    </div>
+    <div style="text-align:center;margin-top:16px;">
+      <a href="#" onClick="{{ goContato }}" class="cta" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;border:2px solid #14181a;color:#14181a;transition:transform .2s ease,background .2s ease,color .2s ease;" style-hover="background:#14181a;color:#fff;transform:translateY(-2px);">Consultar condições</a>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ isContato }}" hint-placeholder-val="{{ false }}">
+<section class="sec-hero page-in" style="padding:64px 0 56px;background:linear-gradient(180deg,#f0f5f2,#faf9f6);">
+  <div data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Contato</span>
+    <h1 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(2.3rem,4.4vw,3.4rem);margin:0 0 .5em;color:#14181a;max-width:800px;">Agende sua consulta com nutricionista no Centro Cívico, Curitiba</h1>
+    <p style="font-size:1.2rem;color:#5b6660;max-width:54ch;margin:0;">Fale agora pelo WhatsApp ou preencha o formulário abaixo, presencial no Centro Cívico ou online para toda Curitiba.</p>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;">
+  <div class="stk" data-reveal="1" style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:flex-start;">
+    <div>
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);margin-bottom:24px;">
+        <h3 style="font-size:1.28rem;margin:0 0 .4em;color:#14181a;">Fale agora</h3>
+        <p style="margin:0 0 1em;color:#5b6660;">A forma mais rápida de falar com o Thales.</p>
+        <div class="cta-row" style="display:flex;gap:14px;flex-wrap:wrap;">
+          <a href="{{ waLink }}" target="_blank" rel="noopener" class="cta" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;background:#0fae62;color:#fff;transition:transform .2s ease,box-shadow .2s ease;" style-hover="transform:translateY(-2px);box-shadow:0 10px 22px -8px rgba(15,174,98,.5);">Fale no WhatsApp: (41) 98734-7625</a>
+          <a href="mailto:contato@nutrithales.com.br" class="cta" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;border:2px solid #e7ebe9;color:#14181a;transition:background .2s ease,color .2s ease;" style-hover="background:#14181a;color:#fff;border-color:#14181a;">contato@nutrithales.com.br</a>
+        </div>
+      </div>
+      <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(20,24,26,.2);">
+        <h3 style="font-size:1.28rem;margin:0 0 .4em;color:#14181a;">Outros canais</h3>
+        <p style="margin:0 0 .6em;color:#5b6660;">Instagram: <a href="https://www.instagram.com/nutri.thales" target="_blank" rel="noopener" style="color:#0fae62;">@nutri.thales</a></p>
+        <p style="margin:0 0 .6em;color:#5b6660;">Atendimento presencial:<br>Avenida Cândido de Abreu, 526, sala 1108, Torre B<br>Curitiba, Paraná</p>
+        <p style="margin:0;color:#5b6660;">Atendimento on-line disponível para todo o Brasil.</p>
+      </div>
+    </div>
+
+    <div style="background:#fff;border:1px solid #e7ebe9;border-radius:14px;padding:32px;box-shadow:0 4px 18px -12px rgba(20,24,26,.12);transition:transform .25s ease,box-shadow .25s ease;" style-hover="transform:translateY(-4px);box-shadow:0 14px 30px -14px rgba(20,24,26,.2);">
+      <sc-if value="{{ contactSent }}" hint-placeholder-val="{{ false }}">
+        <div style="padding:14px 16px;border-radius:8px;font-weight:600;background:rgba(26,220,127,.15);color:#0b7a45;">Mensagem enviada! Vou te responder em breve, se for mais rápido, chama no WhatsApp.</div>
+      </sc-if>
+      <sc-if value="{{ contactNotSent }}" hint-placeholder-val="{{ true }}">
+        <form style="display:grid;gap:16px;" onSubmit="{{ submitContact }}">
+          <div class="stk" style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+            <div>
+              <label style="display:block;font-weight:600;font-size:.92rem;margin-bottom:6px;color:#14181a;">Nome*</label>
+              <input type="text" required="{{ true }}" value="{{ contactNome }}" onChange="{{ setNome }}" style="width:100%;padding:12px 14px;border:1px solid #e7ebe9;border-radius:8px;font-size:1rem;background:#fff;box-sizing:border-box;">
+            </div>
+            <div>
+              <label style="display:block;font-weight:600;font-size:.92rem;margin-bottom:6px;color:#14181a;">E-mail*</label>
+              <input type="email" required="{{ true }}" value="{{ contactEmail }}" onChange="{{ setEmail }}" style="width:100%;padding:12px 14px;border:1px solid #e7ebe9;border-radius:8px;font-size:1rem;background:#fff;box-sizing:border-box;">
+            </div>
+          </div>
+          <div>
+            <label style="display:block;font-weight:600;font-size:.92rem;margin-bottom:6px;color:#14181a;">WhatsApp</label>
+            <input type="tel" placeholder="(41) 90000-0000" value="{{ contactTelefone }}" onChange="{{ setTelefone }}" style="width:100%;padding:12px 14px;border:1px solid #e7ebe9;border-radius:8px;font-size:1rem;background:#fff;box-sizing:border-box;">
+          </div>
+          <div>
+            <label style="display:block;font-weight:600;font-size:.92rem;margin-bottom:6px;color:#14181a;">Mensagem*</label>
+            <textarea rows="5" required="{{ true }}" value="{{ contactMensagem }}" onChange="{{ setMensagem }}" style="width:100%;padding:12px 14px;border:1px solid #e7ebe9;border-radius:8px;font-size:1rem;background:#fff;box-sizing:border-box;font-family:inherit;"></textarea>
+          </div>
+          <button type="submit" class="cta" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;border:none;background:#1adc7f;color:#04140c;width:100%;cursor:pointer;transition:transform .2s ease,background .2s ease;" style-hover="background:#0fae62;color:#fff;transform:translateY(-2px);">Enviar mensagem</button>
+        </form>
+      </sc-if>
+    </div>
+  </div>
+</section>
+
+<section class="sec" style="padding:76px 0;background:#f0f5f2;">
+  <div style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;text-align:center;">
+    <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Área de atendimento</span>
+    <h2 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(1.8rem,3.4vw,2.5rem);margin:0 0 .5em;color:#14181a;">Atendimento nutricional no Ahú e região central de Curitiba</h2>
+    <p style="font-size:1.08rem;color:#5b6660;max-width:680px;margin:0 auto;">Consultório no Centro Cívico, com fácil acesso para quem mora ou trabalha no Ahú, Juvevê, Cabral, Alto da Glória e Centro. Para o restante de Curitiba e região, o atendimento online mantém a mesma qualidade e profundidade da consulta presencial.</p>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ isAgendamento }}" hint-placeholder-val="{{ false }}">
+<section class="sec-hero page-in" style="padding:64px 0 56px;background:linear-gradient(180deg,#f0f5f2,#faf9f6);">
+  <div style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;text-align:center;">
+    <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Agendamento</span>
+    <h1 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(2.3rem,4.4vw,3.4rem);margin:0 0 .5em;color:#14181a;">Vamos marcar sua consulta</h1>
+    <p style="font-size:1.2rem;color:#5b6660;max-width:54ch;margin:0 auto;">Combinamos o melhor horário direto na conversa, rápido e sem burocracia.</p>
+  </div>
+</section>
+<section class="sec" style="padding:76px 0;">
+  <div style="max-width:760px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="background:#fff;border:1px solid #e7ebe9;border-radius:16px;padding:48px 40px;box-shadow:0 8px 28px -14px rgba(20,24,26,.15);text-align:center;">
+      <div style="width:56px;height:56px;border-radius:50%;background:rgba(26,220,127,.14);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">
+        <svg viewBox="0 0 24 24" style="width:26px;height:26px;fill:#0fae62;" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.64-1.03-5.12-2.9-6.99A9.82 9.82 0 0 0 12.04 2zm0 18.1h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.35c0-4.53 3.69-8.22 8.22-8.22 2.2 0 4.26.86 5.82 2.4a8.17 8.17 0 0 1 2.41 5.82c0 4.53-3.7 8.21-8.21 8.21zm4.5-6.15c-.25-.12-1.47-.72-1.7-.81-.23-.08-.4-.12-.56.13-.17.25-.65.81-.79.97-.15.17-.29.19-.54.06-.25-.12-1.04-.38-1.99-1.22-.73-.66-1.23-1.46-1.37-1.71-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.44.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.36-.77-1.86-.2-.49-.4-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08 0 1.22.89 2.4 1.01 2.57.12.17 1.76 2.69 4.27 3.77.6.26 1.06.41 1.43.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+      </div>
+      <h3 style="font-size:1.5rem;margin:0 0 .5em;color:#14181a;">Vamos conversar pelo WhatsApp</h3>
+      <p style="margin:0 0 1.6em;color:#5b6660;font-size:1.05rem;max-width:44ch;margin-left:auto;margin-right:auto;">Me conte seu objetivo e o melhor horário para você, presencial no Centro Cívico ou online. Costumo responder rápido, sem robô, sem espera.</p>
+      <a href="{{ waLink }}" target="_blank" rel="noopener" class="cta" style="display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:18px 34px;border-radius:999px;font-weight:700;font-size:1.05rem;background:#1adc7f;color:#04140c;box-shadow:0 10px 26px -8px rgba(26,220,127,.55);transition:transform .2s ease,box-shadow .2s ease,background .2s ease;" style-hover="transform:translateY(-2px);background:#0fae62;color:#fff;box-shadow:0 14px 30px -8px rgba(15,174,98,.6);">
+        <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:currentColor;flex:none;" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.64-1.03-5.12-2.9-6.99A9.82 9.82 0 0 0 12.04 2zm0 18.1h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.35c0-4.53 3.69-8.22 8.22-8.22 2.2 0 4.26.86 5.82 2.4a8.17 8.17 0 0 1 2.41 5.82c0 4.53-3.7 8.21-8.21 8.21zm4.5-6.15c-.25-.12-1.47-.72-1.7-.81-.23-.08-.4-.12-.56.13-.17.25-.65.81-.79.97-.15.17-.29.19-.54.06-.25-.12-1.04-.38-1.99-1.22-.73-.66-1.23-1.46-1.37-1.71-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.44.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.36-.77-1.86-.2-.49-.4-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08 0 1.22.89 2.4 1.01 2.57.12.17 1.76 2.69 4.27 3.77.6.26 1.06.41 1.43.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+        Chamar no WhatsApp: (41) 98734-7625
+      </a>
+    </div>
+  </div>
+</section>
+</sc-if>
+
+<sc-if value="{{ isAreaPaciente }}" hint-placeholder-val="{{ false }}">
+<section class="page-in" style="padding:120px 0;text-align:center;">
+  <div style="max-width:640px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Área do paciente</span>
+    <h1 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.08em;font-size:clamp(2rem,4vw,2.8rem);margin:0 0 .5em;color:#14181a;">Em construção</h1>
+    <p style="font-size:1.1rem;color:#5b6660;margin:0 0 1.5em;">Em breve, seus materiais e acompanhamento estarão disponíveis aqui.</p>
+    <a href="#" onClick="{{ goHome }}" class="cta" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;border:2px solid #14181a;color:#14181a;transition:transform .2s ease,background .2s ease,color .2s ease;" style-hover="background:#14181a;color:#fff;transform:translateY(-2px);">Voltar para o início</a>
+  </div>
+</section>
+</sc-if>
+
+</main>
+
+<footer style="background:#14181a;color:#fff;margin-top:64px;">
+  <div class="footer-grid" style="max-width:1160px;margin:0 auto;padding:56px 24px 32px;box-sizing:border-box;display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;">
+    <div>
+      <img src="assets/logo-white.png" alt="Nutricionista Thales Rosa" height="64">
+    </div>
+    <div>
+      <h3 style="font-size:.95rem;text-transform:uppercase;letter-spacing:.08em;color:#1adc7f;margin-bottom:14px;">Navegação</h3>
+      <a href="#" onClick="{{ goSobre }}" style="display:block;color:rgba(255,255,255,.78);padding:5px 0;">Sobre</a>
+      <a href="#" onClick="{{ goAcompanhamento }}" style="display:block;color:rgba(255,255,255,.78);padding:5px 0;">Acompanhamento</a>
+      <a href="#" onClick="{{ goPlanos }}" style="display:block;color:rgba(255,255,255,.78);padding:5px 0;">Planos</a>
+      <a href="#" onClick="{{ goContato }}" style="display:block;color:rgba(255,255,255,.78);padding:5px 0;">Contato</a>
+    </div>
+    <div>
+      <h3 style="font-size:.95rem;text-transform:uppercase;letter-spacing:.08em;color:#1adc7f;margin-bottom:14px;">Atendimento</h3>
+      <p style="color:rgba(255,255,255,.78);">Avenida Cândido de Abreu, 526, sala 1108, Torre B<br>Curitiba, Paraná</p>
+      <p style="color:rgba(255,255,255,.78);">Segunda a sexta, das 8h às 19h</p>
+    </div>
+    <div>
+      <div style="display:flex;gap:12px;">
+        <a href="{{ waLink }}" target="_blank" rel="noopener" aria-label="Falar no WhatsApp" style="width:44px;height:44px;border-radius:50%;background:#0fae62;display:flex;align-items:center;justify-content:center;transition:transform .2s ease;" style-hover="transform:translateY(-2px);">
+          <svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:#fff;" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.64-1.03-5.12-2.9-6.99A9.82 9.82 0 0 0 12.04 2zm0 18.1h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.35c0-4.53 3.69-8.22 8.22-8.22 2.2 0 4.26.86 5.82 2.4a8.17 8.17 0 0 1 2.41 5.82c0 4.53-3.7 8.21-8.21 8.21zm4.5-6.15c-.25-.12-1.47-.72-1.7-.81-.23-.08-.4-.12-.56.13-.17.25-.65.81-.79.97-.15.17-.29.19-.54.06-.25-.12-1.04-.38-1.99-1.22-.73-.66-1.23-1.46-1.37-1.71-.15-.25-.02-.38.11-.51.11-.11.25-.29.37-.44.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.44-.06-.12-.56-1.36-.77-1.86-.2-.49-.4-.42-.56-.43h-.48c-.17 0-.44.06-.67.31-.23.25-.87.85-.87 2.08 0 1.22.89 2.4 1.01 2.57.12.17 1.76 2.69 4.27 3.77.6.26 1.06.41 1.43.53.6.19 1.14.16 1.57.1.48-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.15-1.18-.06-.1-.23-.16-.48-.28z"/></svg>
+        </a>
+        <a href="mailto:contato@nutrithales.com.br" aria-label="Enviar e-mail" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;transition:transform .2s ease,background .2s ease;" style-hover="transform:translateY(-2px);background:rgba(255,255,255,.18);">
+          <svg viewBox="0 0 24 24" style="width:20px;height:20px;" aria-hidden="true" stroke="#fff" fill="none" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16v12H4z"/><path stroke-linecap="round" stroke-linejoin="round" d="m4 7 8 6 8-6"/></svg>
+        </a>
+        <a href="https://www.instagram.com/nutri.thales" target="_blank" rel="noopener" aria-label="Ver Instagram" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;transition:transform .2s ease,background .2s ease;" style-hover="transform:translateY(-2px);background:rgba(255,255,255,.18);">
+          <svg viewBox="0 0 24 24" style="width:20px;height:20px;" aria-hidden="true" stroke="#fff" fill="none" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div style="max-width:1160px;margin:0 auto;padding:18px 24px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.12);display:flex;justify-content:space-between;font-size:.85rem;color:rgba(255,255,255,.6);flex-wrap:wrap;gap:8px;">
+    <p style="margin:0;">© 2026 Nutricionista Thales Rosa. Todos os direitos reservados.</p>
+    <p style="margin:0;"><a href="#" style="color:rgba(255,255,255,.6);">Política de Privacidade</a></p>
+  </div>
+</footer>
+
+<div class="mcta" style="position:fixed;left:0;right:0;bottom:0;z-index:998;background:#14181a;padding:12px 16px;">
+  <a href="{{ waLink }}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 26px;border-radius:999px;font-weight:600;font-size:.98rem;background:#1adc7f;color:#04140c;width:100%;box-sizing:border-box;">Quero agendar minha consulta</a>
+</div>
+<div style="height:76px;" class="mcta"></div>
+
+
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const WA_NUMBER = '5541987347625';
+const WA_MSG = 'Olá! Vim pelo site e quero saber mais sobre o acompanhamento.';
+
+class Component extends DCLogic {
+  state = {
+    page: 'home',
+    navOpen: false,
+    contactSent: false,
+    contactNome: '', contactEmail: '', contactTelefone: '', contactMensagem: ''
+  };
+
+  setPage(p) {
+    return (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState({ page: p, navOpen: false }); window.scrollTo(0, 0); };
+  }
+
+  toggleNav() {
+    this.setState(s => ({ navOpen: !s.navOpen }));
+  }
+
+  componentDidMount() {
+    this._observeReveals();
+  }
+
+  componentDidUpdate() {
+    this._observeReveals();
+  }
+
+  _observeReveals() {
+    if (!this._io) {
+      this._io = new IntersectionObserver((entries) => {
+        entries.forEach(en => {
+          if (en.isIntersecting) {
+            en.target.classList.add('is-visible');
+            this._io.unobserve(en.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    }
+    document.querySelectorAll('[data-reveal]:not(.is-visible)').forEach(el => this._io.observe(el));
+  }
+
+  renderVals() {
+    const page = this.state.page;
+    const navOp = {
+      home: page === 'home' ? 1 : 0.8,
+      sobre: page === 'sobre' ? 1 : 0.8,
+      acompanhamento: page === 'acompanhamento' ? 1 : 0.8,
+      planos: page === 'planos' ? 1 : 0.8,
+      contato: page === 'contato' ? 1 : 0.8
+    };
+
+    const plansData = [
+      { slug: 'consulta-avulsa', name: 'Consulta Avulsa', tagline: 'Ponto de partida', duration: 'Atendimento pontual', description: 'Uma avaliação completa e um plano alimentar personalizado, sem compromisso de longo prazo.', features: ['Avaliação física completa', 'Plano alimentar por 30 dias', 'Suporte inicial no WhatsApp'], highlight: false },
+      { slug: 'essencial', name: 'Plano Essencial', tagline: 'Consistência', duration: '4 meses', description: 'O ponto de partida para quem quer construir uma rotina alimentar consistente, com check-ins regulares para manter o progresso no caminho certo.', features: ['3 consultas e reavaliações', 'Check-in a cada 15 dias', '1 planilha de treino', 'Suporte contínuo pelo WhatsApp'], highlight: false },
+      { slug: 'evolucao', name: 'Plano Evolução', tagline: 'Transformação completa', duration: '8 meses', description: 'Acompanhamento mais próximo e prolongado, com consulta médica inclusa, pensado para quem busca uma transformação completa e duradoura.', features: ['6 consultas e reavaliações', 'Check-in a cada 15 dias', '2 planilhas de treino', '1 consulta médica inclusa', 'Suporte contínuo pelo WhatsApp'], highlight: true },
+      { slug: 'elite', name: 'Plano Elite - Premium', tagline: 'Experiência completa', duration: '12 meses', description: 'A experiência mais completa, com atendimento prioritário e treino renovado mês a mês, para quem quer o suporte máximo ao longo de um ano inteiro.', features: ['9 consultas com prioridade', 'Check-in semanal', '2 consultas médicas inclusas', 'Treino renovado mensalmente', 'Suporte contínuo com prioridade pelo WhatsApp'], highlight: false }
+    ];
+    const allPlans = plansData.map(p => ({ ...p, notHighlight: !p.highlight }));
+    const homePlans = plansData;
+
+    const faqs = [
+      { q: 'Como funciona a primeira consulta?', a: 'A primeira consulta tem 90 minutos. É o momento de compreender sua rotina, seus objetivos, seu histórico e construir uma estratégia realmente aplicável.' },
+      { q: 'O atendimento on-line funciona da mesma forma?', a: 'Sim. O acompanhamento mantém a mesma atenção e profundidade. A diferença é que a consulta acontece por videochamada, de onde você estiver.' },
+      { q: 'Preciso seguir uma dieta muito restritiva?', a: 'O planejamento é individualizado. A proposta é organizar escolhas que façam sentido para seus objetivos e que possam ser sustentadas na vida real.' },
+      { q: 'Posso agendar apenas uma avaliação física?', a: 'Sim. A avaliação física pode ser agendada separadamente e tem duração de 45 minutos.' }
+    ];
+
+    const acompanhamentoServices = [
+      { title: 'Nutrição esportiva', desc: 'Estratégias alimentares alinhadas ao treino, recuperação e performance.' },
+      { title: 'Emagrecimento', desc: 'Recomposição corporal sustentável, sem restrições impossíveis de manter.' },
+      { title: 'Mudança de hábitos', desc: 'Constância e adesão prática no centro da estratégia, não o extremismo.' },
+      { title: 'Organização da rotina alimentar', desc: 'Planejamento realista para uma rotina corrida, sem perder qualidade.' },
+      { title: 'Avaliação física', desc: 'Leitura completa da composição corporal para acompanhar sua evolução.' },
+      { title: 'Ajustes contínuos', desc: 'Check-ins regulares para reavaliar e adaptar o plano ao longo do tempo.' }
+    ];
+
+    const submitContact = (e) => {
+      e.preventDefault();
+      const s = this.state;
+      const msg = `Olá! Vim pelo site.\nNome: ${s.contactNome}\nE-mail: ${s.contactEmail}\nTelefone: ${s.contactTelefone}\nMensagem: ${s.contactMensagem}`;
+      window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
+      this.setState({ contactSent: true });
+    };
+
+    return {
+      isHome: page === 'home', isSobre: page === 'sobre', isAcompanhamento: page === 'acompanhamento',
+      isPlanos: page === 'planos', isContato: page === 'contato',
+      isAgendamento: page === 'agendamento',
+      goHome: this.setPage('home'), goSobre: this.setPage('sobre'), goAcompanhamento: this.setPage('acompanhamento'),
+      goPlanos: this.setPage('planos'), goContato: this.setPage('contato'),
+      goAgendamento: this.setPage('agendamento'), goAreaPaciente: this.setPage('area-paciente'),
+      isAreaPaciente: page === 'area-paciente',
+      navOpen: this.state.navOpen, toggleNav: () => this.toggleNav(),
+      navOp,
+      waLink: 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(WA_MSG),
+      homePlans, allPlans, faqs, acompanhamentoServices,
+      contactSent: this.state.contactSent, contactNotSent: !this.state.contactSent,
+      contactNome: this.state.contactNome, contactEmail: this.state.contactEmail,
+      contactTelefone: this.state.contactTelefone, contactMensagem: this.state.contactMensagem,
+      setNome: (e) => this.setState({ contactNome: e.target.value }),
+      setEmail: (e) => this.setState({ contactEmail: e.target.value }),
+      setTelefone: (e) => this.setState({ contactTelefone: e.target.value }),
+      setMensagem: (e) => this.setState({ contactMensagem: e.target.value }),
+      submitContact
+    };
+  }
+}
+</script>
+</body>
+</html>
