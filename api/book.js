@@ -35,8 +35,9 @@ export default async function handler(req,res){
     });
 
     let profileSynced=false;
-    const dashboardUrl=process.env.AGENDA_DASHBOARD_URL?.replace(/\/$/,'');
-    if(dashboardUrl&&process.env.AGENDA_SYNC_SECRET){
+    // Use the stable production alias so a new admin deployment never breaks booking sync.
+    const dashboardUrl='https://admin-nutri-thales.vercel.app';
+    if(process.env.AGENDA_SYNC_SECRET){
       try{
         const syncResponse=await fetch(`${dashboardUrl}/api/agenda/webhook`,{
           method:'POST',
