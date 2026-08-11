@@ -12,13 +12,13 @@ export function scheduleWindows(date){
 }
 export function scheduledSpan(date,time,service){
   const cfg=services[service];
-  if(!cfg||!/^\d{4}-\d{2}-\d{2}$/.test(date||'')||!/^\d{2}:00$/.test(time||''))return null;
+  if(!cfg||!/^\d{4}-\d{2}-\d{2}$/.test(date||'')||!/^\d{2}:(00|30)$/.test(time||''))return null;
   const start=new Date(`${date}T${time}:00-03:00`);
   const end=new Date(start.getTime()+cfg.duration*60000);
   const inside=scheduleWindows(date).some(([a,z])=>{
     const windowStart=new Date(`${date}T${a}:00-03:00`);
-    const windowEnd=new Date(`${date}T${z}:00-03:00`);
-    return start>=windowStart&&end<=windowEnd;
+    const lastStart=new Date(`${date}T${z}:00-03:00`);
+    return start>=windowStart&&start<=lastStart;
   });
   return inside?{start:start.toISOString(),end:end.toISOString()}:null;
 }
