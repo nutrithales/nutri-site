@@ -22,7 +22,7 @@ function page(title, message, token = '') {
 
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store, max-age=0');
-  const clientId = process.env.GOOGLE_CLIENT_ID?.replace(/[\s"']/g, '').replace(/\|/g, 'l');
+  const clientId = '784975224517-6gl9286vpl9n20j5l8jhhea9s519dm1n.apps.googleusercontent.com';
   const clientSecret = process.env.GOOGLE_CLIENT_SECRET?.replace(/[\s"']/g, '');
 
   if (!clientId || !clientSecret) {
