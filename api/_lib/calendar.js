@@ -4,7 +4,7 @@ export const weeklyWindows={
   1:[['08:00','12:00'],['16:00','18:00']],
   3:[['16:00','18:00']],
   5:[['08:00','12:00'],['16:00','18:00']],
-  6:[['09:00','12:00']]
+  6:[['08:00','11:00']]
 };
 export function scheduleWindows(date){
   const day=new Date(`${date}T12:00:00-03:00`).getDay();
