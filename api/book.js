@@ -24,7 +24,35 @@ export default async function handler(req,res){
       attendees:[{email:x.email}],
       reminders:{useDefault:false,overrides:[{method:'email',minutes:1440},{method:'popup',minutes:120}]}
     });
-    return res.status(201).json({ok:true,id:event.id});
+
+    let profileSynced=false;
+    const dashboardUrl=process.env.AGENDA_DASHBOARD_URL?.replace(/\/$/,'');
+    if(dashboardUrl&&process.env.AGENDA_SYNC_SECRET){
+      try{
+        const syncResponse=await fetch(`${dashboardUrl}/api/agenda/webhook`,{
+          method:'POST',
+          headers:{'content-type':'application/json',authorization:`Bearer ${process.env.AGENDA_SYNC_SECRET}`},
+          body:JSON.stringify({
+            eventId:event.id,
+            name:x.name,
+            cpf:x.cpf,
+            email:x.email,
+            phone:x.phone,
+            plan:x.plan,
+            mode:x.mode,
+            serviceTitle:cfg.title,
+            start:span.start,
+            notes:x.notes||''
+          })
+        });
+        profileSynced=syncResponse.ok;
+        if(!syncResponse.ok)console.error('Falha ao sincronizar paciente:',await syncResponse.text());
+      }catch(syncError){
+        console.error('Falha ao sincronizar paciente:',syncError);
+      }
+    }
+
+    return res.status(201).json({ok:true,id:event.id,profileSynced});
   }catch(e){
     return res.status(503).json({error:e.message});
   }
