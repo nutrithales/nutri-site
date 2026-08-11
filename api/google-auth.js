@@ -22,8 +22,8 @@ function page(title, message, token = '') {
 
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store, max-age=0');
-  const clientId = process.env.GOOGLE_CLIENT_ID;
-  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+  const clientId = process.env.GOOGLE_CLIENT_ID?.replace(/\\s+/g, '');
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET?.replace(/\\s+/g, '');
 
   if (!clientId || !clientSecret) {
     return res.status(503).send(page('Configuração pendente', 'Cadastre GOOGLE_CLIENT_ID e GOOGLE_CLIENT_SECRET nas variáveis de ambiente da Vercel e faça um novo deploy.'));
