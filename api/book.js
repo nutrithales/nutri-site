@@ -35,7 +35,7 @@ export default async function handler(req,res){
     });
 
     let profileSynced=false;
-    // Use the stable production alias so a new admin deployment never breaks booking sync.
+    // Stable production endpoint; the shared sync secret is loaded from Vercel at deploy time.
     const dashboardUrl='https://admin-nutri-thales.vercel.app';
     if(process.env.AGENDA_SYNC_SECRET){
       try{
