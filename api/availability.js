@@ -16,7 +16,7 @@ export default async function handler(req,res){
     for(const [a,z] of windows){
       let cur=new Date(`${date}T${a}:00-03:00`);
       const windowEnd=new Date(`${date}T${z}:00-03:00`);
-      while(cur<windowEnd){
+      while(cur<=windowEnd){
         const time=cur.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',timeZone:'America/Sao_Paulo'});
         const span=scheduledSpan(date,time,service);
         if(span){
@@ -24,7 +24,7 @@ export default async function handler(req,res){
           const occupied=blocks.some(b=>new Date(b.start)<finish&&new Date(b.end)>start);
           if(start>Date.now()+12*3600000&&!occupied)slots.push(time);
         }
-        cur=new Date(cur.getTime()+60*60000);
+        cur=new Date(cur.getTime()+30*60000);
       }
     }
     return res.json({slots});
