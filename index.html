@@ -143,6 +143,7 @@ html{scroll-behavior:smooth;}
       <a href="#" onClick="{{ goSobre }}" style="opacity:{{ navOp.sobre }};">Sobre</a>
       <a href="#" onClick="{{ goAcompanhamento }}" style="opacity:{{ navOp.acompanhamento }};">Acompanhamento</a>
       <a href="#" onClick="{{ goPlanos }}" style="opacity:{{ navOp.planos }};">Planos</a>
+      <a href="#" onClick="{{ goConteudos }}" style="opacity:{{ navOp.conteudos }};">Conteúdos</a>
       <a href="#" onClick="{{ goContato }}" style="opacity:{{ navOp.contato }};">Contato</a>
       <a href="#" onClick="{{ goAreaPaciente }}" style="display:inline-flex;align-items:center;gap:6px;border:2px solid #14181a;color:#14181a;border-radius:999px;padding:8px 16px;font-weight:600;font-size:.88rem;transition:background .2s ease,color .2s ease;" style-hover="background:#14181a;color:#fff;">Área do paciente</a>
       <a href="#" onClick="{{ goAgendamento }}" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 20px;border-radius:999px;font-weight:600;font-size:.98rem;border:2px solid transparent;background:#1adc7f;color:#04140c;box-shadow:0 8px 20px -8px rgba(26,220,127,.6);transition:transform .2s ease,box-shadow .2s ease,background .2s ease;" style-hover="background:#0fae62;color:#fff;transform:translateY(-2px);box-shadow:0 12px 26px -8px rgba(26,220,127,.7);">Pré-avaliação gratuita</a>
@@ -157,6 +158,7 @@ html{scroll-behavior:smooth;}
       <a href="#" onClick="{{ goSobre }}" style="padding:16px 4px;font-weight:600;font-size:1.1rem;color:#14181a;border-bottom:1px solid #eef1ef;">Sobre</a>
       <a href="#" onClick="{{ goAcompanhamento }}" style="padding:16px 4px;font-weight:600;font-size:1.1rem;color:#14181a;border-bottom:1px solid #eef1ef;">Acompanhamento</a>
       <a href="#" onClick="{{ goPlanos }}" style="padding:16px 4px;font-weight:600;font-size:1.1rem;color:#14181a;border-bottom:1px solid #eef1ef;">Planos</a>
+      <a href="#" onClick="{{ goConteudos }}" style="padding:16px 4px;font-weight:600;font-size:1.1rem;color:#14181a;border-bottom:1px solid #eef1ef;">Conteúdos</a>
       <a href="#" onClick="{{ goContato }}" style="padding:16px 4px;font-weight:600;font-size:1.1rem;color:#14181a;border-bottom:1px solid #eef1ef;">Contato</a>
       <a href="#" onClick="{{ goAreaPaciente }}" style="padding:16px 4px;font-weight:600;font-size:1.1rem;color:#14181a;border-bottom:1px solid #eef1ef;">Área do paciente</a>
       <a href="#" onClick="{{ goAgendamento }}" style="display:flex;align-items:center;justify-content:center;margin-top:14px;padding:16px 20px;border-radius:999px;font-weight:700;font-size:1.05rem;background:#1adc7f;color:#04140c;">Pré-avaliação gratuita</a>
@@ -780,6 +782,42 @@ html{scroll-behavior:smooth;}
 </section>
 </sc-if>
 
+<sc-if value="{{ isConteudos }}" hint-placeholder-val="{{ false }}">
+<section class="page-in" style="padding:82px 0 96px;background:linear-gradient(180deg,#f0f5f2 0,#faf9f6 320px);">
+  <div style="max-width:1160px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
+    <div style="max-width:760px;margin-bottom:48px;">
+      <span style="text-transform:uppercase;letter-spacing:.12em;font-size:.82rem;font-weight:700;color:#0fae62;display:block;margin-bottom:12px;">Nutrição sem complicação</span>
+      <h1 style="font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-0.07em;font-size:clamp(2.2rem,4vw,3.4rem);line-height:1.08;margin:0 0 .45em;color:#14181a;">Conteúdos para cuidar melhor da alimentação, do corpo e da performance.</h1>
+      <p style="font-size:1.15rem;line-height:1.65;color:#5b6660;margin:0;max-width:62ch;">Informações práticas e baseadas em evidências para quem quer evoluir sem dietas impossíveis, terrorismo nutricional ou soluções prontas.</p>
+    </div>
+    <div class="grid3" style="display:grid;grid-template-columns:repeat(3,1fr);gap:24px;">
+      <a href="conteudos/por-que-comer-pouco-atrapalha-o-emagrecimento.html" style="display:flex;flex-direction:column;background:#fff;border:1px solid #e7ebe9;border-radius:18px;padding:30px;min-height:290px;box-sizing:border-box;transition:transform .2s ease,box-shadow .2s ease;" style-hover="transform:translateY(-4px);box-shadow:0 18px 36px -20px rgba(20,24,26,.35);">
+        <span style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#0fae62;">Emagrecimento</span>
+        <h2 style="font-size:1.45rem;line-height:1.2;margin:18px 0 12px;color:#14181a;letter-spacing:-.03em;">Comer pouco demais pode atrapalhar o emagrecimento?</h2>
+        <p style="color:#5b6660;line-height:1.6;margin:0 0 24px;">Entenda por que reduzir demais a comida pode aumentar a fome, piorar os treinos e tornar o processo mais difícil de sustentar.</p>
+        <span style="margin-top:auto;font-weight:700;color:#14181a;">Ler artigo →</span>
+      </a>
+      <a href="conteudos/o-que-comer-antes-de-correr.html" style="display:flex;flex-direction:column;background:#14181a;border:1px solid #14181a;border-radius:18px;padding:30px;min-height:290px;box-sizing:border-box;transition:transform .2s ease,box-shadow .2s ease;" style-hover="transform:translateY(-4px);box-shadow:0 18px 36px -20px rgba(20,24,26,.55);">
+        <span style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#1adc7f;">Corrida e performance</span>
+        <h2 style="font-size:1.45rem;line-height:1.2;margin:18px 0 12px;color:#fff;letter-spacing:-.03em;">O que comer antes de correr 5 km, 10 km ou 21 km?</h2>
+        <p style="color:rgba(255,255,255,.7);line-height:1.6;margin:0 0 24px;">Um guia para ajustar a refeição ao horário, à distância e à tolerância individual, sem fórmulas engessadas.</p>
+        <span style="margin-top:auto;font-weight:700;color:#1adc7f;">Ler artigo →</span>
+      </a>
+      <a href="conteudos/como-emagrecer-sem-cortar-carboidratos.html" style="display:flex;flex-direction:column;background:#fff;border:1px solid #e7ebe9;border-radius:18px;padding:30px;min-height:290px;box-sizing:border-box;transition:transform .2s ease,box-shadow .2s ease;" style-hover="transform:translateY(-4px);box-shadow:0 18px 36px -20px rgba(20,24,26,.35);">
+        <span style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:#0fae62;">Comportamento alimentar</span>
+        <h2 style="font-size:1.45rem;line-height:1.2;margin:18px 0 12px;color:#14181a;letter-spacing:-.03em;">Como emagrecer sem cortar pão, arroz ou a vida social</h2>
+        <p style="color:#5b6660;line-height:1.6;margin:0 0 24px;">O que realmente precisa mudar para perder gordura mantendo flexibilidade, prazer e constância na rotina.</p>
+        <span style="margin-top:auto;font-weight:700;color:#14181a;">Ler artigo →</span>
+      </a>
+    </div>
+    <div style="margin-top:44px;padding:32px;border-radius:18px;background:#1adc7f;color:#04140c;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+      <div><strong style="display:block;font-size:1.3rem;margin-bottom:6px;">Quer uma estratégia pensada para você?</strong><span style="line-height:1.5;">Conheça o acompanhamento nutricional presencial em Curitiba ou on-line.</span></div>
+      <a href="#" onClick="{{ goAgendamento }}" style="display:inline-flex;padding:14px 24px;border-radius:999px;background:#14181a;color:#fff;font-weight:700;">Agendar pré-avaliação gratuita</a>
+    </div>
+  </div>
+</section>
+</sc-if>
+
 <sc-if value="{{ isAreaPaciente }}" hint-placeholder-val="{{ false }}">
 <section class="page-in" style="padding:100px 0;text-align:center;">
   <div style="max-width:420px;margin:0 auto;padding:0 24px;box-sizing:border-box;">
@@ -832,6 +870,7 @@ html{scroll-behavior:smooth;}
       <a href="#" onClick="{{ goSobre }}" style="display:block;color:rgba(255,255,255,.78);padding:5px 0;">Sobre</a>
       <a href="#" onClick="{{ goAcompanhamento }}" style="display:block;color:rgba(255,255,255,.78);padding:5px 0;">Acompanhamento</a>
       <a href="#" onClick="{{ goPlanos }}" style="display:block;color:rgba(255,255,255,.78);padding:5px 0;">Planos</a>
+      <a href="#" onClick="{{ goConteudos }}" style="display:block;color:rgba(255,255,255,.78);padding:5px 0;">Conteúdos</a>
       <a href="#" onClick="{{ goContato }}" style="display:block;color:rgba(255,255,255,.78);padding:5px 0;">Contato</a>
     </div>
     <div>
@@ -957,6 +996,7 @@ class Component extends DCLogic {
       sobre: page === 'sobre' ? 1 : 0.8,
       acompanhamento: page === 'acompanhamento' ? 1 : 0.8,
       planos: page === 'planos' ? 1 : 0.8,
+      conteudos: page === 'conteudos' ? 1 : 0.8,
       contato: page === 'contato' ? 1 : 0.8
     };
 
@@ -996,10 +1036,10 @@ class Component extends DCLogic {
 
     return {
       isHome: page === 'home', isSobre: page === 'sobre', isAcompanhamento: page === 'acompanhamento',
-      isPlanos: page === 'planos', isContato: page === 'contato',
+      isPlanos: page === 'planos', isConteudos: page === 'conteudos', isContato: page === 'contato',
       isAgendamento: page === 'agendamento',
       goHome: this.setPage('home'), goSobre: this.setPage('sobre'), goAcompanhamento: this.setPage('acompanhamento'),
-      goPlanos: this.setPage('planos'), goContato: this.setPage('contato'),
+      goPlanos: this.setPage('planos'), goConteudos: this.setPage('conteudos'), goContato: this.setPage('contato'),
       goAgendamento: this.setPage('agendamento'), goAreaPaciente: this.setPage('area-paciente'),
       isAreaPaciente: page === 'area-paciente',
       navOpen: this.state.navOpen, toggleNav: () => this.toggleNav(),
