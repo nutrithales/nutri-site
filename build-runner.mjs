@@ -39,10 +39,13 @@ fs.writeFileSync(indexPath, html);
 const patientIndexPath = path.join(out, 'paciente', 'index.html');
 if (fs.existsSync(patientIndexPath)) {
   let patientHtml = fs.readFileSync(patientIndexPath, 'utf8');
-  const trainingScript = '<script src="/paciente/patient-training-link.js"></script>';
-  if (!patientHtml.includes(trainingScript)) {
+  const legacyTrainingScript = '<script src="/paciente/patient-training-link.js"></script>';
+  const trainingScript = '<script src="/paciente/patient-training-link.js?v=2"></script>';
+  if (patientHtml.includes(legacyTrainingScript)) {
+    patientHtml = patientHtml.replace(legacyTrainingScript, trainingScript);
+  } else if (!patientHtml.includes(trainingScript)) {
     if (!patientHtml.includes('</body>')) throw new Error('patient page body marker not found');
     patientHtml = patientHtml.replace('</body>', `${trainingScript}\n</body>`);
-    fs.writeFileSync(patientIndexPath, patientHtml);
   }
+  fs.writeFileSync(patientIndexPath, patientHtml);
 }
