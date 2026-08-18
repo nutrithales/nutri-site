@@ -29,7 +29,7 @@ async function ensurePatientPlanLink(sessionOverride) {
     const { list, empty } = await waitForQuickLinks();
     if (!list) return;
 
-    const target = 'https://admin.nutrithales.com.br/paciente/plano-alimentar';
+    const target = '/paciente/plano-alimentar';
     const existing = Array.from(list.querySelectorAll('a')).find(a => {
       const href = a.getAttribute('href') || '';
       const text = (a.textContent || '').toLowerCase();
