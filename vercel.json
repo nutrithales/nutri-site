@@ -1,4 +1,4 @@
 {
-  "buildCommand": "node build-patient-site.mjs",
+  "buildCommand": "node build-runner.mjs",
   "outputDirectory": "dist"
 }
