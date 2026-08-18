@@ -8,7 +8,6 @@ async function ensurePatientPlanLink(sessionOverride) {
       .select('id,titulo,tipo,plano_estruturado_id')
       .eq('auth_id', session.user.id)
       .eq('ativo', true)
-      .order('id', { ascending: false })
       .limit(1)
       .maybeSingle();
 
@@ -25,19 +24,21 @@ async function ensurePatientPlanLink(sessionOverride) {
     const empty = document.getElementById('pagesEmpty');
     if (!list) return;
 
+    const target = 'https://admin.nutrithales.com.br/paciente/plano-alimentar';
     const existing = Array.from(list.querySelectorAll('a')).find(a => {
       const href = a.getAttribute('href') || '';
       const text = (a.textContent || '').toLowerCase();
       return href.includes('/paciente/plano-alimentar') || text.includes('plano alimentar');
     });
+
     if (existing) {
-      existing.href = '/paciente/plano-alimentar';
+      existing.href = target;
       return;
     }
 
     const link = document.createElement('a');
     link.className = 'quick-link';
-    link.href = '/paciente/plano-alimentar';
+    link.href = target;
     link.innerHTML = '<div class="quick-top"><span class="quick-icon">◉</span><span class="quick-arrow">→</span></div><div class="quick-title">Plano Alimentar</div>';
     list.prepend(link);
     if (empty) empty.style.display = 'none';
