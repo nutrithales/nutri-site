@@ -1,11 +1,29 @@
 {
   "buildCommand": "node build-runner.mjs",
   "outputDirectory": "dist",
-  "rewrites": [
+  "redirects": [
     {
       "source": "/paciente",
-      "destination": "/paciente/index.html"
+      "destination": "https://admin.nutrithales.com.br/paciente",
+      "permanent": false
     },
+    {
+      "source": "/paciente/login",
+      "destination": "https://admin.nutrithales.com.br/paciente/login",
+      "permanent": false
+    },
+    {
+      "source": "/paciente/plano-alimentar",
+      "destination": "https://admin.nutrithales.com.br/paciente/plano-alimentar",
+      "permanent": false
+    },
+    {
+      "source": "/paciente/suplementacao",
+      "destination": "https://admin.nutrithales.com.br/paciente/suplementacao",
+      "permanent": false
+    }
+  ],
+  "rewrites": [
     {
       "source": "/paciente/treinos/vinicius",
       "destination": "/paciente/treinos/index.html"
