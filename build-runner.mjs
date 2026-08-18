@@ -49,3 +49,15 @@ if (fs.existsSync(patientIndexPath)) {
   }
   fs.writeFileSync(patientIndexPath, patientHtml);
 }
+
+const workoutIndexPath = path.join(out, 'paciente', 'treinos', 'index.html');
+if (fs.existsSync(workoutIndexPath)) {
+  let workoutHtml = fs.readFileSync(workoutIndexPath, 'utf8');
+  const backBase = '.back{font-size:13px;color:var(--muted);font-weight:700}';
+  const backButton = '.back{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:9px 13px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text);font-size:12px;font-weight:800;white-space:nowrap;box-shadow:var(--shadow)}';
+  const hiddenMobileBack = '.header-left .back{display:none}';
+  if (!workoutHtml.includes('← Área do paciente')) throw new Error('workout dashboard return link marker not found');
+  if (!workoutHtml.includes(backBase) && !workoutHtml.includes(backButton)) throw new Error('workout dashboard return button style marker not found');
+  workoutHtml = workoutHtml.replace(backBase, backButton).replace(hiddenMobileBack, '.header-left .back{display:inline-flex}');
+  fs.writeFileSync(workoutIndexPath, workoutHtml);
+}
