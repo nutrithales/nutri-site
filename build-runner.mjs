@@ -35,3 +35,14 @@ if (html.includes(mobileCta)) {
   html = html.replace(mobileCta, `<sc-if value="{{ !isAreaPaciente }}" hint-placeholder-val="{{ true }}">\n${mobileCta}\n</sc-if>`);
 }
 fs.writeFileSync(indexPath, html);
+
+const patientIndexPath = path.join(out, 'paciente', 'index.html');
+if (fs.existsSync(patientIndexPath)) {
+  let patientHtml = fs.readFileSync(patientIndexPath, 'utf8');
+  const trainingScript = '<script src="/paciente/patient-training-link.js"></script>';
+  if (!patientHtml.includes(trainingScript)) {
+    if (!patientHtml.includes('</body>')) throw new Error('patient page body marker not found');
+    patientHtml = patientHtml.replace('</body>', `${trainingScript}\n</body>`);
+    fs.writeFileSync(patientIndexPath, patientHtml);
+  }
+}
