@@ -39,15 +39,13 @@ fs.writeFileSync(indexPath, html);
 const patientIndexPath = path.join(out, 'paciente', 'index.html');
 if (fs.existsSync(patientIndexPath)) {
   let patientHtml = fs.readFileSync(patientIndexPath, 'utf8');
-  const legacyTrainingScript = '<script src="/paciente/patient-training-link.js"></script>';
-  const trainingScript = '<script src="/paciente/patient-training-link.js?v=2"></script>';
-  if (patientHtml.includes(legacyTrainingScript)) {
-    patientHtml = patientHtml.replace(legacyTrainingScript, trainingScript);
-  } else if (!patientHtml.includes(trainingScript)) {
+  const trainingScriptV3 = '<script src="/paciente/patient-training-link.js?v=3"></script>';
+  patientHtml = patientHtml
+    .replace('<script src="/paciente/patient-training-link.js"></script>', trainingScriptV3)
+    .replace('<script src="/paciente/patient-training-link.js?v=2"></script>', trainingScriptV3);
+  if (!patientHtml.includes(trainingScriptV3)) {
     if (!patientHtml.includes('</body>')) throw new Error('patient page body marker not found');
-    patientHtml = patientHtml.replace('</body>', `${trainingScript}\n</body>`);
+    patientHtml = patientHtml.replace('</body>', `${trainingScriptV3}\n</body>`);
   }
   fs.writeFileSync(patientIndexPath, patientHtml);
 }
-
-// Deployment trigger: generic interactive patient workout dashboard.
