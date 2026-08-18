@@ -73,5 +73,29 @@ if (fs.existsSync(workoutIndexPath)) {
   if (workoutHtml.includes(logoText)) workoutHtml = workoutHtml.replace(logoText, logoImages);
   if (!workoutHtml.includes(logoStyles)) workoutHtml = workoutHtml.replace('</style>', `${logoStyles}\n</style>`);
   for (const navItem of navItemsToRemove) workoutHtml = workoutHtml.replace(navItem, '');
+
+  const oldRestTick = "clearInterval(state.restTick);state.restTick=setInterval(()=>{const s=session(),r=s.rest;if(!r||r.paused)return;r.remaining=Math.max(0,(r.remaining||0)-1);if(r.remaining<=0){s.rest=null;scheduleSave();toast('Descanso concluído');renderRest()}else renderRest(false)},1000)";
+  const newRestTick = "clearInterval(state.restTick);state.restTick=setInterval(()=>syncRestClock(true),500)";
+  const oldStartRest = "function startRest(ex){const sec=Number(ex.descanso_seg||0);if(!sec)return;const s=session();s.rest={exerciseId:ex.id,label:ex.nome,total:sec,remaining:sec,paused:false};scheduleSave();renderRest();}";
+  const newStartRest = "function startRest(ex){const sec=Number(ex.descanso_seg||0);if(!sec)return;const s=session();s.rest={exerciseId:ex.id,label:ex.nome,total:sec,remaining:sec,paused:false,endAt:Date.now()+sec*1000};scheduleSave();renderRest();}";
+  const oldPause = "$('#restPause').onclick=()=>{r.paused=!r.paused;scheduleSave();renderRest()}";
+  const newPause = "$('#restPause').onclick=()=>{if(r.paused){r.paused=false;r.endAt=Date.now()+Math.max(0,Number(r.remaining)||0)*1000}else{if(r.endAt)r.remaining=Math.max(0,Math.ceil((r.endAt-Date.now())/1000));r.paused=true;r.endAt=null}scheduleSave();renderRest()}";
+  const oldRestart = "$('#restRestart').onclick=()=>{r.remaining=r.total;r.paused=false;scheduleSave();renderRest()}";
+  const newRestart = "$('#restRestart').onclick=()=>{r.remaining=r.total;r.paused=false;r.endAt=Date.now()+Math.max(0,Number(r.total)||0)*1000;scheduleSave();renderRest()}";
+  const oldAdd = "$('#restAdd').onclick=()=>{r.total+=30;r.remaining+=30;scheduleSave();renderRest()}";
+  const newAdd = "$('#restAdd').onclick=()=>{r.total+=30;r.remaining+=30;if(!r.paused)r.endAt=Date.now()+Math.max(0,Number(r.remaining)||0)*1000;scheduleSave();renderRest()}";
+  const syncRestCode = "function syncRestClock(showToast=false){const s=session(),r=s.rest;if(!r||r.paused)return;if(!r.endAt)r.endAt=Date.now()+Math.max(0,Number(r.remaining)||0)*1000;r.remaining=Math.max(0,Math.ceil((r.endAt-Date.now())/1000));if(r.remaining<=0){s.rest=null;scheduleSave();if(showToast)toast('Descanso concluído');renderRest();return}renderRest(false)}\ndocument.addEventListener('visibilitychange',()=>{if(!document.hidden)syncRestClock(true)});window.addEventListener('pageshow',()=>syncRestClock(true));\n";
+
+  if (!workoutHtml.includes(oldRestTick)) throw new Error('workout rest interval marker not found');
+  if (!workoutHtml.includes(oldStartRest)) throw new Error('workout rest start marker not found');
+  if (!workoutHtml.includes(oldPause) || !workoutHtml.includes(oldRestart) || !workoutHtml.includes(oldAdd)) throw new Error('workout rest controls marker not found');
+  workoutHtml = workoutHtml
+    .replace(oldRestTick, newRestTick)
+    .replace(oldStartRest, newStartRest)
+    .replace(oldPause, newPause)
+    .replace(oldRestart, newRestart)
+    .replace(oldAdd, newAdd);
+  if (!workoutHtml.includes('function syncRestClock(')) workoutHtml = workoutHtml.replace('boot();', `${syncRestCode}boot();`);
+
   fs.writeFileSync(workoutIndexPath, workoutHtml);
 }
