@@ -7,6 +7,10 @@
       "destination": "/paciente/index.html"
     },
     {
+      "source": "/paciente/treinos",
+      "destination": "/paciente/treinos/index.html"
+    },
+    {
       "source": "/paciente/diario/anna",
       "destination": "/api/patient-page-proxy?app=anna-diario"
     },
