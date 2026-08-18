@@ -1,0 +1,54 @@
+name: Production Safety
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: production-safety-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  preflight:
+    name: Preflight build and isolation
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: Validate build, JavaScript and domain isolation
+        run: node scripts/safety-check.mjs
+
+  production-smoke:
+    name: Production smoke test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: preflight
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Wait for deployment propagation
+        run: sleep 20
+      - name: Check homepage
+        run: |
+          body=$(curl --fail --silent --show-error --location --retry 4 --retry-delay 5 https://www.nutrithales.com.br/)
+          echo "$body" | grep -q 'Nutricionista em Curitiba'
+      - name: Check patient area
+        run: |
+          body=$(curl --fail --silent --show-error --location --retry 4 --retry-delay 5 https://www.nutrithales.com.br/paciente)
+          echo "$body" | grep -q 'Área do Paciente'
+          if echo "$body" | grep -qi 'admin.nutrithales.com.br'; then exit 1; fi
+      - name: Check workout dashboard
+        run: |
+          body=$(curl --fail --silent --show-error --location --retry 4 --retry-delay 5 https://www.nutrithales.com.br/paciente/treinos)
+          echo "$body" | grep -q 'Dashboard de Treinos'
+          if echo "$body" | grep -qi 'admin.nutrithales.com.br'; then exit 1; fi
