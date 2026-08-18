@@ -7,6 +7,10 @@
       "destination": "/paciente/index.html"
     },
     {
+      "source": "/paciente/treinos/vinicius",
+      "destination": "/paciente/treinos/vinicius/index.html"
+    },
+    {
       "source": "/paciente/treinos",
       "destination": "/paciente/treinos/index.html"
     },
