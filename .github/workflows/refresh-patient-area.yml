@@ -1,0 +1,238 @@
+name: Refresh patient area
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/refresh-patient-area.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch patient dashboard
+        shell: bash
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+
+          path = Path('index.html')
+          s = path.read_text()
+
+          css = r'''
+/* Patient area dashboard */
+.patient-dashboard{max-width:880px;margin:0 auto;padding:0 24px;box-sizing:border-box;text-align:left;}
+.patient-eyebrow{text-transform:uppercase;letter-spacing:.14em;font-size:.78rem;font-weight:700;color:#0fae62;margin-bottom:12px;display:block;}
+.patient-title{font-family:'Galano Grotesque Alt',sans-serif;letter-spacing:-.055em;font-size:clamp(2rem,5vw,3.3rem);line-height:1.02;margin:0;color:#14181a;}
+.patient-subtitle{font-size:1.02rem;color:#66706b;margin:10px 0 0;}
+.patient-section{margin-top:30px;}
+.patient-section-head{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:12px;}
+.patient-section-title{font-size:.78rem;letter-spacing:.11em;text-transform:uppercase;font-weight:700;color:#66706b;margin:0;}
+.patient-card{background:#fff;border:1px solid #e5e9e6;border-radius:22px;box-shadow:0 14px 34px -28px rgba(20,24,26,.45);}
+.patient-next{padding:24px;display:flex;align-items:center;justify-content:space-between;gap:24px;}
+.patient-next-label{font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#0fae62;margin-bottom:8px;}
+.patient-next-date{font-size:1.48rem;font-weight:700;letter-spacing:-.03em;color:#14181a;}
+.patient-next-meta{font-size:.92rem;color:#66706b;margin-top:5px;}
+.patient-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border:1.5px solid #14181a;border-radius:999px;font-size:.88rem;font-weight:700;color:#14181a;white-space:nowrap;transition:.2s ease;}
+.patient-link:hover{background:#14181a;color:#fff;transform:translateY(-1px);}
+.patient-plan{padding:22px 24px;}
+.patient-plan-top{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.patient-plan-name{font-size:1.15rem;font-weight:700;color:#14181a;}
+.patient-plan-count{font-size:.88rem;color:#66706b;}
+.patient-progress{height:8px;border-radius:999px;background:#edf1ee;overflow:hidden;margin-top:16px;}
+.patient-progress-bar{height:100%;border-radius:999px;background:#1adc7f;transition:width .35s ease;}
+.patient-pages{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.patient-page-card{display:flex;align-items:center;gap:14px;min-height:86px;padding:18px;border:1px solid #e5e9e6;border-radius:18px;background:#fff;color:#14181a;box-sizing:border-box;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;}
+.patient-page-card:hover{color:#14181a;transform:translateY(-2px);border-color:#b9c3bd;box-shadow:0 14px 28px -22px rgba(20,24,26,.55);}
+.patient-page-icon{width:42px;height:42px;border-radius:13px;background:#e9fbf3;display:flex;align-items:center;justify-content:center;flex:0 0 42px;color:#0fae62;}
+.patient-page-title{font-size:.98rem;font-weight:700;line-height:1.2;}
+.patient-page-caption{font-size:.78rem;color:#78827d;margin-top:4px;}
+.patient-checkin{padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;}
+.patient-checkin-title{font-size:1rem;font-weight:700;color:#14181a;}
+.patient-checkin-copy{font-size:.88rem;color:#66706b;margin-top:5px;}
+.patient-support{margin-top:30px;padding:20px 22px;border-radius:20px;background:#14181a;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:18px;}
+.patient-support strong{font-size:.98rem;display:block;}
+.patient-support span{font-size:.82rem;color:#bac2be;display:block;margin-top:3px;}
+.patient-support a{color:#1adc7f;font-weight:700;font-size:.9rem;white-space:nowrap;}
+.patient-logout{display:inline-flex;margin-top:24px;color:#66706b;font-weight:600;font-size:.86rem;}
+.patient-empty{padding:20px;border:1px dashed #ccd3cf;border-radius:18px;color:#66706b;font-size:.9rem;text-align:center;}
+@media(max-width:640px){
+  .patient-dashboard{padding:0 18px;}
+  .patient-title{font-size:2.15rem !important;}
+  .patient-next,.patient-checkin,.patient-support{align-items:flex-start;flex-direction:column;}
+  .patient-link{width:100%;box-sizing:border-box;}
+  .patient-pages{grid-template-columns:1fr 1fr;gap:10px;}
+  .patient-page-card{min-height:112px;padding:15px;align-items:flex-start;flex-direction:column;gap:10px;}
+  .patient-page-icon{width:38px;height:38px;flex-basis:38px;}
+  .patient-page-title{font-size:.9rem;}
+  .patient-page-caption{display:none;}
+}
+'''
+          if '/* Patient area dashboard */' not in s:
+              s = s.replace('</style>', css + '\n</style>', 1)
+
+          old_state = "    patientPages: [], patientPageLoading: false\n"
+          new_state = "    patientPages: [], patientPageLoading: false,\n    patientProfile: null, patientNextConsult: null, patientConsultasRealizadas: 0, patientLastCheckin: null\n"
+          if old_state not in s:
+              raise SystemExit('patient state anchor not found')
+          s = s.replace(old_state, new_state, 1)
+
+          fetch_start = s.index('  // Tabela esperada no Supabase: "paginas_paciente"')
+          fetch_end = s.index('  async patientLogoutHandler()', fetch_start)
+          new_fetch = r'''  // Dados exibidos na home do paciente. Todas as consultas respeitam as RLS existentes.
+  async fetchPatientPage(userId) {
+    const sb = this.getSupabase();
+    if (!sb) return;
+    this.setState({ patientPageLoading: true });
+
+    const nowIso = new Date().toISOString();
+    const [pagesResult, profileResult, nextConsultResult, realizadasResult, checkinResult] = await Promise.all([
+      sb.from('paginas_paciente').select('titulo, url_pagina, icone, ordem').eq('user_id', userId).eq('ativo', true).order('ordem', { ascending: true }),
+      sb.from('pacientes').select('nome, plano, consultas_incluidas, consultas_realizadas_iniciais').eq('auth_id', userId).maybeSingle(),
+      sb.from('consultas').select('data, tipo, status, modalidade').eq('auth_id', userId).in('status', ['agendada', 'confirmada']).gte('data', nowIso).order('data', { ascending: true }).limit(1).maybeSingle(),
+      sb.from('consultas').select('id', { count: 'exact', head: true }).eq('auth_id', userId).eq('status', 'realizada'),
+      sb.from('checkins').select('semana, status, respondido_em').eq('auth_id', userId).order('semana', { ascending: false }).limit(1).maybeSingle()
+    ]);
+
+    const profile = profileResult.data || null;
+    const initialDone = profile?.consultas_realizadas_iniciais || 0;
+    const countedDone = realizadasResult.count || 0;
+
+    this.setState({
+      patientPageLoading: false,
+      patientPages: pagesResult.error ? [] : (pagesResult.data || []),
+      patientProfile: profile,
+      patientNextConsult: nextConsultResult.data || null,
+      patientConsultasRealizadas: Math.max(initialDone, countedDone),
+      patientLastCheckin: checkinResult.data || null
+    });
+  }
+
+'''
+          s = s[:fetch_start] + new_fetch + s[fetch_end:]
+
+          old_ctx = "      patientPages: this.state.patientPages, patientPageLoading: this.state.patientPageLoading,\n      hasPatientPages: this.state.patientPages.length > 0,\n"
+          new_ctx = r'''      patientPages: this.state.patientPages, patientPageLoading: this.state.patientPageLoading,
+      hasPatientPages: this.state.patientPages.length > 0,
+      patientFirstName: ((this.state.patientProfile?.nome || '').trim().split(/\s+/)[0] || 'Paciente'),
+      patientPlan: this.state.patientProfile?.plano || 'Acompanhamento',
+      patientProgressText: (() => { const total = this.state.patientProfile?.consultas_incluidas || 0; const done = this.state.patientConsultasRealizadas || 0; return total > 0 ? `${Math.min(done,total)} de ${total} consultas realizadas` : 'Acompanhamento ativo'; })(),
+      patientProgressPct: (() => { const total = this.state.patientProfile?.consultas_incluidas || 0; const done = this.state.patientConsultasRealizadas || 0; return total > 0 ? Math.min(100, Math.round((done/total)*100)) : 0; })(),
+      hasPatientNextConsult: !!this.state.patientNextConsult,
+      patientNextConsultDate: this.state.patientNextConsult?.data ? new Date(this.state.patientNextConsult.data).toLocaleDateString('pt-BR', { day:'2-digit', month:'long' }) : '',
+      patientNextConsultTime: this.state.patientNextConsult?.data ? new Date(this.state.patientNextConsult.data).toLocaleTimeString('pt-BR', { hour:'2-digit', minute:'2-digit' }) : '',
+      patientNextConsultType: this.state.patientNextConsult?.tipo || 'Consulta',
+      patientNextConsultMode: this.state.patientNextConsult?.modalidade || 'Consultório',
+      patientCheckinText: this.state.patientLastCheckin?.semana ? `Último check-in em ${new Date(this.state.patientLastCheckin.semana + 'T12:00:00').toLocaleDateString('pt-BR')}` : 'Seu check-in aparece aqui quando estiver disponível.',
+'''
+          if old_ctx not in s:
+              raise SystemExit('render context anchor not found')
+          s = s.replace(old_ctx, new_ctx, 1)
+
+          logged_start = s.index('    <sc-if value="{{ patientSession }}" hint-placeholder-val="{{ false }}">')
+          logged_end = s.index('    <sc-if value="{{ !patientSession }}" hint-placeholder-val="{{ true }}">', logged_start)
+          new_logged = r'''    <sc-if value="{{ patientSession }}" hint-placeholder-val="{{ false }}">
+      <div class="patient-dashboard">
+        <span class="patient-eyebrow">Área do paciente</span>
+        <h1 class="patient-title">Olá, {{ patientFirstName }}</h1>
+        <p class="patient-subtitle">Seu acompanhamento, organizado em um só lugar.</p>
+
+        <sc-if value="{{ patientPageLoading }}" hint-placeholder-val="{{ false }}">
+          <div class="patient-section patient-empty">Carregando seu acompanhamento…</div>
+        </sc-if>
+
+        <sc-if value="{{ !patientPageLoading }}" hint-placeholder-val="{{ true }}">
+          <div class="patient-section">
+            <div class="patient-section-head"><p class="patient-section-title">Próxima consulta</p></div>
+            <sc-if value="{{ hasPatientNextConsult }}" hint-placeholder-val="{{ false }}">
+              <div class="patient-card patient-next">
+                <div>
+                  <div class="patient-next-label">{{ patientNextConsultType }}</div>
+                  <div class="patient-next-date">{{ patientNextConsultDate }} · {{ patientNextConsultTime }}</div>
+                  <div class="patient-next-meta">{{ patientNextConsultMode }}</div>
+                </div>
+                <a href="#" onClick="{{ goAgendamento }}" class="patient-link">Ver agenda</a>
+              </div>
+            </sc-if>
+            <sc-if value="{{ !hasPatientNextConsult }}" hint-placeholder-val="{{ true }}">
+              <div class="patient-card patient-next">
+                <div>
+                  <div class="patient-next-label">Agenda</div>
+                  <div class="patient-next-date">Nenhuma consulta futura</div>
+                  <div class="patient-next-meta">Quando quiser, você pode escolher um novo horário.</div>
+                </div>
+                <a href="#" onClick="{{ goAgendamento }}" class="patient-link">Agendar</a>
+              </div>
+            </sc-if>
+          </div>
+
+          <div class="patient-section">
+            <div class="patient-section-head"><p class="patient-section-title">Seu acompanhamento</p></div>
+            <div class="patient-card patient-plan">
+              <div class="patient-plan-top">
+                <div class="patient-plan-name">{{ patientPlan }}</div>
+                <div class="patient-plan-count">{{ patientProgressText }}</div>
+              </div>
+              <div class="patient-progress"><div class="patient-progress-bar" style="width:{{ patientProgressPct }}%;"></div></div>
+            </div>
+          </div>
+
+          <div class="patient-section">
+            <div class="patient-section-head"><p class="patient-section-title">Acesso rápido</p></div>
+            <sc-if value="{{ hasPatientPages }}" hint-placeholder-val="{{ false }}">
+              <div class="patient-pages">
+                <sc-for list="{{ patientPages }}" as="pg" hint-placeholder-count="2">
+                  <a href="{{ pg.url_pagina }}" target="_blank" rel="noopener" class="patient-page-card">
+                    <span class="patient-page-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5V5a2 2 0 0 1 2-2h10.5A1.5 1.5 0 0 1 18 4.5V19"/><path d="M6 17h14v4H6a2 2 0 1 1 0-4Z"/></svg>
+                    </span>
+                    <span><span class="patient-page-title">{{ pg.titulo }}</span><span class="patient-page-caption">Abrir acompanhamento</span></span>
+                  </a>
+                </sc-for>
+              </div>
+            </sc-if>
+            <sc-if value="{{ !hasPatientPages }}" hint-placeholder-val="{{ true }}">
+              <div class="patient-empty">Seus materiais ainda estão sendo preparados.</div>
+            </sc-if>
+          </div>
+
+          <div class="patient-section">
+            <div class="patient-section-head"><p class="patient-section-title">Check-in</p></div>
+            <div class="patient-card patient-checkin">
+              <div>
+                <div class="patient-checkin-title">Acompanhamento contínuo</div>
+                <div class="patient-checkin-copy">{{ patientCheckinText }}</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="patient-support">
+            <div><strong>Precisa falar comigo?</strong><span>Use o WhatsApp para dúvidas sobre seu acompanhamento.</span></div>
+            <a href="https://wa.me/5541987347625" target="_blank" rel="noopener">Chamar no WhatsApp →</a>
+          </div>
+
+          <a href="#" onClick="{{ patientLogout }}" class="patient-logout">Sair da minha conta</a>
+        </sc-if>
+      </div>
+    </sc-if>
+
+'''
+          s = s[:logged_start] + new_logged + s[logged_end:]
+
+          path.write_text(s)
+          PY
+
+      - name: Commit changes
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git rm .github/workflows/refresh-patient-area.yml
+          git commit -m "feat: redesign patient area dashboard"
+          git push
