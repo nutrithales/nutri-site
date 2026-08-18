@@ -5,6 +5,46 @@
     {
       "source": "/paciente",
       "destination": "/paciente/index.html"
+    },
+    {
+      "source": "/paciente/diario/anna",
+      "destination": "/api/patient-page-proxy?app=anna-diario"
+    },
+    {
+      "source": "/paciente/diario/anna/:path*",
+      "destination": "/api/patient-page-proxy?app=anna-diario&path=:path*"
+    },
+    {
+      "source": "/paciente/hiit/anna",
+      "destination": "/api/patient-page-proxy?app=anna-hiit"
+    },
+    {
+      "source": "/paciente/hiit/anna/:path*",
+      "destination": "/api/patient-page-proxy?app=anna-hiit&path=:path*"
+    },
+    {
+      "source": "/paciente/treinos/anna",
+      "destination": "/api/patient-page-proxy?app=anna-treino"
+    },
+    {
+      "source": "/paciente/treinos/anna/:path*",
+      "destination": "/api/patient-page-proxy?app=anna-treino&path=:path*"
+    },
+    {
+      "source": "/paciente/treinos/isabel-maratona",
+      "destination": "/api/patient-page-proxy?app=isabel-maratona"
+    },
+    {
+      "source": "/paciente/treinos/isabel-maratona/:path*",
+      "destination": "/api/patient-page-proxy?app=isabel-maratona&path=:path*"
+    },
+    {
+      "source": "/paciente/diario/vinicius",
+      "destination": "/api/patient-page-proxy?app=vinicius-diario"
+    },
+    {
+      "source": "/paciente/diario/vinicius/:path*",
+      "destination": "/api/patient-page-proxy?app=vinicius-diario&path=:path*"
     }
   ]
 }
