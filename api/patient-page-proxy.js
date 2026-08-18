@@ -40,11 +40,6 @@ function getBody(req) {
 function rewriteText(text, prefix, origin) {
   let result = text;
 
-  // Relative navigation should remain inside the branded route.
-  if (/<head[\s>]/i.test(result) && !/<base\s/i.test(result)) {
-    result = result.replace(/<head([^>]*)>/i, `<head$1><base href="${prefix}/">`);
-  }
-
   // Root-relative assets, links, forms and browser fetches must also pass
   // through the proxy; otherwise they would hit nutrithales.com.br root.
   const attrNames = ['href', 'src', 'action', 'poster'];
@@ -59,6 +54,12 @@ function rewriteText(text, prefix, origin) {
     .replace(/(new\s+URL\(\s*["'])\/(?!\/)/g, `$1${prefix}/`)
     .replace(/(url\(\s*["']?)\/(?!\/)/g, `$1${prefix}/`)
     .split(origin).join(prefix);
+
+  // Inject the base only after root-relative attributes are rewritten, so
+  // the branded prefix itself is not prefixed a second time.
+  if (/<head[\s>]/i.test(result) && !/<base\s/i.test(result)) {
+    result = result.replace(/<head([^>]*)>/i, `<head$1><base href="${prefix}/">`);
+  }
 
   return result;
 }
