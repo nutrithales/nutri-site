@@ -4,7 +4,7 @@
   "redirects": [
     {
       "source": "/paciente",
-      "destination": "https://admin.nutrithales.com.br/paciente",
+      "destination": "https://admin.nutrithales.com.br/paciente/login",
       "permanent": false
     },
     {
