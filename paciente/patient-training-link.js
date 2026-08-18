@@ -1,7 +1,6 @@
-(async function () {
+async function ensurePatientTrainingLink(sessionOverride) {
   try {
-    const { data } = await sb.auth.getSession();
-    const session = data && data.session;
+    const session = sessionOverride || (await sb.auth.getSession()).data?.session;
     if (!session) return;
 
     const { data: profile, error: profileError } = await sb
@@ -47,4 +46,15 @@
   } catch (error) {
     console.error('Não foi possível carregar o atalho de treino.', error);
   }
+}
+
+(async function initPatientTrainingLink() {
+  await ensurePatientTrainingLink();
+
+  sb.auth.onAuthStateChange((_event, session) => {
+    if (!session) return;
+    setTimeout(() => {
+      void ensurePatientTrainingLink(session);
+    }, 0);
+  });
 })();
