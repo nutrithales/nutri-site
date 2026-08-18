@@ -24,3 +24,14 @@ const tmp = path.join(os.tmpdir(), `patient-overlay-${Date.now()}.mjs`);
 fs.writeFileSync(tmp, runtime);
 await import(pathToFileURL(tmp).href);
 fs.rmSync(tmp, { force: true });
+
+const indexPath = path.join(out, 'index.html');
+let html = fs.readFileSync(indexPath, 'utf8');
+const mobileCta = `<div class="mcta" style="position:fixed;left:0;right:0;bottom:0;z-index:998;background:#14181a;padding:12px 16px;">
+  <a href="{{ waLink }}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 16px;border-radius:999px;font-weight:600;font-size:.85rem;letter-spacing:-0.01em;background:#1adc7f;color:#04140c;width:100%;box-sizing:border-box;">Quero agendar minha pré-avaliação gratuita</a>
+</div>
+<div style="height:76px;" class="mcta"></div>`;
+if (html.includes(mobileCta)) {
+  html = html.replace(mobileCta, `<sc-if value="{{ !isAreaPaciente }}" hint-placeholder-val="{{ true }}">\n${mobileCta}\n</sc-if>`);
+}
+fs.writeFileSync(indexPath, html);
