@@ -30,16 +30,24 @@ async function ensurePatientTrainingLink(sessionOverride) {
     const empty = document.getElementById('pagesEmpty');
     if (!list) return;
 
-    const alreadyHasWorkout = Array.from(list.querySelectorAll('a')).some(a => {
+    const targetHref = profile.id === '20c469e7-43c6-41c3-9f19-b5704ced772b'
+      ? '/paciente/treinos/vinicius'
+      : '/paciente/treinos';
+
+    const existingWorkout = Array.from(list.querySelectorAll('a')).find(a => {
       const href = a.getAttribute('href') || '';
       const text = (a.textContent || '').toLowerCase();
       return href === '/paciente/treinos' || href.includes('/paciente/treinos/') || text.includes('treino');
     });
-    if (alreadyHasWorkout) return;
+
+    if (existingWorkout) {
+      existingWorkout.href = targetHref;
+      return;
+    }
 
     const link = document.createElement('a');
     link.className = 'quick-link';
-    link.href = '/paciente/treinos';
+    link.href = targetHref;
     link.innerHTML = '<div class="quick-top"><span class="quick-icon">↗</span><span class="quick-arrow">→</span></div><div class="quick-title">Treino de Musculação</div>';
     list.prepend(link);
     if (empty) empty.style.display = 'none';
