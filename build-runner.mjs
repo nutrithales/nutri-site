@@ -49,3 +49,5 @@ if (fs.existsSync(patientIndexPath)) {
   }
   fs.writeFileSync(patientIndexPath, patientHtml);
 }
+
+// Deployment trigger: generic interactive patient workout dashboard.
