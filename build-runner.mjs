@@ -56,8 +56,22 @@ if (fs.existsSync(workoutIndexPath)) {
   const backBase = '.back{font-size:13px;color:var(--muted);font-weight:700}';
   const backButton = '.back{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:9px 13px;border:1px solid var(--border);border-radius:999px;background:var(--surface);color:var(--text);font-size:12px;font-weight:800;white-space:nowrap;box-shadow:var(--shadow)}';
   const hiddenMobileBack = '.header-left .back{display:none}';
+  const logoText = '<div class="logo">NUTRI THALES</div>';
+  const logoImages = '<div class="brand-logo" aria-label="Nutri Thales"><img class="brand-logo-light" src="/assets/logo-thales.png" alt="Nutri Thales"><img class="brand-logo-dark" src="/assets/logo-thales-white.png" alt="Nutri Thales"></div>';
+  const logoStyles = '.brand-logo{display:flex;align-items:center;height:44px}.brand-logo img{display:block;width:auto;max-width:150px;max-height:42px;object-fit:contain}.brand-logo-dark{display:none!important}body.dark .brand-logo-light{display:none!important}body.dark .brand-logo-dark{display:block!important}';
+  const navItemsToRemove = [
+    '<button class="nav-btn locked">Alimentação <span class="lock">em breve</span></button>',
+    '<button class="nav-btn locked">Check-in <span class="lock">em breve</span></button>',
+    '<button class="nav-btn locked">Agenda <span class="lock">em breve</span></button>'
+  ];
+
   if (!workoutHtml.includes('← Área do paciente')) throw new Error('workout dashboard return link marker not found');
   if (!workoutHtml.includes(backBase) && !workoutHtml.includes(backButton)) throw new Error('workout dashboard return button style marker not found');
+  if (!workoutHtml.includes(logoText) && !workoutHtml.includes('class="brand-logo"')) throw new Error('workout dashboard brand marker not found');
+
   workoutHtml = workoutHtml.replace(backBase, backButton).replace(hiddenMobileBack, '.header-left .back{display:inline-flex}');
+  if (workoutHtml.includes(logoText)) workoutHtml = workoutHtml.replace(logoText, logoImages);
+  if (!workoutHtml.includes(logoStyles)) workoutHtml = workoutHtml.replace('</style>', `${logoStyles}\n</style>`);
+  for (const navItem of navItemsToRemove) workoutHtml = workoutHtml.replace(navItem, '');
   fs.writeFileSync(workoutIndexPath, workoutHtml);
 }
