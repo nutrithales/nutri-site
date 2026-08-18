@@ -3,15 +3,7 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/paciente",
-      "destination": "/paciente/index.html"
-    },
-    {
       "source": "/paciente/treinos/vinicius",
-      "destination": "/paciente/treinos/index.html"
-    },
-    {
-      "source": "/paciente/treinos",
       "destination": "/paciente/treinos/index.html"
     },
     {
@@ -53,6 +45,18 @@
     {
       "source": "/paciente/diario/vinicius/:path*",
       "destination": "/api/patient-page-proxy?app=vinicius-diario&path=:path*"
+    },
+    {
+      "source": "/paciente",
+      "destination": "https://admin.nutrithales.com.br/paciente"
+    },
+    {
+      "source": "/paciente/:path*",
+      "destination": "https://admin.nutrithales.com.br/paciente/:path*"
+    },
+    {
+      "source": "/_next/:path*",
+      "destination": "https://admin.nutrithales.com.br/_next/:path*"
     }
   ]
 }
