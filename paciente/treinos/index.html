@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Meus Treinos | Nutri. Thales Rosa</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+@font-face{font-family:"Galano";src:url("/assets/fonts/GalanoGrotesqueAltRegular.otf") format("opentype");font-weight:400;font-display:swap}
+@font-face{font-family:"Galano";src:url("/assets/fonts/GalanoGrotesqueAltSemiBold.otf") format("opentype");font-weight:600;font-display:swap}
+@font-face{font-family:"Galano";src:url("/assets/fonts/GalanoGrotesqueAltBold.otf") format("opentype");font-weight:700;font-display:swap}
+:root{--ink:#14181a;--muted:#66716b;--green:#1adc7f;--green-dark:#0fae62;--cream:#faf9f6;--line:#e7ebe9;--card:#fff;--shadow:0 16px 50px -28px rgba(20,24,26,.28)}
+*{box-sizing:border-box}body{margin:0;background:var(--cream);color:var(--ink);font-family:"Galano",system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}.shell{width:min(100%,820px);margin:auto;padding:22px 16px max(42px,env(safe-area-inset-bottom))}a{color:inherit;text-decoration:none}.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:30px}.brand{font-weight:700}.back{display:inline-flex;align-items:center;gap:7px;font-size:.9rem;color:var(--muted);font-weight:600}.eyebrow{text-transform:uppercase;letter-spacing:.13em;font-size:.72rem;font-weight:700;color:var(--green-dark);margin:0 0 9px}.title{font-size:clamp(2rem,8vw,3rem);letter-spacing:-.045em;line-height:1;margin:0}.lead{font-size:.98rem;line-height:1.5;color:var(--muted);margin:12px 0 24px}.program-list{display:grid;gap:14px}.program{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:20px;box-shadow:var(--shadow)}.program-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:16px}.program-name{font-size:1.08rem;font-weight:700;line-height:1.3}.program-meta{font-size:.84rem;color:var(--muted);margin-top:5px}.pill{flex:none;border-radius:999px;background:rgba(26,220,127,.13);color:#087a43;padding:6px 9px;font-size:.72rem;font-weight:700}.program-note{font-size:.9rem;line-height:1.5;color:var(--muted);padding:12px 0 2px}.exercise-list{display:grid;gap:9px}.exercise{border:1px solid var(--line);border-radius:16px;padding:14px;background:#fff}.exercise-name{font-weight:700;font-size:.95rem;line-height:1.3}.exercise-meta{display:flex;flex-wrap:wrap;gap:7px;margin-top:7px;color:var(--muted);font-size:.79rem}.exercise-note{margin-top:9px;color:var(--muted);font-size:.84rem;line-height:1.45;white-space:pre-line}.video{display:inline-flex;margin-top:10px;padding:8px 10px;border-radius:999px;background:var(--ink);color:#fff;font-size:.78rem;font-weight:700}.state{background:#fff;border:1px dashed #ccd4d0;border-radius:18px;padding:18px;color:var(--muted);font-size:.92rem;line-height:1.5}.loading{color:var(--muted);font-size:.92rem}.hidden{display:none}.logout{margin-top:22px;border:0;background:transparent;padding:7px 0;color:var(--muted);font:inherit;font-weight:600;cursor:pointer}
+@media(max-width:560px){.program{padding:17px;border-radius:18px}.program-head{flex-direction:column}.pill{align-self:flex-start}.topbar{margin-bottom:24px}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <div class="topbar"><a class="back" href="/paciente">← Área do paciente</a><div class="brand">Nutri. Thales Rosa</div></div>
+  <header><p class="eyebrow">Treinamento</p><h1 class="title">Seus treinos</h1><p id="lead" class="lead">Carregando sua prescrição atual…</p></header>
+  <div id="loading" class="loading">Buscando treinos liberados…</div>
+  <div id="state" class="state hidden"></div>
+  <section id="programs" class="program-list"></section>
+  <button id="logoutBtn" class="logout hidden" type="button">Sair da conta</button>
+</main>
+<script>
+const SUPABASE_URL='https://xwihrxinweeadtcouhoo.supabase.co';
+const SUPABASE_ANON_KEY='sb_publishable_9rdUCvfgWydLr4vA-uQvHQ_FWwgggLk';
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const $=id=>document.getElementById(id);
+function esc(value){return String(value??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
+function firstName(value){return String(value||'').trim().split(/\s+/)[0]||'Paciente'}
+function metaParts(ex){const p=[];if(ex.series)p.push(`${ex.series} séries`);if(ex.repeticoes)p.push(`${esc(ex.repeticoes)} reps`);if(ex.rir)p.push(`RIR ${esc(ex.rir)}`);if(ex.rpe)p.push(`RPE ${esc(ex.rpe)}`);if(ex.descanso_seg!=null)p.push(`${ex.descanso_seg}s descanso`);if(ex.carga_inicial!=null)p.push(`Carga inicial ${esc(ex.carga_inicial)} kg`);return p}
+function renderProgram(program,exercises){const meta=[program.codigo,program.objetivo,program.bloco].filter(Boolean).map(esc).join(' · ');const note=program.observacoes?`<div class="program-note">${esc(program.observacoes)}</div>`:'';const rows=exercises.map((ex,i)=>`<article class="exercise"><div class="exercise-name">${i+1}. ${esc(ex.nome)}</div><div class="exercise-meta">${metaParts(ex).map(x=>`<span>${x}</span>`).join('')}</div>${ex.observacoes?`<div class="exercise-note">${esc(ex.observacoes)}</div>`:''}${ex.video_url?`<a class="video" href="${esc(ex.video_url)}" target="_blank" rel="noopener">Ver vídeo</a>`:''}</article>`).join('');return `<article class="program"><div class="program-head"><div><div class="program-name">${esc(program.nome)}</div>${meta?`<div class="program-meta">${meta}</div>`:''}</div><span class="pill">Ativo</span></div>${note}<div class="exercise-list">${rows||'<div class="state">Os exercícios deste treino ainda não foram cadastrados.</div>'}</div></article>`}
+async function init(){
+  const {data:{session}}=await sb.auth.getSession();
+  if(!session){location.replace('/paciente');return}
+  $('logoutBtn').classList.remove('hidden');
+  const {data:profile,error:profileError}=await sb.from('pacientes').select('id,nome,treino_liberado').eq('auth_id',session.user.id).maybeSingle();
+  if(profileError||!profile){$('loading').classList.add('hidden');$('state').textContent='Não foi possível localizar seu cadastro. Entre em contato com o consultório.';$('state').classList.remove('hidden');return}
+  $('lead').textContent=`${firstName(profile.nome)}, aqui estão os treinos liberados no seu acompanhamento.`;
+  if(!profile.treino_liberado){$('loading').classList.add('hidden');$('state').textContent='Seu treino ainda não foi liberado. Assim que o consultório liberar a prescrição, ela aparecerá aqui automaticamente.';$('state').classList.remove('hidden');return}
+  const {data:programs,error:programError}=await sb.from('treino_programas').select('id,nome,codigo,objetivo,bloco,ordem,status,observacoes').eq('paciente_id',profile.id).eq('status','ativo').order('ordem');
+  if(programError){$('loading').classList.add('hidden');$('state').textContent='Não foi possível carregar seus treinos agora. Tente novamente em instantes.';$('state').classList.remove('hidden');return}
+  if(!programs||!programs.length){$('loading').classList.add('hidden');$('state').textContent='Nenhum treino ativo foi encontrado. Quando um treino for cadastrado e liberado, ele aparecerá aqui automaticamente.';$('state').classList.remove('hidden');return}
+  const ids=programs.map(p=>p.id);
+  const {data:exerciseRows,error:exerciseError}=await sb.from('treino_exercicios').select('id,treino_id,bloco_ordem,bloco_nome,ordem,nome,series,repeticoes,rir,rpe,descanso_seg,carga_inicial,video_url,observacoes').in('treino_id',ids).order('bloco_ordem').order('ordem');
+  if(exerciseError){$('loading').classList.add('hidden');$('state').textContent='Não foi possível carregar os exercícios agora. Tente novamente em instantes.';$('state').classList.remove('hidden');return}
+  const grouped={};for(const ex of (exerciseRows||[]))(grouped[ex.treino_id]??=[]).push(ex);
+  $('loading').classList.add('hidden');$('programs').innerHTML=programs.map(p=>renderProgram(p,grouped[p.id]||[])).join('');
+}
+$('logoutBtn').onclick=async()=>{await sb.auth.signOut();location.replace('/paciente')};
+init();
+</script>
+</body>
+</html>
