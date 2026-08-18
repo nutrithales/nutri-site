@@ -1,4 +1,10 @@
 {
   "buildCommand": "node build-runner.mjs",
-  "outputDirectory": "dist"
+  "outputDirectory": "dist",
+  "rewrites": [
+    {
+      "source": "/paciente",
+      "destination": "/paciente/index.html"
+    }
+  ]
 }
