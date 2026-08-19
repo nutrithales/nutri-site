@@ -40,8 +40,6 @@ function getBody(req) {
 function rewriteText(text, prefix, origin) {
   let result = text;
 
-  // Root-relative assets, links, forms and browser fetches must also pass
-  // through the proxy; otherwise they would hit nutrithales.com.br root.
   const attrNames = ['href', 'src', 'action', 'poster'];
   for (const attr of attrNames) {
     const re = new RegExp(`(${attr}\\s*=\\s*["'])/(?!/)`, 'gi');
@@ -55,8 +53,6 @@ function rewriteText(text, prefix, origin) {
     .replace(/(url\(\s*["']?)\/(?!\/)/g, `$1${prefix}/`)
     .split(origin).join(prefix);
 
-  // Inject the base only after root-relative attributes are rewritten, so
-  // the branded prefix itself is not prefixed a second time.
   if (/<head[\s>]/i.test(result) && !/<base\s/i.test(result)) {
     result = result.replace(/<head([^>]*)>/i, `<head$1><base href="${prefix}/">`);
   }
@@ -70,19 +66,44 @@ function injectAnnaWorkoutBackButton(html) {
   const injection = `
 <script>
 (function () {
-  function makeAvatarClickable() {
-    var candidates = Array.from(document.querySelectorAll('button,a,div,span'));
-    var avatar = candidates.find(function (el) {
-      if ((el.textContent || '').trim() !== 'A') return false;
-      var rect = el.getBoundingClientRect();
-      if (rect.width < 34 || rect.width > 96 || rect.height < 34 || rect.height > 96) return false;
-      if (rect.top > 150 || rect.right < window.innerWidth * 0.65) return false;
-      var style = window.getComputedStyle(el);
-      var radius = parseFloat(style.borderTopLeftRadius || '0');
-      return radius >= Math.min(rect.width, rect.height) * 0.35;
-    });
+  var DESTINATION = 'https://nutrithales.com.br/paciente';
 
-    if (!avatar || avatar.dataset.patientAreaBack === 'true') return Boolean(avatar);
+  function isAvatarBox(el) {
+    if (!el || !el.getBoundingClientRect) return false;
+    var rect = el.getBoundingClientRect();
+    if (rect.width < 42 || rect.width > 110 || rect.height < 42 || rect.height > 110) return false;
+    if (rect.top < 55 || rect.top > 270) return false;
+    if (rect.right < window.innerWidth * 0.72) return false;
+    var style = window.getComputedStyle(el);
+    var radius = parseFloat(style.borderTopLeftRadius || '0');
+    return radius >= Math.min(rect.width, rect.height) * 0.28;
+  }
+
+  function findAvatar() {
+    var textCandidates = Array.from(document.querySelectorAll('button,a,div,span,p'))
+      .filter(function (el) { return (el.textContent || '').trim() === 'A'; });
+
+    for (var i = 0; i < textCandidates.length; i++) {
+      var node = textCandidates[i];
+      for (var depth = 0; node && depth < 5; depth++, node = node.parentElement) {
+        if (isAvatarBox(node)) return node;
+      }
+    }
+    return null;
+  }
+
+  function goToPatientArea(event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+      if (event.stopImmediatePropagation) event.stopImmediatePropagation();
+    }
+    window.location.assign(DESTINATION);
+  }
+
+  function bindAvatar() {
+    var avatar = findAvatar();
+    if (!avatar) return false;
 
     avatar.dataset.patientAreaBack = 'true';
     avatar.setAttribute('role', 'button');
@@ -92,28 +113,33 @@ function injectAnnaWorkoutBackButton(html) {
     avatar.style.cursor = 'pointer';
     avatar.style.touchAction = 'manipulation';
 
-    function goBack(event) {
-      if (event) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      window.location.href = '/paciente';
+    if (avatar.dataset.patientAreaListener !== 'true') {
+      avatar.dataset.patientAreaListener = 'true';
+      avatar.addEventListener('click', goToPatientArea, true);
+      avatar.addEventListener('touchend', goToPatientArea, true);
+      avatar.addEventListener('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') goToPatientArea(event);
+      }, true);
     }
-
-    avatar.addEventListener('click', goBack, true);
-    avatar.addEventListener('keydown', function (event) {
-      if (event.key === 'Enter' || event.key === ' ') goBack(event);
-    }, true);
     return true;
   }
 
-  if (makeAvatarClickable()) return;
+  document.addEventListener('click', function (event) {
+    var avatar = findAvatar();
+    if (!avatar) return;
+    if (event.target === avatar || avatar.contains(event.target)) goToPatientArea(event);
+  }, true);
 
-  var observer = new MutationObserver(function () {
-    if (makeAvatarClickable()) observer.disconnect();
-  });
-  observer.observe(document.documentElement, { childList: true, subtree: true });
-  setTimeout(function () { observer.disconnect(); }, 10000);
+  document.addEventListener('touchend', function (event) {
+    var avatar = findAvatar();
+    if (!avatar) return;
+    if (event.target === avatar || avatar.contains(event.target)) goToPatientArea(event);
+  }, true);
+
+  bindAvatar();
+  var observer = new MutationObserver(function () { bindAvatar(); });
+  observer.observe(document.documentElement, { childList: true, subtree: true, attributes: false });
+  setInterval(bindAvatar, 1000);
 })();
 </script>`;
 
