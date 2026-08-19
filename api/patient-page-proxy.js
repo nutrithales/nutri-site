@@ -70,52 +70,50 @@ function injectAnnaWorkoutBackButton(html) {
   const injection = `
 <script>
 (function () {
-  var buttonId = 'nutri-patient-back-button';
-  var timer = null;
-  var attempts = 0;
+  function makeAvatarClickable() {
+    var candidates = Array.from(document.querySelectorAll('button,a,div,span'));
+    var avatar = candidates.find(function (el) {
+      if ((el.textContent || '').trim() !== 'A') return false;
+      var rect = el.getBoundingClientRect();
+      if (rect.width < 34 || rect.width > 96 || rect.height < 34 || rect.height > 96) return false;
+      if (rect.top > 150 || rect.right < window.innerWidth * 0.65) return false;
+      var style = window.getComputedStyle(el);
+      var radius = parseFloat(style.borderTopLeftRadius || '0');
+      return radius >= Math.min(rect.width, rect.height) * 0.35;
+    });
 
-  function mountBackButton() {
-    attempts += 1;
-    if (!document.body) return;
-    if (document.getElementById(buttonId)) {
-      if (timer) clearInterval(timer);
-      return;
+    if (!avatar || avatar.dataset.patientAreaBack === 'true') return Boolean(avatar);
+
+    avatar.dataset.patientAreaBack = 'true';
+    avatar.setAttribute('role', 'button');
+    avatar.setAttribute('tabindex', '0');
+    avatar.setAttribute('aria-label', 'Voltar para a área do paciente');
+    avatar.setAttribute('title', 'Área do paciente');
+    avatar.style.cursor = 'pointer';
+    avatar.style.touchAction = 'manipulation';
+
+    function goBack(event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      window.location.href = '/paciente';
     }
 
-    var link = document.createElement('a');
-    link.id = buttonId;
-    link.href = '/paciente';
-    link.setAttribute('aria-label', 'Voltar para a área do paciente');
-    link.innerHTML = '<span aria-hidden="true" style="font-size:20px;line-height:1">‹</span><span>Área do paciente</span>';
-    link.style.cssText = [
-      'position:fixed',
-      'left:14px',
-      'top:calc(env(safe-area-inset-top, 0px) + 78px)',
-      'z-index:2147483646',
-      'display:inline-flex',
-      'align-items:center',
-      'gap:6px',
-      'min-height:40px',
-      'padding:0 13px 0 10px',
-      'border:1px solid rgba(14,26,20,.12)',
-      'border-radius:999px',
-      'background:rgba(255,255,255,.94)',
-      'color:#102019',
-      'font:700 12px/1 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif',
-      'text-decoration:none',
-      'box-shadow:0 8px 24px rgba(14,26,20,.10)',
-      'backdrop-filter:blur(12px)',
-      '-webkit-backdrop-filter:blur(12px)',
-      'touch-action:manipulation'
-    ].join(';');
-
-    document.body.appendChild(link);
-    if (attempts > 3 && timer) clearInterval(timer);
+    avatar.addEventListener('click', goBack, true);
+    avatar.addEventListener('keydown', function (event) {
+      if (event.key === 'Enter' || event.key === ' ') goBack(event);
+    }, true);
+    return true;
   }
 
-  mountBackButton();
-  timer = setInterval(mountBackButton, 700);
-  setTimeout(function () { if (timer) clearInterval(timer); }, 8000);
+  if (makeAvatarClickable()) return;
+
+  var observer = new MutationObserver(function () {
+    if (makeAvatarClickable()) observer.disconnect();
+  });
+  observer.observe(document.documentElement, { childList: true, subtree: true });
+  setTimeout(function () { observer.disconnect(); }, 10000);
 })();
 </script>`;
 
