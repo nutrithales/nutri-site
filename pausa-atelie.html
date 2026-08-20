@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101614">
+  <meta name="description" content="Pausa de Ateliê: rotina guiada de mobilidade para profissionais da tatuagem.">
+  <title>Pausa de Ateliê</title>
+  <style>
+    @font-face{font-family:Galano;src:url("assets/fonts/GalanoGrotesqueAltRegular.otf") format("opentype");font-weight:400;font-display:swap}
+    @font-face{font-family:Galano;src:url("assets/fonts/GalanoGrotesqueAltSemiBold.otf") format("opentype");font-weight:600;font-display:swap}
+    @font-face{font-family:Galano;src:url("assets/fonts/GalanoGrotesqueAltBold.otf") format("opentype");font-weight:700;font-display:swap}
+    :root{--ink:#101614;--paper:#f5f1e8;--card:#fffdf8;--green:#1adc7f;--green-dark:#0c9f59;--muted:#637069;--line:#dce3dd;--coral:#ed8069;--shadow:0 18px 55px rgba(16,22,20,.10)}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:var(--paper);color:var(--ink);font-family:Galano,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased}
+    button,a{font:inherit}
+    button{cursor:pointer}
+    .shell{width:min(100% - 32px,1040px);margin-inline:auto}
+    .topbar{position:sticky;top:0;z-index:20;background:rgba(245,241,232,.88);border-bottom:1px solid rgba(16,22,20,.08);backdrop-filter:blur(16px)}
+    .topbar-inner{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-.03em}
+    .brand-mark{width:36px;height:36px;display:grid;place-items:center;border-radius:50%;background:var(--ink);color:var(--green);font-size:18px}
+    .back{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.6);color:var(--ink);text-decoration:none;font-size:.9rem;font-weight:600}
+    .hero{position:relative;overflow:hidden;padding:74px 0 44px;background:var(--ink);color:white}
+    .hero:before,.hero:after{content:"";position:absolute;border:1px solid rgba(26,220,127,.24);border-radius:50%;pointer-events:none}
+    .hero:before{width:460px;height:460px;right:-185px;top:-240px;box-shadow:0 0 0 42px rgba(26,220,127,.025),0 0 0 90px rgba(26,220,127,.018)}
+    .hero:after{width:210px;height:210px;left:-120px;bottom:-145px}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;margin-bottom:20px;color:var(--green);font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+    .eyebrow:before{content:"";width:28px;height:2px;background:currentColor}
+    h1{max-width:760px;margin:0;font-size:clamp(2.7rem,7vw,5.8rem);line-height:.88;letter-spacing:-.075em}
+    .hero-copy{max-width:650px;margin:28px 0 0;color:#c9d2ce;font-size:clamp(1rem,2vw,1.18rem);line-height:1.65}
+    .hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:30px}
+    .pill{padding:9px 13px;border:1px solid rgba(255,255,255,.14);border-radius:999px;background:rgba(255,255,255,.055);color:#edf5f1;font-size:.86rem}
+    .intro{padding:34px 0 4px}
+    .personal-note{display:grid;grid-template-columns:auto 1fr;gap:18px;align-items:start;padding:22px;border:1px solid var(--line);border-radius:22px;background:var(--card);box-shadow:0 10px 40px rgba(16,22,20,.045)}
+    .note-icon{width:45px;height:45px;display:grid;place-items:center;border-radius:14px;background:#e5f9ee;color:var(--green-dark);font-size:20px}
+    .personal-note h2{margin:0 0 5px;font-size:1.04rem;letter-spacing:-.025em}
+    .personal-note p{margin:0;color:var(--muted);line-height:1.55;font-size:.94rem}
+    .section{padding:46px 0}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:22px;margin-bottom:22px}
+    .section-kicker{color:var(--green-dark);font-size:.76rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase}
+    h2{margin:7px 0 0;font-size:clamp(1.7rem,4vw,2.45rem);letter-spacing:-.055em;line-height:1}
+    .routine-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+    .routine-tab{min-height:126px;padding:18px;text-align:left;border:1px solid var(--line);border-radius:20px;background:var(--card);color:var(--ink);transition:.2s ease}
+    .routine-tab:hover{transform:translateY(-2px);border-color:#b9c7bf}
+    .routine-tab.active{background:var(--ink);border-color:var(--ink);color:white;box-shadow:var(--shadow)}
+    .routine-time{display:block;margin-bottom:20px;color:var(--green-dark);font-size:.76rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+    .routine-tab.active .routine-time{color:var(--green)}
+    .routine-name{display:block;font-size:1.06rem;font-weight:700;line-height:1.15;letter-spacing:-.025em}
+    .guide{margin-top:18px;border-radius:28px;background:var(--card);border:1px solid var(--line);overflow:hidden;box-shadow:var(--shadow)}
+    .guide-top{display:grid;grid-template-columns:240px 1fr;min-height:270px}
+    .timer-panel{display:grid;place-items:center;align-content:center;gap:18px;padding:30px;background:#e5f9ee;border-right:1px solid var(--line)}
+    .timer-ring{--p:0deg;position:relative;width:170px;height:170px;display:grid;place-items:center;border-radius:50%;background:conic-gradient(var(--green) var(--p),#c9ded2 0);transition:background .2s linear}
+    .timer-ring:before{content:"";position:absolute;inset:12px;border-radius:50%;background:var(--card)}
+    .timer-value{position:relative;font-size:2.7rem;font-weight:700;letter-spacing:-.06em}
+    .timer-label{position:relative;margin-top:-8px;color:var(--muted);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+    .timer-controls{display:flex;gap:8px}
+    .control{min-width:46px;height:46px;border:0;border-radius:50%;background:var(--ink);color:white;font-weight:700}
+    .control.primary{width:auto;padding:0 18px;border-radius:999px;background:var(--green);color:#07150e}
+    .exercise-panel{padding:34px 38px;display:flex;flex-direction:column;justify-content:center}
+    .step-count{color:var(--green-dark);font-size:.76rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+    .exercise-title{margin:9px 0 12px;font-size:clamp(1.65rem,4vw,2.35rem);line-height:1;letter-spacing:-.05em}
+    .exercise-purpose{display:inline-flex;align-self:flex-start;padding:7px 10px;border-radius:8px;background:#f2efe6;color:#55605a;font-size:.78rem;font-weight:600}
+    .exercise-cue{margin:18px 0 0;color:var(--muted);line-height:1.65;font-size:1rem}
+    .exercise-alert{display:none;margin-top:16px;padding:11px 13px;border-radius:10px;background:#fff1ed;color:#914637;font-size:.82rem;line-height:1.45}
+    .exercise-alert.show{display:block}
+    .progress{height:6px;background:#e5e9e6}
+    .progress-bar{width:0;height:100%;background:var(--green);transition:width .25s ease}
+    .guide-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 20px;border-top:1px solid var(--line)}
+    .nav-btn{padding:11px 17px;border:1px solid var(--line);border-radius:999px;background:white;color:var(--ink);font-weight:600}
+    .nav-btn.next{border-color:var(--ink);background:var(--ink);color:white}
+    .nav-btn:disabled{opacity:.35;cursor:not-allowed}
+    .guide-status{color:var(--muted);font-size:.82rem;text-align:center}
+    .studio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .studio-card{padding:21px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.58)}
+    .studio-card strong{display:block;margin:12px 0 7px;font-size:1rem;letter-spacing:-.02em}
+    .studio-card p{margin:0;color:var(--muted);font-size:.89rem;line-height:1.55}
+    .studio-number{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:var(--ink);color:var(--green);font-size:.8rem;font-weight:700}
+    .safety{padding:26px;border-radius:24px;background:var(--ink);color:white}
+    .safety h2{font-size:1.55rem;margin:0 0 12px;letter-spacing:-.035em}
+    .safety p{margin:0;color:#c9d2ce;line-height:1.6;font-size:.93rem}
+    .safety-list{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:19px}
+    .safety-item{padding:14px;border:1px solid rgba(255,255,255,.1);border-radius:14px;background:rgba(255,255,255,.045);font-size:.83rem;line-height:1.4}
+    .safety-item b{display:block;margin-bottom:4px;color:var(--coral)}
+    footer{padding:28px 0 42px;color:var(--muted);font-size:.78rem;line-height:1.55}
+    footer a{color:inherit}
+    .complete{display:none;padding:40px 30px;text-align:center;background:#e5f9ee}
+    .complete.show{display:block}
+    .complete-mark{width:70px;height:70px;margin:0 auto 18px;display:grid;place-items:center;border-radius:50%;background:var(--green);font-size:28px;font-weight:700}
+    .complete h3{margin:0 0 8px;font-size:1.65rem;letter-spacing:-.045em}
+    .complete p{margin:0 auto 20px;max-width:480px;color:var(--muted);line-height:1.55}
+    @media(max-width:760px){
+      .hero{padding:52px 0 36px}.routine-tabs{grid-template-columns:1fr}.routine-tab{min-height:auto}.routine-time{margin-bottom:9px}.guide-top{grid-template-columns:1fr}.timer-panel{border-right:0;border-bottom:1px solid var(--line);padding:24px}.timer-ring{width:148px;height:148px}.exercise-panel{padding:28px 24px}.studio-grid,.safety-list{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column}.guide-nav{padding:13px 14px}.guide-status{display:none}
+    }
+    @media(max-width:480px){.shell{width:min(100% - 22px,1040px)}.brand span:last-child{display:none}.personal-note{grid-template-columns:1fr}.hero-meta{gap:7px}.pill{font-size:.78rem}.nav-btn{padding:10px 13px}}
+    @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <div class="brand"><span class="brand-mark">P</span><span>Pausa de Ateliê</span></div>
+      <a class="back" href="/paciente">← Área da paciente</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="shell">
+        <div class="eyebrow">Rotina personalizada</div>
+        <h1>Cuide do corpo que sustenta o seu traço.</h1>
+        <p class="hero-copy">Uma pausa guiada para aliviar a carga de horas desenhando e tatuando: mãos precisas, ombros mais leves e coluna trabalhando com mais controle.</p>
+        <div class="hero-meta">
+          <span class="pill">3 a 9 minutos</span><span class="pill">Sem equipamento</span><span class="pill">Feita no ateliê</span><span class="pill">Baixo impacto</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="intro">
+      <div class="shell">
+        <div class="personal-note">
+          <div class="note-icon">✦</div>
+          <div><h2>Pensada para a rotina de tatuadora</h2><p>As sequências priorizam regiões muito exigidas no ateliê — cervical, ombros, parte alta das costas, antebraços e punhos — sem esquecer o controle do quadril e da lombar. A meta é sair da postura estática, não “forçar” amplitude.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="section-head"><div><div class="section-kicker">Escolha o momento</div><h2>Qual pausa cabe agora?</h2></div></div>
+        <div class="routine-tabs" id="routineTabs"></div>
+
+        <article class="guide" id="guide">
+          <div class="guide-top" id="guideContent">
+            <div class="timer-panel">
+              <div class="timer-ring" id="timerRing"><div><div class="timer-value" id="timerValue">00:40</div><div class="timer-label">tempo</div></div></div>
+              <div class="timer-controls"><button class="control" id="resetTimer" aria-label="Reiniciar cronômetro">↺</button><button class="control primary" id="toggleTimer">Iniciar</button></div>
+            </div>
+            <div class="exercise-panel">
+              <div class="step-count" id="stepCount"></div>
+              <h3 class="exercise-title" id="exerciseTitle"></h3>
+              <span class="exercise-purpose" id="exercisePurpose"></span>
+              <p class="exercise-cue" id="exerciseCue"></p>
+              <div class="exercise-alert" id="exerciseAlert"></div>
+            </div>
+          </div>
+          <div class="complete" id="completePanel"><div class="complete-mark">✓</div><h3>Pausa concluída</h3><p>Respire fundo, reorganize sua bancada e volte ao trabalho percebendo onde o corpo pode ficar mais solto.</p><button class="nav-btn next" id="restartRoutine">Fazer novamente</button></div>
+          <div class="progress"><div class="progress-bar" id="progressBar"></div></div>
+          <div class="guide-nav"><button class="nav-btn" id="prevStep">← Anterior</button><div class="guide-status" id="guideStatus"></div><button class="nav-btn next" id="nextStep">Próximo →</button></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:14px">
+      <div class="shell">
+        <div class="section-head"><div><div class="section-kicker">Ergonomia prática</div><h2>Três ajustes no ateliê</h2></div></div>
+        <div class="studio-grid">
+          <div class="studio-card"><span class="studio-number">01</span><strong>Aproxime o trabalho</strong><p>Reposicione maca, banco e apoio antes de inclinar o tronco. Leve a área tatuada até você sempre que possível.</p></div>
+          <div class="studio-card"><span class="studio-number">02</span><strong>Alterne a postura</strong><p>Evite procurar a postura “perfeita”. Troque apoio, levante e dê alguns passos entre etapas do atendimento.</p></div>
+          <div class="studio-card"><span class="studio-number">03</span><strong>Apoie o que puder</strong><p>Use apoio para antebraço e pés. Ombros longe das orelhas e punho o mais neutro possível durante o traço.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="shell">
+        <div class="safety">
+          <h2>Sem heroísmo com a lombar.</h2>
+          <p>Esta pausa complementa o treino e a fisioterapia; ela não substitui avaliação individual. Todos os movimentos devem permanecer confortáveis e controlados.</p>
+          <div class="safety-list">
+            <div class="safety-item"><b>Pare imediatamente</b>Se surgir dor irradiando para a perna, choque, dormência ou formigamento.</div>
+            <div class="safety-item"><b>Reduza a amplitude</b>Se houver pressão ou incômodo crescente na lombar, cervical ou punhos.</div>
+            <div class="safety-item"><b>Siga a fisioterapia</b>Se a orientação clínica for diferente desta rotina, a conduta do profissional prevalece.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="shell">Material de apoio ao acompanhamento profissional. Baseado em princípios de exercício individualizado, controle de movimento e redução de exposição a posturas estáticas. Referências: <a href="https://www.who.int/publications/i/item/9789240081789" target="_blank" rel="noopener">OMS — dor lombar</a> e <a href="https://stacks.cdc.gov/view/cdc/223070" target="_blank" rel="noopener">NIOSH — demandas musculoesqueléticas em tatuadores</a>.</div></footer>
+
+  <script>
+    const routines = [
+      {
+        name:'Antes do primeiro traço', time:'4 min',
+        steps:[
+          {title:'Respiração e postura alta',purpose:'Preparar coluna e respiração',seconds:40,cue:'Em pé, pés firmes. Cresça pelo topo da cabeça, solte os ombros e faça respirações lentas. Expanda as costelas sem arquear a lombar.',alert:'Mantenha a barriga levemente ativa e evite jogar o tronco para trás.'},
+          {title:'Queixo para trás',purpose:'Cervical',seconds:40,cue:'Olhe para a frente e deslize suavemente o queixo para trás, como se fizesse uma papada. Segure 2 segundos e relaxe. Não olhe para baixo.',alert:''},
+          {title:'Escápulas no bolso',purpose:'Ombros e parte alta das costas',seconds:45,cue:'Com os braços soltos, leve as escápulas suavemente para trás e para baixo. Segure 2 segundos sem estufar o peito nem arquear a lombar.',alert:''},
+          {title:'Preparação dos punhos',purpose:'Mãos e antebraços',seconds:45,cue:'Abra e feche as mãos lentamente. Depois faça círculos pequenos com os punhos, sem apertar os dedos e sem buscar amplitude máxima.',alert:'Se houver formigamento, reduza ou interrompa.'},
+          {title:'Marcha leve no lugar',purpose:'Circulação e quadris',seconds:50,cue:'Marche com passos baixos, postura alta e respiração tranquila. Apoie-se na bancada se necessário. Termine soltando braços e mãos.',alert:'O tronco permanece estável, sem balançar ou rodar.'}
+        ]
+      },
+      {
+        name:'Entre clientes', time:'6 min',
+        steps:[
+          {title:'Caminhada de reset',purpose:'Sair da postura estática',seconds:60,cue:'Caminhe pelo ateliê com passos naturais. Deixe os braços balançarem e faça três expirações longas.',alert:''},
+          {title:'Queixo para trás',purpose:'Cervical',seconds:40,cue:'Olhe para a frente e deslize suavemente o queixo para trás. Segure 2 segundos e retorne sem empurrar a cabeça para baixo.',alert:''},
+          {title:'Abrir o peito na parede',purpose:'Peitoral e ombros',seconds:35,cue:'Apoie o antebraço na parede com o cotovelo abaixo da altura do ombro. Gire o corpo poucos graus até sentir tensão leve no peito.',alert:'Faça um lado por vez e mantenha as costelas organizadas.'},
+          {title:'Trocar o lado',purpose:'Peitoral e ombros',seconds:35,cue:'Repita do outro lado, sem elevar o ombro e sem forçar a articulação. A sensação deve ser de alongamento leve.',alert:''},
+          {title:'Extensores do punho',purpose:'Antebraço e mão dominante',seconds:30,cue:'Braço à frente, cotovelo quase estendido e palma para baixo. Com a outra mão, conduza os dedos suavemente para baixo.',alert:'Nada de puxar forte ou manter se houver dormência.'},
+          {title:'Flexores do punho',purpose:'Antebraço e mão dominante',seconds:30,cue:'Braço à frente, palma para cima. Conduza os dedos suavemente para baixo, mantendo o ombro relaxado.',alert:'Use tensão leve, nunca dor.'},
+          {title:'Quadril para trás com apoio',purpose:'Quadris e controle de tronco',seconds:50,cue:'Mãos apoiadas na bancada, joelhos destravados. Leve o quadril para trás mantendo a coluna longa e retorne. Movimento curto e confortável.',alert:'Não arredonde a lombar. Se houver incômodo, pule este movimento.'},
+          {title:'Elevação de calcanhares',purpose:'Circulação',seconds:45,cue:'Com apoio leve, suba e desça os calcanhares devagar. Distribua o peso entre os dois pés e mantenha o corpo alto.',alert:''}
+        ]
+      },
+      {
+        name:'Fechamento do ateliê', time:'9 min',
+        steps:[
+          {title:'Caminhada sem pressa',purpose:'Transição do trabalho',seconds:75,cue:'Caminhe pelo espaço e permita que braços e ombros relaxem. Respire pelo nariz e solte o ar lentamente.',alert:''},
+          {title:'Queixo para trás',purpose:'Cervical',seconds:45,cue:'Faça repetições suaves, levando o queixo para trás e mantendo o olhar reto. Segure 2 segundos em cada repetição.',alert:''},
+          {title:'Deslize na parede',purpose:'Escápulas e ombros',seconds:50,cue:'Costas próximas da parede, braços em formato de W. Deslize poucos centímetros para cima e volte, sem elevar os ombros.',alert:'Mantenha o abdômen levemente ativo; não force a lombar contra a parede.'},
+          {title:'Mobilidade torácica apoiada',purpose:'Parte alta das costas',seconds:45,cue:'Mãos na bancada, dê um passo para trás e leve o quadril suavemente para trás. Preserve a lombar neutra e deixe o peito descer apenas o confortável.',alert:'Se a lombar participar do movimento ou doer, pule esta etapa.'},
+          {title:'Flexor do quadril com apoio',purpose:'Quadril direito',seconds:40,cue:'Em afastamento curto, segure na bancada. Flexione levemente o joelho da frente e leve a pelve poucos centímetros adiante, sem arquear as costas.',alert:'A sensação deve aparecer na frente do quadril de trás, não na lombar.'},
+          {title:'Trocar o lado',purpose:'Quadril esquerdo',seconds:40,cue:'Repita do outro lado, mantendo tronco alto, glúteo da perna de trás levemente ativo e amplitude pequena.',alert:''},
+          {title:'Punhos e dedos',purpose:'Mãos e antebraços',seconds:55,cue:'Abra os dedos, relaxe, faça círculos pequenos com os punhos e finalize sacudindo as mãos com suavidade.',alert:'Evite insistir se houver dormência, choque ou perda de força.'},
+          {title:'Sentar e levantar alto',purpose:'Pernas e controle postural',seconds:60,cue:'De um banco firme, aproxime os pés, incline o tronco como uma peça única e levante. Sente devagar. Use as mãos se precisar.',alert:'Mantenha a carga próxima do corpo e evite arredondar a lombar.'},
+          {title:'Respiração de encerramento',purpose:'Desacelerar',seconds:50,cue:'Em pé ou sentada com apoio, faça quatro respirações longas. A cada expiração, solte mandíbula, mãos e ombros.',alert:''}
+        ]
+      }
+    ];
+
+    let routineIndex=0, stepIndex=0, remaining=0, total=0, timer=null, running=false;
+    const $=id=>document.getElementById(id);
+
+    function renderTabs(){
+      $('routineTabs').innerHTML=routines.map((r,i)=>`<button class="routine-tab ${i===routineIndex?'active':''}" data-index="${i}"><span class="routine-time">${r.time}</span><span class="routine-name">${r.name}</span></button>`).join('');
+      document.querySelectorAll('.routine-tab').forEach(btn=>btn.addEventListener('click',()=>selectRoutine(Number(btn.dataset.index))));
+    }
+    function selectRoutine(i){routineIndex=i;stepIndex=0;stopTimer();renderTabs();renderStep();}
+    function formatTime(sec){return `${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`}
+    function renderStep(){
+      const r=routines[routineIndex], s=r.steps[stepIndex];
+      $('guideContent').style.display='grid';$('completePanel').classList.remove('show');$('guide').classList.remove('done');
+      total=s.seconds;remaining=s.seconds;running=false;clearInterval(timer);timer=null;
+      $('stepCount').textContent=`Passo ${stepIndex+1} de ${r.steps.length}`;$('exerciseTitle').textContent=s.title;$('exercisePurpose').textContent=s.purpose;$('exerciseCue').textContent=s.cue;
+      $('exerciseAlert').textContent=s.alert;$('exerciseAlert').classList.toggle('show',Boolean(s.alert));
+      $('timerValue').textContent=formatTime(remaining);$('timerRing').style.setProperty('--p','0deg');$('toggleTimer').textContent='Iniciar';
+      $('prevStep').disabled=stepIndex===0;$('nextStep').textContent=stepIndex===r.steps.length-1?'Concluir ✓':'Próximo →';
+      $('guideStatus').textContent=r.name;$('progressBar').style.width=`${(stepIndex/r.steps.length)*100}%`;
+    }
+    function toggleTimer(){if(running){stopTimer();return}running=true;$('toggleTimer').textContent='Pausar';timer=setInterval(()=>{remaining--;if(remaining<=0){remaining=0;stopTimer();if(navigator.vibrate)navigator.vibrate([100,60,100])}updateTimer()},1000)}
+    function stopTimer(){running=false;clearInterval(timer);timer=null;if($('toggleTimer'))$('toggleTimer').textContent=remaining===0?'Concluído':'Iniciar'}
+    function updateTimer(){$('timerValue').textContent=formatTime(remaining);$('timerRing').style.setProperty('--p',`${((total-remaining)/total)*360}deg`)}
+    function nextStep(){const r=routines[routineIndex];stopTimer();if(stepIndex<r.steps.length-1){stepIndex++;renderStep()}else{showComplete()}}
+    function showComplete(){$('guideContent').style.display='none';$('completePanel').classList.add('show');$('progressBar').style.width='100%';$('prevStep').disabled=true;$('nextStep').disabled=true;$('guideStatus').textContent='Rotina concluída'}
+    function restart(){stepIndex=0;$('nextStep').disabled=false;renderStep()}
+    $('toggleTimer').addEventListener('click',toggleTimer);$('resetTimer').addEventListener('click',()=>{stopTimer();remaining=total;updateTimer()});$('prevStep').addEventListener('click',()=>{if(stepIndex>0){stopTimer();stepIndex--;renderStep()}});$('nextStep').addEventListener('click',nextStep);$('restartRoutine').addEventListener('click',restart);
+    renderTabs();renderStep();
+  </script>
+</body>
+</html>
