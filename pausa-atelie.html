@@ -19,8 +19,9 @@
     .shell{width:min(100% - 32px,1040px);margin-inline:auto}
     .topbar{position:sticky;top:0;z-index:20;background:rgba(245,241,232,.88);border-bottom:1px solid rgba(16,22,20,.08);backdrop-filter:blur(16px)}
     .topbar-inner{min-height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{display:flex;align-items:center;gap:11px;font-weight:700;letter-spacing:-.03em}
-    .brand-mark{width:36px;height:36px;display:grid;place-items:center;border-radius:50%;background:var(--ink);color:var(--green);font-size:18px}
+    .brand{display:flex;align-items:center;gap:13px;font-weight:700;letter-spacing:-.03em}
+    .brand-logo{display:block;width:auto;height:38px;object-fit:contain}
+    .brand-divider{width:1px;height:28px;background:var(--line)}
     .back{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.6);color:var(--ink);text-decoration:none;font-size:.9rem;font-weight:600}
     .hero{position:relative;overflow:hidden;padding:74px 0 44px;background:var(--ink);color:white}
     .hero:before,.hero:after{content:"";position:absolute;border:1px solid rgba(26,220,127,.24);border-radius:50%;pointer-events:none}
@@ -65,6 +66,10 @@
     .exercise-cue{margin:18px 0 0;color:var(--muted);line-height:1.65;font-size:1rem}
     .exercise-alert{display:none;margin-top:16px;padding:11px 13px;border-radius:10px;background:#fff1ed;color:#914637;font-size:.82rem;line-height:1.45}
     .exercise-alert.show{display:block}
+    .exercise-demo{display:none;align-items:center;gap:14px;margin-top:18px;padding:10px;border:1px solid var(--line);border-radius:16px;background:#f7f5ef;color:var(--ink);text-decoration:none;transition:.2s ease}
+    .exercise-demo.show{display:flex}.exercise-demo:hover{transform:translateY(-2px);border-color:#a8b9af}
+    .exercise-demo img{width:112px;aspect-ratio:16/9;object-fit:cover;border-radius:11px;background:#dfe6e1}
+    .demo-copy{display:grid;gap:4px}.demo-kicker{color:var(--green-dark);font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}.demo-title{font-size:.9rem;font-weight:700;line-height:1.25}.demo-source{color:var(--muted);font-size:.72rem}
     .progress{height:6px;background:#e5e9e6}
     .progress-bar{width:0;height:100%;background:var(--green);transition:width .25s ease}
     .guide-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 20px;border-top:1px solid var(--line)}
@@ -93,14 +98,14 @@
     @media(max-width:760px){
       .hero{padding:52px 0 36px}.routine-tabs{grid-template-columns:1fr}.routine-tab{min-height:auto}.routine-time{margin-bottom:9px}.guide-top{grid-template-columns:1fr}.timer-panel{border-right:0;border-bottom:1px solid var(--line);padding:24px}.timer-ring{width:148px;height:148px}.exercise-panel{padding:28px 24px}.studio-grid,.safety-list{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column}.guide-nav{padding:13px 14px}.guide-status{display:none}
     }
-    @media(max-width:480px){.shell{width:min(100% - 22px,1040px)}.brand span:last-child{display:none}.personal-note{grid-template-columns:1fr}.hero-meta{gap:7px}.pill{font-size:.78rem}.nav-btn{padding:10px 13px}}
+    @media(max-width:480px){.shell{width:min(100% - 22px,1040px)}.brand-divider,.brand-title{display:none}.brand-logo{height:34px}.personal-note{grid-template-columns:1fr}.hero-meta{gap:7px}.pill{font-size:.78rem}.nav-btn{padding:10px 13px}.exercise-demo img{width:94px}}
     @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="shell topbar-inner">
-      <div class="brand"><span class="brand-mark">P</span><span>Pausa nas Tattoos</span></div>
+      <div class="brand"><img class="brand-logo" src="assets/logo-thales.png" alt="Nutri Thales Rosa"><span class="brand-divider" aria-hidden="true"></span><span class="brand-title">Pausa nas Tattoos</span></div>
       <a class="back" href="/paciente">← Área da paciente</a>
     </div>
   </header>
@@ -143,6 +148,7 @@
               <span class="exercise-purpose" id="exercisePurpose"></span>
               <p class="exercise-cue" id="exerciseCue"></p>
               <div class="exercise-alert" id="exerciseAlert"></div>
+              <a class="exercise-demo" id="exerciseDemo" href="#" target="_blank" rel="noopener"><img id="exerciseThumb" src="" alt="Demonstração do movimento"><span class="demo-copy"><span class="demo-kicker">Ver como fazer</span><span class="demo-title" id="exerciseDemoTitle">Assistir demonstração</span><span class="demo-source">Vídeo técnico selecionado</span></span></a>
             </div>
           </div>
           <div class="complete" id="completePanel"><div class="complete-mark">✓</div><h3>Pausa concluída</h3><p>Respire fundo, reorganize sua bancada e volte ao trabalho percebendo onde o corpo pode ficar mais solto.</p><button class="nav-btn next" id="restartRoutine">Fazer novamente</button></div>
@@ -178,7 +184,7 @@
     </section>
   </main>
 
-  <footer><div class="shell">Material de apoio ao acompanhamento profissional. Baseado em princípios de exercício individualizado, controle de movimento e redução de exposição a posturas estáticas. Referências: <a href="https://www.who.int/publications/i/item/9789240081789" target="_blank" rel="noopener">OMS — dor lombar</a> e <a href="https://stacks.cdc.gov/view/cdc/223070" target="_blank" rel="noopener">NIOSH — demandas musculoesqueléticas em tatuadores</a>.</div></footer>
+  <footer><div class="shell"><strong>Nutri Thales Rosa · Nutrição & Treinamento</strong><br>Material de apoio ao acompanhamento profissional, baseado em princípios de exercício individualizado, controle de movimento e redução de exposição a posturas estáticas. Referências: <a href="https://www.who.int/publications/i/item/9789240081789" target="_blank" rel="noopener">OMS — dor lombar</a> e <a href="https://stacks.cdc.gov/view/cdc/223070" target="_blank" rel="noopener">NIOSH — demandas musculoesqueléticas em tatuadores</a>.</div></footer>
 
   <script>
     const routines = [
@@ -186,9 +192,9 @@
         name:'Antes do primeiro traço', time:'4 min',
         steps:[
           {title:'Respiração e postura alta',purpose:'Preparar coluna e respiração',seconds:40,cue:'Em pé, pés firmes. Cresça pelo topo da cabeça, solte os ombros e faça respirações lentas. Expanda as costelas sem arquear a lombar.',alert:'Mantenha a barriga levemente ativa e evite jogar o tronco para trás.'},
-          {title:'Queixo para trás',purpose:'Cervical',seconds:40,cue:'Olhe para a frente e deslize suavemente o queixo para trás, como se fizesse uma papada. Segure 2 segundos e relaxe. Não olhe para baixo.',alert:''},
-          {title:'Escápulas no bolso',purpose:'Ombros e parte alta das costas',seconds:45,cue:'Com os braços soltos, leve as escápulas suavemente para trás e para baixo. Segure 2 segundos sem estufar o peito nem arquear a lombar.',alert:''},
-          {title:'Preparação dos punhos',purpose:'Mãos e antebraços',seconds:45,cue:'Abra e feche as mãos lentamente. Depois faça círculos pequenos com os punhos, sem apertar os dedos e sem buscar amplitude máxima.',alert:'Se houver formigamento, reduza ou interrompa.'},
+          {title:'Queixo para trás',purpose:'Cervical',seconds:40,cue:'Olhe para a frente e deslize suavemente o queixo para trás, como se fizesse uma papada. Segure 2 segundos e relaxe. Não olhe para baixo.',alert:'',videoId:'LkLed6m3twY',videoTitle:'Demonstração: ajuste cervical'},
+          {title:'Escápulas no bolso',purpose:'Ombros e parte alta das costas',seconds:45,cue:'Com os braços soltos, leve as escápulas suavemente para trás e para baixo. Segure 2 segundos sem estufar o peito nem arquear a lombar.',alert:'',videoId:'FDfiMBYS6JE',videoTitle:'Demonstração: retração escapular'},
+          {title:'Preparação dos punhos',purpose:'Mãos e antebraços',seconds:45,cue:'Abra e feche as mãos lentamente. Depois faça círculos pequenos com os punhos, sem apertar os dedos e sem buscar amplitude máxima.',alert:'Se houver formigamento, reduza ou interrompa.',videoId:'MYBrjpGMb-w',videoTitle:'Demonstração: mobilidade dos punhos'},
           {title:'Marcha leve no lugar',purpose:'Circulação e quadris',seconds:50,cue:'Marche com passos baixos, postura alta e respiração tranquila. Apoie-se na bancada se necessário. Termine soltando braços e mãos.',alert:'O tronco permanece estável, sem balançar ou rodar.'}
         ]
       },
@@ -196,25 +202,25 @@
         name:'Entre clientes', time:'6 min',
         steps:[
           {title:'Caminhada de reset',purpose:'Sair da postura estática',seconds:60,cue:'Caminhe pelo ateliê com passos naturais. Deixe os braços balançarem e faça três expirações longas.',alert:''},
-          {title:'Queixo para trás',purpose:'Cervical',seconds:40,cue:'Olhe para a frente e deslize suavemente o queixo para trás. Segure 2 segundos e retorne sem empurrar a cabeça para baixo.',alert:''},
-          {title:'Abrir o peito na parede',purpose:'Peitoral e ombros',seconds:35,cue:'Apoie o antebraço na parede com o cotovelo abaixo da altura do ombro. Gire o corpo poucos graus até sentir tensão leve no peito.',alert:'Faça um lado por vez e mantenha as costelas organizadas.'},
+          {title:'Queixo para trás',purpose:'Cervical',seconds:40,cue:'Olhe para a frente e deslize suavemente o queixo para trás. Segure 2 segundos e retorne sem empurrar a cabeça para baixo.',alert:'',videoId:'LkLed6m3twY',videoTitle:'Demonstração: ajuste cervical'},
+          {title:'Abrir o peito na parede',purpose:'Peitoral e ombros',seconds:35,cue:'Apoie o antebraço na parede com o cotovelo abaixo da altura do ombro. Gire o corpo poucos graus até sentir tensão leve no peito.',alert:'Faça um lado por vez e mantenha as costelas organizadas.',videoId:'Eaj_NG5_hIo',videoTitle:'Referência visual: ombros na parede'},
           {title:'Trocar o lado',purpose:'Peitoral e ombros',seconds:35,cue:'Repita do outro lado, sem elevar o ombro e sem forçar a articulação. A sensação deve ser de alongamento leve.',alert:''},
-          {title:'Extensores do punho',purpose:'Antebraço e mão dominante',seconds:30,cue:'Braço à frente, cotovelo quase estendido e palma para baixo. Com a outra mão, conduza os dedos suavemente para baixo.',alert:'Nada de puxar forte ou manter se houver dormência.'},
-          {title:'Flexores do punho',purpose:'Antebraço e mão dominante',seconds:30,cue:'Braço à frente, palma para cima. Conduza os dedos suavemente para baixo, mantendo o ombro relaxado.',alert:'Use tensão leve, nunca dor.'},
+          {title:'Extensores do punho',purpose:'Antebraço e mão dominante',seconds:30,cue:'Braço à frente, cotovelo quase estendido e palma para baixo. Com a outra mão, conduza os dedos suavemente para baixo.',alert:'Nada de puxar forte ou manter se houver dormência.',videoId:'-HttLBqujk0',videoTitle:'Demonstração: extensores do punho'},
+          {title:'Flexores do punho',purpose:'Antebraço e mão dominante',seconds:30,cue:'Braço à frente, palma para cima. Conduza os dedos suavemente para baixo, mantendo o ombro relaxado.',alert:'Use tensão leve, nunca dor.',videoId:'rDqYtzYE-n8',videoTitle:'Demonstração: flexores do punho'},
           {title:'Quadril para trás com apoio',purpose:'Quadris e controle de tronco',seconds:50,cue:'Mãos apoiadas na bancada, joelhos destravados. Leve o quadril para trás mantendo a coluna longa e retorne. Movimento curto e confortável.',alert:'Não arredonde a lombar. Se houver incômodo, pule este movimento.'},
-          {title:'Elevação de calcanhares',purpose:'Circulação',seconds:45,cue:'Com apoio leve, suba e desça os calcanhares devagar. Distribua o peso entre os dois pés e mantenha o corpo alto.',alert:''}
+          {title:'Elevação de calcanhares',purpose:'Circulação',seconds:45,cue:'Com apoio leve, suba e desça os calcanhares devagar. Distribua o peso entre os dois pés e mantenha o corpo alto.',alert:'',videoId:'wrPN51LyOUE',videoTitle:'Demonstração: elevação de calcanhares'}
         ]
       },
       {
         name:'Fechamento do ateliê', time:'9 min',
         steps:[
           {title:'Caminhada sem pressa',purpose:'Transição do trabalho',seconds:75,cue:'Caminhe pelo espaço e permita que braços e ombros relaxem. Respire pelo nariz e solte o ar lentamente.',alert:''},
-          {title:'Queixo para trás',purpose:'Cervical',seconds:45,cue:'Faça repetições suaves, levando o queixo para trás e mantendo o olhar reto. Segure 2 segundos em cada repetição.',alert:''},
-          {title:'Deslize na parede',purpose:'Escápulas e ombros',seconds:50,cue:'Costas próximas da parede, braços em formato de W. Deslize poucos centímetros para cima e volte, sem elevar os ombros.',alert:'Mantenha o abdômen levemente ativo; não force a lombar contra a parede.'},
+          {title:'Queixo para trás',purpose:'Cervical',seconds:45,cue:'Faça repetições suaves, levando o queixo para trás e mantendo o olhar reto. Segure 2 segundos em cada repetição.',alert:'',videoId:'LkLed6m3twY',videoTitle:'Demonstração: ajuste cervical'},
+          {title:'Deslize na parede',purpose:'Escápulas e ombros',seconds:50,cue:'Costas próximas da parede, braços em formato de W. Deslize poucos centímetros para cima e volte, sem elevar os ombros.',alert:'Mantenha o abdômen levemente ativo; não force a lombar contra a parede.',videoId:'Eaj_NG5_hIo',videoTitle:'Demonstração: deslize na parede'},
           {title:'Mobilidade torácica apoiada',purpose:'Parte alta das costas',seconds:45,cue:'Mãos na bancada, dê um passo para trás e leve o quadril suavemente para trás. Preserve a lombar neutra e deixe o peito descer apenas o confortável.',alert:'Se a lombar participar do movimento ou doer, pule esta etapa.'},
-          {title:'Flexor do quadril com apoio',purpose:'Quadril direito',seconds:40,cue:'Em afastamento curto, segure na bancada. Flexione levemente o joelho da frente e leve a pelve poucos centímetros adiante, sem arquear as costas.',alert:'A sensação deve aparecer na frente do quadril de trás, não na lombar.'},
+          {title:'Flexor do quadril com apoio',purpose:'Quadril direito',seconds:40,cue:'Em afastamento curto, segure na bancada. Flexione levemente o joelho da frente e leve a pelve poucos centímetros adiante, sem arquear as costas.',alert:'A sensação deve aparecer na frente do quadril de trás, não na lombar.',videoId:'DXuStgWuJV8',videoTitle:'Demonstração: flexor do quadril'},
           {title:'Trocar o lado',purpose:'Quadril esquerdo',seconds:40,cue:'Repita do outro lado, mantendo tronco alto, glúteo da perna de trás levemente ativo e amplitude pequena.',alert:''},
-          {title:'Punhos e dedos',purpose:'Mãos e antebraços',seconds:55,cue:'Abra os dedos, relaxe, faça círculos pequenos com os punhos e finalize sacudindo as mãos com suavidade.',alert:'Evite insistir se houver dormência, choque ou perda de força.'},
+          {title:'Punhos e dedos',purpose:'Mãos e antebraços',seconds:55,cue:'Abra os dedos, relaxe, faça círculos pequenos com os punhos e finalize sacudindo as mãos com suavidade.',alert:'Evite insistir se houver dormência, choque ou perda de força.',videoId:'MYBrjpGMb-w',videoTitle:'Demonstração: mobilidade dos punhos'},
           {title:'Sentar e levantar alto',purpose:'Pernas e controle postural',seconds:60,cue:'De um banco firme, aproxime os pés, incline o tronco como uma peça única e levante. Sente devagar. Use as mãos se precisar.',alert:'Mantenha a carga próxima do corpo e evite arredondar a lombar.'},
           {title:'Respiração de encerramento',purpose:'Desacelerar',seconds:50,cue:'Em pé ou sentada com apoio, faça quatro respirações longas. A cada expiração, solte mandíbula, mãos e ombros.',alert:''}
         ]
@@ -236,6 +242,8 @@
       total=s.seconds;remaining=s.seconds;running=false;clearInterval(timer);timer=null;
       $('stepCount').textContent=`Passo ${stepIndex+1} de ${r.steps.length}`;$('exerciseTitle').textContent=s.title;$('exercisePurpose').textContent=s.purpose;$('exerciseCue').textContent=s.cue;
       $('exerciseAlert').textContent=s.alert;$('exerciseAlert').classList.toggle('show',Boolean(s.alert));
+      const demo=$('exerciseDemo');
+      if(s.videoId){demo.href=`https://www.youtube.com/watch?v=${s.videoId}`;$('exerciseThumb').src=`https://img.youtube.com/vi/${s.videoId}/hqdefault.jpg`;$('exerciseThumb').alt=`Demonstração de ${s.title}`;$('exerciseDemoTitle').textContent=s.videoTitle||`Demonstração de ${s.title}`;demo.classList.add('show')}else{demo.classList.remove('show');demo.removeAttribute('href');$('exerciseThumb').removeAttribute('src')}
       $('timerValue').textContent=formatTime(remaining);$('timerRing').style.setProperty('--p','0deg');$('toggleTimer').textContent='Iniciar';
       $('prevStep').disabled=stepIndex===0;$('nextStep').textContent=stepIndex===r.steps.length-1?'Concluir ✓':'Próximo →';
       $('guideStatus').textContent=r.name;$('progressBar').style.width=`${(stepIndex/r.steps.length)*100}%`;
