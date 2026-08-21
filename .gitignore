@@ -1,0 +1,23 @@
+# Secrets and local environment files
+.env
+.env.*
+!.env.example
+!.env.template
+
+# Private keys and certificates
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Node / local tooling
+node_modules/
+.vercel/
+.next/
+dist/
+coverage/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
