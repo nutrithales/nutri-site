@@ -32,7 +32,7 @@ if (!privacyLinkPattern.test(homepage)) {
 const policy = fs.readFileSync(policyPath, 'utf8');
 const requiredMarkers = [
   '<title>Política de Privacidade',
-  'Lei Geral de Proteção de Dados',
+  'LGPD',
   'Dados de saúde',
   'Direitos do titular',
   'nutri.thalesrosa@gmail.com'
