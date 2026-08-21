@@ -63,13 +63,15 @@ jobs:
           redirect=$(curl --silent --show-error --head http://www.nutrithales.com.br/ | tr -d '\r')
           echo "$redirect" | grep -Eq '^HTTP/.* (301|302|307|308)'
           echo "$redirect" | grep -qi '^location: https://'
-      - name: Check patient area
+      - name: Check patient login
         run: |
           body=$(curl --fail --silent --show-error --location --retry 4 --retry-delay 5 https://www.nutrithales.com.br/paciente)
-          echo "$body" | grep -q 'Área do Paciente'
+          echo "$body" | grep -qi 'Área do Paciente'
+          echo "$body" | grep -qi 'Entrar'
           if echo "$body" | grep -qi 'admin.nutrithales.com.br'; then exit 1; fi
-      - name: Check workout dashboard
+      - name: Check protected workout route
         run: |
           body=$(curl --fail --silent --show-error --location --retry 4 --retry-delay 5 https://www.nutrithales.com.br/paciente/treinos)
-          echo "$body" | grep -q 'Dashboard de Treinos'
+          echo "$body" | grep -qi 'Área do Paciente'
+          echo "$body" | grep -qi 'Entrar'
           if echo "$body" | grep -qi 'admin.nutrithales.com.br'; then exit 1; fi
