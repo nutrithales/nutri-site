@@ -28,6 +28,8 @@ jobs:
           node-version: 24
       - name: Validate build, JavaScript and domain isolation
         run: node scripts/safety-check.mjs
+      - name: Validate security headers and critical route contracts
+        run: node scripts/security-regression-check.mjs
 
   production-smoke:
     name: Production smoke test
@@ -42,6 +44,25 @@ jobs:
         run: |
           body=$(curl --fail --silent --show-error --location --retry 4 --retry-delay 5 https://www.nutrithales.com.br/)
           echo "$body" | grep -q 'Nutricionista em Curitiba'
+      - name: Check privacy policy
+        run: |
+          body=$(curl --fail --silent --show-error --location --retry 4 --retry-delay 5 https://www.nutrithales.com.br/politica-de-privacidade/)
+          echo "$body" | grep -q 'Política de Privacidade'
+          echo "$body" | grep -q 'LGPD'
+      - name: Check public article
+        run: |
+          body=$(curl --fail --silent --show-error --location --retry 4 --retry-delay 5 https://www.nutrithales.com.br/conteudos/avaliacao-fisica-com-bodymetrix.html)
+          echo "$body" | grep -q 'BodyMetrix'
+      - name: Check HTTPS and defensive headers
+        run: |
+          headers=$(curl --fail --silent --show-error --head --retry 4 --retry-delay 5 https://www.nutrithales.com.br/ | tr -d '\r')
+          echo "$headers" | grep -qi '^strict-transport-security:'
+          echo "$headers" | grep -qi '^x-content-type-options: nosniff$'
+          echo "$headers" | grep -qi '^referrer-policy: strict-origin-when-cross-origin$'
+          echo "$headers" | grep -qi '^content-security-policy-report-only:'
+          redirect=$(curl --silent --show-error --head http://www.nutrithales.com.br/ | tr -d '\r')
+          echo "$redirect" | grep -Eq '^HTTP/.* (301|302|307|308)'
+          echo "$redirect" | grep -qi '^location: https://'
       - name: Check patient area
         run: |
           body=$(curl --fail --silent --show-error --location --retry 4 --retry-delay 5 https://www.nutrithales.com.br/paciente)
