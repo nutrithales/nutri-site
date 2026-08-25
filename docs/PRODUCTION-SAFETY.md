@@ -5,7 +5,8 @@
 - `www.nutrithales.com.br` e `nutrithales.com.br`: site público e Área do Paciente.
 - `www.nutrithales.com.br/paciente`: autenticação e home do paciente.
 - `www.nutrithales.com.br/paciente/treinos`: dashboard universal de treinos.
-- `admin.nutrithales.com.br`: **não pertence a este fluxo de paciente** e nunca deve ser usado como destino de links públicos.
+- `admin.nutrithales.com.br`: painel administrativo; não deve aparecer como destino dos links públicos do paciente.
+- O encaminhamento interno de `/paciente` usa o alias estável `admin-nutri-thales.vercel.app`, evitando dependência da resolução DNS do subdomínio administrativo.
 
 ## Regra de mudança
 
@@ -41,7 +42,7 @@ Se produção quebrar:
 - `https://www.nutrithales.com.br/paciente`
 - `https://www.nutrithales.com.br/paciente/treinos`
 
-Todas devem responder sem depender de `admin.nutrithales.com.br`.
+Todas devem responder sem expor nem depender da resolução DNS de `admin.nutrithales.com.br`.
 
 ## Banco de dados
 

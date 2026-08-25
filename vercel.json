@@ -63,15 +63,15 @@
     },
     {
       "source": "/paciente",
-      "destination": "https://admin.nutrithales.com.br/paciente"
+      "destination": "https://admin-nutri-thales.vercel.app/paciente"
     },
     {
       "source": "/paciente/:path*",
-      "destination": "https://admin.nutrithales.com.br/paciente/:path*"
+      "destination": "https://admin-nutri-thales.vercel.app/paciente/:path*"
     },
     {
       "source": "/_next/:path*",
-      "destination": "https://admin.nutrithales.com.br/_next/:path*"
+      "destination": "https://admin-nutri-thales.vercel.app/_next/:path*"
     }
   ]
 }

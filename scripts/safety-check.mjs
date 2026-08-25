@@ -79,7 +79,7 @@ if (fs.existsSync(patientPath) && fs.existsSync(trainingPath)) {
   const rewrites = Array.isArray(vercel.rewrites) ? vercel.rewrites : [];
   const patientRewrite = rewrites.find((r) => r?.source === '/paciente');
   const patientCatchAll = rewrites.find((r) => r?.source === '/paciente/:path*');
-  const expectedBase = 'https://admin.nutrithales.com.br/paciente';
+  const expectedBase = 'https://admin-nutri-thales.vercel.app/paciente';
 
   if (patientRewrite?.destination !== expectedBase) {
     fail('Rewrite /paciente não aponta para o destino esperado.');

@@ -38,9 +38,9 @@ const expectedRewrites = new Map([
   ['/paciente/treinos/isabel-maratona/:path*', '/api/patient-page-proxy?app=isabel-maratona&path=:path*'],
   ['/paciente/diario/vinicius', '/api/patient-page-proxy?app=vinicius-diario'],
   ['/paciente/diario/vinicius/:path*', '/api/patient-page-proxy?app=vinicius-diario&path=:path*'],
-  ['/paciente', 'https://admin.nutrithales.com.br/paciente'],
-  ['/paciente/:path*', 'https://admin.nutrithales.com.br/paciente/:path*'],
-  ['/_next/:path*', 'https://admin.nutrithales.com.br/_next/:path*'],
+  ['/paciente', 'https://admin-nutri-thales.vercel.app/paciente'],
+  ['/paciente/:path*', 'https://admin-nutri-thales.vercel.app/paciente/:path*'],
+  ['/_next/:path*', 'https://admin-nutri-thales.vercel.app/_next/:path*'],
 ]);
 
 for (const [source, destination] of expectedRewrites) {
