@@ -27,11 +27,18 @@ export async function token(){
   const clientId=cleanEnv(process.env.GOOGLE_CLIENT_ID)||'784975224517-6gl9286vpl9n20j5l8jhhea9s519dm1n.apps.googleusercontent.com';
   const clientSecret=cleanEnv(process.env.GOOGLE_CLIENT_SECRET);
   const refreshToken=cleanEnv(process.env.GOOGLE_REFRESH_TOKEN);
-  if(!clientSecret||!refreshToken)throw new Error('Google Agenda não configurado');
+  if(!clientSecret)throw new Error('Configuração ausente: GOOGLE_CLIENT_SECRET');
+  if(!refreshToken)throw new Error('Configuração ausente: GOOGLE_REFRESH_TOKEN');
   const body=new URLSearchParams({client_id:clientId,client_secret:clientSecret,refresh_token:refreshToken,grant_type:'refresh_token'});
   const r=await fetch('https://oauth2.googleapis.com/token',{method:'POST',headers:{'content-type':'application/x-www-form-urlencoded'},body});
-  if(!r.ok)throw new Error('Google Agenda não configurado');
-  return (await r.json()).access_token;
+  if(!r.ok){
+    let code='oauth_error';
+    try{const data=await r.json();if(typeof data?.error==='string'&&/^[a-z0-9_]+$/i.test(data.error))code=data.error}catch{}
+    throw new Error(`Falha OAuth Google: ${code}`);
+  }
+  const data=await r.json();
+  if(!data.access_token)throw new Error('Falha OAuth Google: access_token ausente');
+  return data.access_token;
 }
 export async function busy(start,end){const t=await token();const r=await fetch('https://www.googleapis.com/calendar/v3/freeBusy',{method:'POST',headers:{authorization:`Bearer ${t}`,'content-type':'application/json'},body:JSON.stringify({timeMin:start,timeMax:end,timeZone:TZ,items:[{id:process.env.GOOGLE_CALENDAR_ID||'primary'}]})});if(!r.ok)throw new Error('Falha ao consultar agenda');const j=await r.json();return j.calendars[process.env.GOOGLE_CALENDAR_ID||'primary'].busy||[]}
 export async function createEvent(payload){const t=await token();const cal=encodeURIComponent(process.env.GOOGLE_CALENDAR_ID||'primary');const r=await fetch(`https://www.googleapis.com/calendar/v3/calendars/${cal}/events?sendUpdates=all`,{method:'POST',headers:{authorization:`Bearer ${t}`,'content-type':'application/json'},body:JSON.stringify(payload)});if(!r.ok)throw new Error('Falha ao criar evento');return r.json()}
