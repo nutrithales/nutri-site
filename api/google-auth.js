@@ -3,6 +3,10 @@ import crypto from 'node:crypto';
 const REDIRECT_URI = 'https://www.nutrithales.com.br/api/google-auth';
 const SCOPE = 'https://www.googleapis.com/auth/calendar';
 
+function cleanEnv(value) {
+  return value?.replace(/[\s"']/g, '') || '';
+}
+
 function sign(value, secret) {
   return crypto.createHmac('sha256', secret).update(value).digest('hex');
 }
@@ -22,8 +26,8 @@ function page(title, message, token = '') {
 
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store, max-age=0');
-  const clientId = '784975224517-6gl9286vpl9n20j5l8jhhea9s519dm1n.apps.googleusercontent.com';
-  const clientSecret = process.env.GOOGLE_CLIENT_SECRET?.replace(/[\s"']/g, '');
+  const clientId = cleanEnv(process.env.GOOGLE_CLIENT_ID) || '784975224517-6gl9286vpl9n20j5l8jhhea9s519dm1n.apps.googleusercontent.com';
+  const clientSecret = cleanEnv(process.env.GOOGLE_CLIENT_SECRET);
 
   if (!clientId || !clientSecret) {
     return res.status(503).send(page('Configuração pendente', 'Cadastre GOOGLE_CLIENT_ID e GOOGLE_CLIENT_SECRET nas variáveis de ambiente da Vercel e faça um novo deploy.'));
