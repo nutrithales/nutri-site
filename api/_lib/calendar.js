@@ -22,7 +22,17 @@ export function scheduledSpan(date,time,service){
   });
   return inside?{start:start.toISOString(),end:end.toISOString()}:null;
 }
-export async function token(){const body=new URLSearchParams({client_id:'784975224517-6gl9286vpl9n20j5l8jhhea9s519dm1n.apps.googleusercontent.com',client_secret:process.env.GOOGLE_CLIENT_SECRET?.replace(/[\s"']/g,''),refresh_token:process.env.GOOGLE_REFRESH_TOKEN,grant_type:'refresh_token'});const r=await fetch('https://oauth2.googleapis.com/token',{method:'POST',headers:{'content-type':'application/x-www-form-urlencoded'},body});if(!r.ok)throw new Error('Google Agenda não configurado');return (await r.json()).access_token}
+function cleanEnv(value){return value?.replace(/[\s"']/g,'')||''}
+export async function token(){
+  const clientId=cleanEnv(process.env.GOOGLE_CLIENT_ID)||'784975224517-6gl9286vpl9n20j5l8jhhea9s519dm1n.apps.googleusercontent.com';
+  const clientSecret=cleanEnv(process.env.GOOGLE_CLIENT_SECRET);
+  const refreshToken=cleanEnv(process.env.GOOGLE_REFRESH_TOKEN);
+  if(!clientSecret||!refreshToken)throw new Error('Google Agenda não configurado');
+  const body=new URLSearchParams({client_id:clientId,client_secret:clientSecret,refresh_token:refreshToken,grant_type:'refresh_token'});
+  const r=await fetch('https://oauth2.googleapis.com/token',{method:'POST',headers:{'content-type':'application/x-www-form-urlencoded'},body});
+  if(!r.ok)throw new Error('Google Agenda não configurado');
+  return (await r.json()).access_token;
+}
 export async function busy(start,end){const t=await token();const r=await fetch('https://www.googleapis.com/calendar/v3/freeBusy',{method:'POST',headers:{authorization:`Bearer ${t}`,'content-type':'application/json'},body:JSON.stringify({timeMin:start,timeMax:end,timeZone:TZ,items:[{id:process.env.GOOGLE_CALENDAR_ID||'primary'}]})});if(!r.ok)throw new Error('Falha ao consultar agenda');const j=await r.json();return j.calendars[process.env.GOOGLE_CALENDAR_ID||'primary'].busy||[]}
 export async function createEvent(payload){const t=await token();const cal=encodeURIComponent(process.env.GOOGLE_CALENDAR_ID||'primary');const r=await fetch(`https://www.googleapis.com/calendar/v3/calendars/${cal}/events?sendUpdates=all`,{method:'POST',headers:{authorization:`Bearer ${t}`,'content-type':'application/json'},body:JSON.stringify(payload)});if(!r.ok)throw new Error('Falha ao criar evento');return r.json()}
 export async function listEvents(){const t=await token(),cal=encodeURIComponent(process.env.GOOGLE_CALENDAR_ID||'primary'),min=new Date().toISOString(),max=new Date(Date.now()+60*86400000).toISOString();const r=await fetch(`https://www.googleapis.com/calendar/v3/calendars/${cal}/events?singleEvents=true&orderBy=startTime&timeMin=${encodeURIComponent(min)}&timeMax=${encodeURIComponent(max)}`,{headers:{authorization:`Bearer ${t}`}});if(!r.ok)throw new Error('Falha ao listar agenda');return (await r.json()).items||[]}
