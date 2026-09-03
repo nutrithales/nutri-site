@@ -4,28 +4,15 @@ import path from 'node:path';
 const root = process.cwd();
 const out = path.join(root, 'dist');
 const articlePath = path.join(out, 'conteudos', 'cuidar-de-si-tambem-e-uma-escolha.html');
-const sourceImagePath = path.join(root, 'assets', 'autocuidado-site.svg');
 
 if (!fs.existsSync(articlePath)) {
   throw new Error('Artigo de autocuidado não encontrado no build.');
 }
 
-if (!fs.existsSync(sourceImagePath)) {
-  throw new Error('Imagem de autocuidado não encontrada no repositório.');
-}
-
 let html = fs.readFileSync(articlePath, 'utf8');
-const svgSource = fs.readFileSync(sourceImagePath, 'utf8');
-const prefix = 'data:image/jpeg;base64,';
-const dataStart = svgSource.indexOf(prefix);
-const dataEnd = dataStart >= 0 ? svgSource.indexOf('"', dataStart) : -1;
-const embeddedJpeg = dataStart >= 0 && dataEnd > dataStart ? svgSource.slice(dataStart, dataEnd) : null;
 
-if (!embeddedJpeg) {
-  throw new Error('JPEG embutido na imagem de autocuidado não encontrado.');
-}
-
-const figure = `<figure class="article-image"><picture><img src="${embeddedJpeg}" width="960" height="540" loading="eager" fetchpriority="high" decoding="async" alt="Rotina de autocuidado com alimentação, hidratação, movimento e atenção à saúde mental"></picture></figure>`;
+const imageUrl = 'https://images.unsplash.com/photo-1767611118992-b300c4fb4bee?auto=format&fit=crop&fm=jpg&q=82&w=1600';
+const figure = `<figure class="article-image"><picture><img src="${imageUrl}" width="960" height="540" loading="eager" fetchpriority="high" decoding="async" alt="Pessoa praticando autocuidado e movimento em uma rotina de saúde"><figcaption>Foto: Margaret Young / Unsplash</figcaption></picture></figure>`;
 
 const existingFigure = /<figure class="article-image">[\s\S]*?<\/figure>/;
 if (existingFigure.test(html)) {
@@ -37,6 +24,10 @@ if (existingFigure.test(html)) {
 }
 
 html = html.replace(/,"image":"[^"]+"/, '');
+const schemaNeedle = '"dateModified":"2026-09-03"';
+if (html.includes(schemaNeedle) && !html.includes(`"image":"${imageUrl}"`)) {
+  html = html.replace(schemaNeedle, `${schemaNeedle},"image":"${imageUrl}"`);
+}
 
 fs.writeFileSync(articlePath, html);
-console.log('✅ Imagem de autocuidado incorporada como JPEG direto no HTML');
+console.log('✅ Imagem do artigo substituída por JPG estável');
