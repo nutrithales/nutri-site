@@ -11,8 +11,8 @@ if (!fs.existsSync(articlePath)) {
 
 let html = fs.readFileSync(articlePath, 'utf8');
 
-const imageUrl = 'https://images.unsplash.com/photo-1767611118992-b300c4fb4bee?auto=format&fit=crop&fm=jpg&q=82&w=1600';
-const figure = `<figure class="article-image"><picture><img src="${imageUrl}" width="960" height="540" loading="eager" fetchpriority="high" decoding="async" alt="Pessoa praticando autocuidado e movimento em uma rotina de saúde"><figcaption>Foto: Margaret Young / Unsplash</figcaption></picture></figure>`;
+const imageUrl = 'https://images.unsplash.com/photo-1784798455842-3a0be501172c?auto=format&fit=crop&fm=jpg&q=72&w=1600';
+const figure = `<figure class="article-image"><picture><img src="${imageUrl}" width="960" height="540" loading="eager" fetchpriority="high" decoding="async" alt="Caderno, café e café da manhã em uma rotina tranquila de autocuidado"><figcaption>Foto: Mengkol Smile / Unsplash</figcaption></picture></figure>`;
 
 const existingFigure = /<figure class="article-image">[\s\S]*?<\/figure>/;
 if (existingFigure.test(html)) {
@@ -30,4 +30,4 @@ if (html.includes(schemaNeedle) && !html.includes(`"image":"${imageUrl}"`)) {
 }
 
 fs.writeFileSync(articlePath, html);
-console.log('✅ Imagem do artigo substituída por JPG estável');
+console.log('✅ Imagem leve e acolhedora aplicada ao artigo');
