@@ -16,7 +16,10 @@ if (!fs.existsSync(sourceImagePath)) {
 
 let html = fs.readFileSync(articlePath, 'utf8');
 const svgSource = fs.readFileSync(sourceImagePath, 'utf8');
-const embeddedJpeg = svgSource.match(/href="(data:image\/jpeg;base64,[^"]+)"/i)?.[1];
+const prefix = 'data:image/jpeg;base64,';
+const dataStart = svgSource.indexOf(prefix);
+const dataEnd = dataStart >= 0 ? svgSource.indexOf('"', dataStart) : -1;
+const embeddedJpeg = dataStart >= 0 && dataEnd > dataStart ? svgSource.slice(dataStart, dataEnd) : null;
 
 if (!embeddedJpeg) {
   throw new Error('JPEG embutido na imagem de autocuidado não encontrado.');
@@ -36,4 +39,4 @@ if (existingFigure.test(html)) {
 html = html.replace(/,"image":"[^"]+"/, '');
 
 fs.writeFileSync(articlePath, html);
-console.log('✅ Imagem de autocuidado convertida para JPEG direto no HTML');
+console.log('✅ Imagem de autocuidado incorporada como JPEG direto no HTML');
