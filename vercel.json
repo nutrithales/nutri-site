@@ -1,5 +1,5 @@
 {
-  "buildCommand": "node build-runner.mjs && node scripts/apply-privacy-policy.mjs && node scripts/inject-latest-content.mjs",
+  "buildCommand": "node build-runner.mjs && node scripts/apply-privacy-policy.mjs && node scripts/inject-latest-content.mjs && node scripts/apply-content-images.mjs",
   "outputDirectory": "dist",
   "headers": [
     {
