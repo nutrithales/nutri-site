@@ -4,16 +4,25 @@ import path from 'node:path';
 const root = process.cwd();
 const out = path.join(root, 'dist');
 const articlePath = path.join(out, 'conteudos', 'cuidar-de-si-tambem-e-uma-escolha.html');
+const sourceImagePath = path.join(root, 'assets', 'autocuidado-site.svg');
 
 if (!fs.existsSync(articlePath)) {
   throw new Error('Artigo de autocuidado não encontrado no build.');
 }
 
-let html = fs.readFileSync(articlePath, 'utf8');
+if (!fs.existsSync(sourceImagePath)) {
+  throw new Error('Imagem de autocuidado não encontrada no repositório.');
+}
 
-const imagePath = '../assets/autocuidado-site.svg';
-const imageUrl = 'https://www.nutrithales.com.br/assets/autocuidado-site.svg';
-const figure = `<figure class="article-image"><picture><source media="(max-width:700px)" srcset="${imagePath}" width="960" height="540"><img src="${imagePath}" width="960" height="540" loading="eager" fetchpriority="high" alt="Rotina de autocuidado com alimentação, hidratação, movimento e atenção à saúde mental"></picture></figure>`;
+let html = fs.readFileSync(articlePath, 'utf8');
+const svgSource = fs.readFileSync(sourceImagePath, 'utf8');
+const embeddedJpeg = svgSource.match(/href="(data:image\/jpeg;base64,[^"]+)"/i)?.[1];
+
+if (!embeddedJpeg) {
+  throw new Error('JPEG embutido na imagem de autocuidado não encontrado.');
+}
+
+const figure = `<figure class="article-image"><picture><img src="${embeddedJpeg}" width="960" height="540" loading="eager" fetchpriority="high" decoding="async" alt="Rotina de autocuidado com alimentação, hidratação, movimento e atenção à saúde mental"></picture></figure>`;
 
 const existingFigure = /<figure class="article-image">[\s\S]*?<\/figure>/;
 if (existingFigure.test(html)) {
@@ -24,13 +33,7 @@ if (existingFigure.test(html)) {
   html = html.replace(metaEnd, `${metaEnd}\n${figure}`);
 }
 
-html = html.replace(/"image":"[^"]+"/, `"image":"${imageUrl}"`);
-if (!html.includes(`"image":"${imageUrl}"`)) {
-  const schemaNeedle = '"dateModified":"2026-09-03"';
-  if (html.includes(schemaNeedle)) {
-    html = html.replace(schemaNeedle, `${schemaNeedle},"image":"${imageUrl}"`);
-  }
-}
+html = html.replace(/,"image":"[^"]+"/, '');
 
 fs.writeFileSync(articlePath, html);
-console.log('✅ Imagem temática de autocuidado aplicada ao artigo');
+console.log('✅ Imagem de autocuidado convertida para JPEG direto no HTML');
